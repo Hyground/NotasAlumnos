@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 06-sep-2024 21:19:58 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="POJOs.Cliente" table="cliente" catalog="programacion_a" optimistic-lock="version">
+        <id name="idCliente" type="java.lang.Integer">
+            <column name="ID_CLIENTE" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="persona" class="POJOs.Persona" fetch="select">
+            <column name="ID_PERSONA" />
+        </many-to-one>
+        <property name="telefono" type="string">
+            <column name="TELEFONO" length="12" />
+        </property>
+        <property name="direccion" type="string">
+            <column name="DIRECCION" length="100" />
+        </property>
+        <property name="nit" type="string">
+            <column name="NIT" length="20" />
+        </property>
+    </class>
+</hibernate-mapping>
