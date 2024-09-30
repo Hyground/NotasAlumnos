@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 29/09/2024 11:15:42 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="POJOs.Secciones" table="secciones" catalog="eduscore" optimistic-lock="version">
+        <id name="seccionId" type="java.lang.Integer">
+            <column name="SeccionID" />
+            <generator class="identity" />
+        </id>
+        <property name="nombreSeccion" type="string">
+            <column name="NombreSeccion" length="1" not-null="true" />
+        </property>
+        <set name="docenteses" table="docentes" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="SeccionID" not-null="true" />
+            </key>
+            <one-to-many class="POJOs.Docentes" />
+        </set>
+        <set name="estudianteses" table="estudiantes" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="SeccionID" not-null="true" />
+            </key>
+            <one-to-many class="POJOs.Estudiantes" />
+        </set>
+    </class>
+</hibernate-mapping>

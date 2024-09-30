@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 29/09/2024 11:15:42 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="POJOs.Grados" table="grados" catalog="eduscore" optimistic-lock="version">
+        <id name="gradoId" type="java.lang.Integer">
+            <column name="GradoID" />
+            <generator class="identity" />
+        </id>
+        <property name="nombreGrado" type="string">
+            <column name="NombreGrado" length="20" not-null="true" />
+        </property>
+        <set name="docenteses" table="docentes" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="GradoID" not-null="true" />
+            </key>
+            <one-to-many class="POJOs.Docentes" />
+        </set>
+        <set name="cursoses" table="cursos" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="GradoID" not-null="true" />
+            </key>
+            <one-to-many class="POJOs.Cursos" />
+        </set>
+        <set name="estudianteses" table="estudiantes" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="GradoID" not-null="true" />
+            </key>
+            <one-to-many class="POJOs.Estudiantes" />
+        </set>
+    </class>
+</hibernate-mapping>

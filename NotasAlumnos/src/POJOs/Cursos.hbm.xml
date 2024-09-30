@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 29/09/2024 11:15:42 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="POJOs.Cursos" table="cursos" catalog="eduscore" optimistic-lock="version">
+        <id name="cursoId" type="java.lang.Integer">
+            <column name="CursoID" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="grados" class="POJOs.Grados" fetch="select">
+            <column name="GradoID" not-null="true" />
+        </many-to-one>
+        <property name="nombreCurso" type="string">
+            <column name="NombreCurso" length="100" not-null="true" />
+        </property>
+        <set name="evaluacioneses" table="evaluaciones" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="CursoID" not-null="true" />
+            </key>
+            <one-to-many class="POJOs.Evaluaciones" />
+        </set>
+        <set name="actividadeses" table="actividades" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="CursoID" not-null="true" />
+            </key>
+            <one-to-many class="POJOs.Actividades" />
+        </set>
+        <set name="docenteses" table="docente_curso" inverse="false" lazy="true" fetch="select">
+            <key>
+                <column name="CursoID" not-null="true" />
+            </key>
+            <many-to-many entity-name="POJOs.Docentes">
+                <column name="DocenteID" not-null="true" />
+            </many-to-many>
+        </set>
+    </class>
+</hibernate-mapping>

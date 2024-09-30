@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 29/09/2024 11:15:42 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="POJOs.Estudiantes" table="estudiantes" catalog="eduscore" optimistic-lock="version">
+        <id name="cui" type="string">
+            <column name="CUI" length="20" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="grados" class="POJOs.Grados" fetch="select">
+            <column name="GradoID" not-null="true" />
+        </many-to-one>
+        <many-to-one name="secciones" class="POJOs.Secciones" fetch="select">
+            <column name="SeccionID" not-null="true" />
+        </many-to-one>
+        <property name="codigoPersonal" type="string">
+            <column name="CodigoPersonal" length="20" not-null="true" />
+        </property>
+        <property name="nombre" type="string">
+            <column name="Nombre" length="50" not-null="true" />
+        </property>
+        <property name="apellido" type="string">
+            <column name="Apellido" length="50" not-null="true" />
+        </property>
+        <property name="borradoLogico" type="boolean">
+            <column name="borradoLogico" not-null="true" />
+        </property>
+        <set name="notases" table="notas" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="CUI" length="20" not-null="true" />
+            </key>
+            <one-to-many class="POJOs.Notas" />
+        </set>
+    </class>
+</hibernate-mapping>
