@@ -1,5 +1,5 @@
 package POJOs;
-// Generated 29/09/2024 11:15:42 PM by Hibernate Tools 4.3.1
+// Generated 30-sep-2024 21:55:42 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -14,7 +14,6 @@ public class Bimestres  implements java.io.Serializable {
      private Integer bimestreId;
      private String nombreBimestre;
      private Set<Evaluaciones> evaluacioneses = new HashSet<Evaluaciones>(0);
-     private Set<Actividades> actividadeses = new HashSet<Actividades>(0);
 
     public Bimestres() {
     }
@@ -23,10 +22,9 @@ public class Bimestres  implements java.io.Serializable {
     public Bimestres(String nombreBimestre) {
         this.nombreBimestre = nombreBimestre;
     }
-    public Bimestres(String nombreBimestre, Set<Evaluaciones> evaluacioneses, Set<Actividades> actividadeses) {
+    public Bimestres(String nombreBimestre, Set<Evaluaciones> evaluacioneses) {
        this.nombreBimestre = nombreBimestre;
        this.evaluacioneses = evaluacioneses;
-       this.actividadeses = actividadeses;
     }
    
     public Integer getBimestreId() {
@@ -49,13 +47,6 @@ public class Bimestres  implements java.io.Serializable {
     
     public void setEvaluacioneses(Set<Evaluaciones> evaluacioneses) {
         this.evaluacioneses = evaluacioneses;
-    }
-    public Set<Actividades> getActividadeses() {
-        return this.actividadeses;
-    }
-    
-    public void setActividadeses(Set<Actividades> actividadeses) {
-        this.actividadeses = actividadeses;
     }
 
 

@@ -41,14 +41,12 @@ Contributor(s):
 -->
 <hibernate-reverse-engineering>
   <schema-selection match-catalog="eduscore"/>
-  <table-filter match-name="docentes"/>
-  <table-filter match-name="actividades"/>
-  <table-filter match-name="cursos"/>
-  <table-filter match-name="estudiantes"/>
-  <table-filter match-name="evaluaciones"/>
-  <table-filter match-name="grados"/>
-  <table-filter match-name="docente_curso"/>
-  <table-filter match-name="notas"/>
   <table-filter match-name="bimestres"/>
+  <table-filter match-name="grados"/>
+  <table-filter match-name="estudiantes"/>
+  <table-filter match-name="docentes"/>
+  <table-filter match-name="notas"/>
+  <table-filter match-name="cursos"/>
   <table-filter match-name="secciones"/>
+  <table-filter match-name="evaluaciones"/>
 </hibernate-reverse-engineering>

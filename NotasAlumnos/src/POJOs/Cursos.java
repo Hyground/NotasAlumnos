@@ -1,5 +1,5 @@
 package POJOs;
-// Generated 29/09/2024 11:15:42 PM by Hibernate Tools 4.3.1
+// Generated 30-sep-2024 21:55:42 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -15,8 +15,6 @@ public class Cursos  implements java.io.Serializable {
      private Grados grados;
      private String nombreCurso;
      private Set<Evaluaciones> evaluacioneses = new HashSet<Evaluaciones>(0);
-     private Set<Actividades> actividadeses = new HashSet<Actividades>(0);
-     private Set<Docentes> docenteses = new HashSet<Docentes>(0);
 
     public Cursos() {
     }
@@ -26,12 +24,10 @@ public class Cursos  implements java.io.Serializable {
         this.grados = grados;
         this.nombreCurso = nombreCurso;
     }
-    public Cursos(Grados grados, String nombreCurso, Set<Evaluaciones> evaluacioneses, Set<Actividades> actividadeses, Set<Docentes> docenteses) {
+    public Cursos(Grados grados, String nombreCurso, Set<Evaluaciones> evaluacioneses) {
        this.grados = grados;
        this.nombreCurso = nombreCurso;
        this.evaluacioneses = evaluacioneses;
-       this.actividadeses = actividadeses;
-       this.docenteses = docenteses;
     }
    
     public Integer getCursoId() {
@@ -61,20 +57,6 @@ public class Cursos  implements java.io.Serializable {
     
     public void setEvaluacioneses(Set<Evaluaciones> evaluacioneses) {
         this.evaluacioneses = evaluacioneses;
-    }
-    public Set<Actividades> getActividadeses() {
-        return this.actividadeses;
-    }
-    
-    public void setActividadeses(Set<Actividades> actividadeses) {
-        this.actividadeses = actividadeses;
-    }
-    public Set<Docentes> getDocenteses() {
-        return this.docenteses;
-    }
-    
-    public void setDocenteses(Set<Docentes> docenteses) {
-        this.docenteses = docenteses;
     }
 
 

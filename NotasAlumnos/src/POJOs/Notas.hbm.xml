@@ -1,21 +1,18 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 29/09/2024 11:15:42 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated 30-sep-2024 21:55:43 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="POJOs.Notas" table="notas" catalog="eduscore" optimistic-lock="version">
-        <id name="notaId" type="int">
+        <id name="notaId" type="java.lang.Integer">
             <column name="NotaID" />
-            <generator class="assigned" />
+            <generator class="identity" />
         </id>
-        <many-to-one name="actividades" class="POJOs.Actividades" fetch="select">
-            <column name="ActividadID" />
-        </many-to-one>
         <many-to-one name="estudiantes" class="POJOs.Estudiantes" fetch="select">
             <column name="CUI" length="20" not-null="true" />
         </many-to-one>
         <many-to-one name="evaluaciones" class="POJOs.Evaluaciones" fetch="select">
-            <column name="EvaluacionID" />
+            <column name="EvaluacionID" not-null="true" />
         </many-to-one>
         <property name="nota" type="big_decimal">
             <column name="Nota" precision="5" not-null="true" />
