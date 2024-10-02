@@ -1,6 +1,10 @@
 .mainFxmlClass {
-    -fx-background-image: url(../Imagenes/Fondoreal.png);
+    -fx-background-image: url("../Imagenes/Fondoreal.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover; 
+    -fx-background-position: center center;
 }
+
 .button{
     -fx-background-color: rgba(265,256,256,0.1);
 }
