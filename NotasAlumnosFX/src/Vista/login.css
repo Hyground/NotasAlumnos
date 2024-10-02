@@ -1,3 +1,10 @@
 .mainFxmlClass {
-    -fx-background-image: url(../Imagenes/Fondorandom.jpg);
+    -fx-background-image: url(../Imagenes/Fondoreal.png);
+}
+.button{
+    -fx-background-color: rgba(265,256,256,0.1);
+}
+
+.button:hover{
+    -fx-background-color: rgba(265,256,256,0.7);
 }
