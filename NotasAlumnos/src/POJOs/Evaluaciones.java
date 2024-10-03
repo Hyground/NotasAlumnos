@@ -1,5 +1,5 @@
 package POJOs;
-// Generated 30-sep-2024 21:55:42 by Hibernate Tools 4.3.1
+// Generated 02-oct-2024 21:21:47 by Hibernate Tools 4.3.1
 
 
 import java.math.BigDecimal;
@@ -16,6 +16,7 @@ public class Evaluaciones  implements java.io.Serializable {
      private Bimestres bimestres;
      private Cursos cursos;
      private Grados grados;
+     private Secciones secciones;
      private String nombreEvaluacion;
      private String tipo;
      private BigDecimal ponderacion;
@@ -25,18 +26,20 @@ public class Evaluaciones  implements java.io.Serializable {
     }
 
 	
-    public Evaluaciones(Bimestres bimestres, Cursos cursos, Grados grados, String nombreEvaluacion, String tipo, BigDecimal ponderacion) {
+    public Evaluaciones(Bimestres bimestres, Cursos cursos, Grados grados, Secciones secciones, String nombreEvaluacion, String tipo, BigDecimal ponderacion) {
         this.bimestres = bimestres;
         this.cursos = cursos;
         this.grados = grados;
+        this.secciones = secciones;
         this.nombreEvaluacion = nombreEvaluacion;
         this.tipo = tipo;
         this.ponderacion = ponderacion;
     }
-    public Evaluaciones(Bimestres bimestres, Cursos cursos, Grados grados, String nombreEvaluacion, String tipo, BigDecimal ponderacion, Set<Notas> notases) {
+    public Evaluaciones(Bimestres bimestres, Cursos cursos, Grados grados, Secciones secciones, String nombreEvaluacion, String tipo, BigDecimal ponderacion, Set<Notas> notases) {
        this.bimestres = bimestres;
        this.cursos = cursos;
        this.grados = grados;
+       this.secciones = secciones;
        this.nombreEvaluacion = nombreEvaluacion;
        this.tipo = tipo;
        this.ponderacion = ponderacion;
@@ -70,6 +73,13 @@ public class Evaluaciones  implements java.io.Serializable {
     
     public void setGrados(Grados grados) {
         this.grados = grados;
+    }
+    public Secciones getSecciones() {
+        return this.secciones;
+    }
+    
+    public void setSecciones(Secciones secciones) {
+        this.secciones = secciones;
     }
     public String getNombreEvaluacion() {
         return this.nombreEvaluacion;

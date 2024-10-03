@@ -4,6 +4,7 @@ import POJOs.Evaluaciones;
 import POJOs.Bimestres;
 import POJOs.Cursos;
 import POJOs.Grados;
+import POJOs.Secciones;
 import java.math.BigDecimal;
 import java.util.List;
 import org.hibernate.Criteria;
@@ -30,12 +31,12 @@ public class CEvaluaciones {
         return lista;
     }
 
-    // Método para crear una nueva evaluación
-    public static boolean crearEvaluacion(int bimestreId, int cursoId, int gradoId, String nombreEvaluacion, String tipo, BigDecimal ponderacion) {
+    // Método para crear una nueva evaluación con idSeccion
+    public static boolean crearEvaluacion(int bimestreId, int cursoId, int gradoId, int seccionId, String nombreEvaluacion, String tipo, BigDecimal ponderacion) {
         boolean flag = false;
         Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = null;
-        
+
         try {
             transaction = session.beginTransaction();
 
@@ -57,11 +58,18 @@ public class CEvaluaciones {
                 throw new RuntimeException("El grado con ID " + gradoId + " no existe.");
             }
 
+            // Obtener la sección al que pertenece la evaluación
+            Secciones seccion = (Secciones) session.get(Secciones.class, seccionId);
+            if (seccion == null) {
+                throw new RuntimeException("La sección con ID " + seccionId + " no existe.");
+            }
+
             // Crear la nueva evaluación
             Evaluaciones nuevaEvaluacion = new Evaluaciones();
             nuevaEvaluacion.setBimestres(bimestre);
             nuevaEvaluacion.setCursos(curso);
             nuevaEvaluacion.setGrados(grado);
+            nuevaEvaluacion.setSecciones(seccion);
             nuevaEvaluacion.setNombreEvaluacion(nombreEvaluacion);
             nuevaEvaluacion.setTipo(tipo);
             nuevaEvaluacion.setPonderacion(ponderacion);
@@ -82,8 +90,8 @@ public class CEvaluaciones {
         return flag;
     }
 
-    // Método para actualizar una evaluación existente
-    public static boolean actualizarEvaluacion(int evaluacionId, int nuevoBimestreId, int nuevoCursoId, int nuevoGradoId, String nuevoNombreEvaluacion, String nuevoTipo, BigDecimal nuevaPonderacion) {
+    // Método para actualizar una evaluación existente con idSeccion
+    public static boolean actualizarEvaluacion(int evaluacionId, int nuevoBimestreId, int nuevoCursoId, int nuevoGradoId, int nuevoSeccionId, String nuevoNombreEvaluacion, String nuevoTipo, BigDecimal nuevaPonderacion) {
         boolean flag = false;
         Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = null;
@@ -116,10 +124,17 @@ public class CEvaluaciones {
                     throw new RuntimeException("El grado con ID " + nuevoGradoId + " no existe.");
                 }
 
-                // Asignar el nuevo bimestre, curso y grado
+                // Obtener la nueva sección
+                Secciones nuevaSeccion = (Secciones) session.get(Secciones.class, nuevoSeccionId);
+                if (nuevaSeccion == null) {
+                    throw new RuntimeException("La sección con ID " + nuevoSeccionId + " no existe.");
+                }
+
+                // Asignar el nuevo bimestre, curso, grado y sección
                 evaluacion.setBimestres(nuevoBimestre);
                 evaluacion.setCursos(nuevoCurso);
                 evaluacion.setGrados(nuevoGrado);
+                evaluacion.setSecciones(nuevaSeccion);
 
                 // Actualizar la evaluación
                 session.update(evaluacion);

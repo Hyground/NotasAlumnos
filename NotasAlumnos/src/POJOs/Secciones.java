@@ -1,5 +1,5 @@
 package POJOs;
-// Generated 30-sep-2024 21:55:42 by Hibernate Tools 4.3.1
+// Generated 02-oct-2024 21:21:47 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -13,6 +13,7 @@ public class Secciones  implements java.io.Serializable {
 
      private Integer seccionId;
      private String nombreSeccion;
+     private Set<Evaluaciones> evaluacioneses = new HashSet<Evaluaciones>(0);
      private Set<Docentes> docenteses = new HashSet<Docentes>(0);
      private Set<Estudiantes> estudianteses = new HashSet<Estudiantes>(0);
 
@@ -23,8 +24,9 @@ public class Secciones  implements java.io.Serializable {
     public Secciones(String nombreSeccion) {
         this.nombreSeccion = nombreSeccion;
     }
-    public Secciones(String nombreSeccion, Set<Docentes> docenteses, Set<Estudiantes> estudianteses) {
+    public Secciones(String nombreSeccion, Set<Evaluaciones> evaluacioneses, Set<Docentes> docenteses, Set<Estudiantes> estudianteses) {
        this.nombreSeccion = nombreSeccion;
+       this.evaluacioneses = evaluacioneses;
        this.docenteses = docenteses;
        this.estudianteses = estudianteses;
     }
@@ -42,6 +44,13 @@ public class Secciones  implements java.io.Serializable {
     
     public void setNombreSeccion(String nombreSeccion) {
         this.nombreSeccion = nombreSeccion;
+    }
+    public Set<Evaluaciones> getEvaluacioneses() {
+        return this.evaluacioneses;
+    }
+    
+    public void setEvaluacioneses(Set<Evaluaciones> evaluacioneses) {
+        this.evaluacioneses = evaluacioneses;
     }
     public Set<Docentes> getDocenteses() {
         return this.docenteses;

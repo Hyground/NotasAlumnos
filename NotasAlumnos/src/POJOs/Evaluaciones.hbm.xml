@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 30-sep-2024 21:55:43 by Hibernate Tools 4.3.1 -->
+<!-- Generated 02-oct-2024 21:21:47 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="POJOs.Evaluaciones" table="evaluaciones" catalog="eduscore" optimistic-lock="version">
         <id name="evaluacionId" type="java.lang.Integer">
@@ -16,6 +16,9 @@
         </many-to-one>
         <many-to-one name="grados" class="POJOs.Grados" fetch="select">
             <column name="GradoID" not-null="true" />
+        </many-to-one>
+        <many-to-one name="secciones" class="POJOs.Secciones" fetch="select">
+            <column name="SeccionID" not-null="true" />
         </many-to-one>
         <property name="nombreEvaluacion" type="string">
             <column name="NombreEvaluacion" length="100" not-null="true" />

@@ -13,7 +13,7 @@ public class Main {
     public static void main(String[] args) {
         
        // este comentario se ejecuta una vez es un metodo para iniciar todo 
-        //CRUDs.InicializadorDeDatos.IniciarTodo();
+        CRUDs.InicializadorDeDatos.IniciarTodo();
         
         /// esto se ejecuta una vez, 
     }
