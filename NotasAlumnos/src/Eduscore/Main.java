@@ -13,9 +13,12 @@ public class Main {
     public static void main(String[] args) {
         
        // este comentario se ejecuta una vez es un metodo para iniciar todo 
-        CRUDs.InicializadorDeDatos.IniciarTodo();
+       // CRUDs.InicializadorDeDatos.IniciarTodo();
         
         /// esto se ejecuta una vez, 
+        
+        //System.out.println("Crear Docente" + CRUDs.CDocentes.crearDocente("Admin", "admin", "Docente", 1, 1));
+        System.out.println(""+ CRUDs.CLogin.CLogin("Admin", "admin"));
     }
     
 }
