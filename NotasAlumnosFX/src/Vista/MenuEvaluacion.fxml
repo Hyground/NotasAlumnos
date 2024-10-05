@@ -7,7 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="Controlador.MenuEvaluacionController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.MenuEvaluacionController">
     <stylesheets>
         <URL value="@menuevaluacion.css" />
     </stylesheets>
@@ -18,10 +18,10 @@
       <Label layoutX="94.0" layoutY="108.0" text="Bimestre:" />
       <Label layoutX="115.0" layoutY="144.0" text="Tipo:" />
       <Label layoutX="76.0" layoutY="178.0" text="Ponderación:" />
-      <TextField layoutX="152.0" layoutY="38.0" />
-      <TextField layoutX="152.0" layoutY="174.0" />
-      <ComboBox layoutX="152.0" layoutY="69.0" prefWidth="150.0" />
-      <ComboBox layoutX="152.0" layoutY="104.0" prefWidth="150.0" />
-      <ComboBox layoutX="152.0" layoutY="140.0" prefWidth="150.0" />
+      <TextField fx:id="txtNombreActividad" layoutX="152.0" layoutY="38.0" />
+      <TextField fx:id="txtPonderacion" layoutX="152.0" layoutY="174.0" />
+      <ComboBox fx:id="txtCurso" layoutX="152.0" layoutY="69.0" prefWidth="150.0" />
+      <ComboBox fx:id="txtBimestre" layoutX="152.0" layoutY="104.0" prefWidth="150.0" />
+      <ComboBox fx:id="txtTipo" layoutX="152.0" layoutY="140.0" prefWidth="150.0" />
    </children>
 </AnchorPane>

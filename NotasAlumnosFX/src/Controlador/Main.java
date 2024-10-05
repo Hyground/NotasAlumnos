@@ -21,7 +21,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         try{
-            Parent root=FXMLLoader.load(getClass().getResource("/Vista/login.fxml"));
+            Parent root=FXMLLoader.load(getClass().getResource("/Vista/MenuEvaluacion.fxml"));
             primaryStage.setTitle("Persona");
             primaryStage.setScene(new Scene(root));
             primaryStage.show();
