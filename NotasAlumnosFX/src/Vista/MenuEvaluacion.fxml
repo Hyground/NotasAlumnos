@@ -18,10 +18,10 @@
       <Label layoutX="94.0" layoutY="108.0" text="Bimestre:" />
       <Label layoutX="115.0" layoutY="144.0" text="Tipo:" />
       <Label layoutX="76.0" layoutY="178.0" text="Ponderación:" />
-      <TextField fx:id="txtNombreActividad" layoutX="152.0" layoutY="38.0" />
-      <TextField fx:id="txtPonderacion" layoutX="152.0" layoutY="174.0" />
-      <ComboBox fx:id="txtCurso" layoutX="152.0" layoutY="69.0" prefWidth="150.0" />
-      <ComboBox fx:id="txtBimestre" layoutX="152.0" layoutY="104.0" prefWidth="150.0" />
-      <ComboBox fx:id="txtTipo" layoutX="152.0" layoutY="140.0" prefWidth="150.0" />
+      <TextField fx:id="txtNombreActividad" layoutX="177.0" layoutY="37.0" />
+      <TextField fx:id="txtPonderacion" layoutX="177.0" layoutY="173.0" />
+      <ComboBox fx:id="txtCurso" layoutX="177.0" layoutY="71.0" prefWidth="150.0" />
+      <ComboBox fx:id="txtBimestre" layoutX="177.0" layoutY="105.0" prefWidth="150.0" />
+      <ComboBox fx:id="txtTipo" layoutX="177.0" layoutY="139.0" prefWidth="150.0" />
    </children>
 </AnchorPane>
