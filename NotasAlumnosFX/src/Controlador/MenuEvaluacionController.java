@@ -16,6 +16,8 @@ import java.math.BigDecimal;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
+import javafx.scene.control.Button;
 
 public class MenuEvaluacionController implements Initializable {
 
@@ -33,6 +35,8 @@ public class MenuEvaluacionController implements Initializable {
     private ObservableList<Cursos> listaCursos;
     private ObservableList<Bimestres> listaBimestres;
     private ObservableList<String> listaTipos;
+    @FXML
+    private Button btnGuardar;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -91,4 +95,8 @@ public class MenuEvaluacionController implements Initializable {
         }
     }
     */
+
+    @FXML
+    private void Crear(ActionEvent event) {
+    }
 }
