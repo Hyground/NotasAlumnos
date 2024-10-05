@@ -59,7 +59,10 @@ public class Cursos  implements java.io.Serializable {
         this.evaluacioneses = evaluacioneses;
     }
 
-
+   @Override
+    public String toString() {
+        return this.nombreCurso;  // Muestra el nombre del curso en el ComboBox
+    }
 
 
 }

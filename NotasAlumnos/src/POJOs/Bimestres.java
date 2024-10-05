@@ -48,6 +48,11 @@ public class Bimestres  implements java.io.Serializable {
     public void setEvaluacioneses(Set<Evaluaciones> evaluacioneses) {
         this.evaluacioneses = evaluacioneses;
     }
+    
+       @Override
+    public String toString() {
+        return this.nombreBimestre;  // Muestra el nombre del bimestre en el ComboBox
+    }
 
 
 
