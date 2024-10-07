@@ -1,5 +1,5 @@
 package POJOs;
-// Generated 02-oct-2024 21:21:47 by Hibernate Tools 4.3.1
+// Generated 06-oct-2024 21:01:00 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -47,11 +47,6 @@ public class Bimestres  implements java.io.Serializable {
     
     public void setEvaluacioneses(Set<Evaluaciones> evaluacioneses) {
         this.evaluacioneses = evaluacioneses;
-    }
-    
-       @Override
-    public String toString() {
-        return this.nombreBimestre;  // Muestra el nombre del bimestre en el ComboBox
     }
 
 

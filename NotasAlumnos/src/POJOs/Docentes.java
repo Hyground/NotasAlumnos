@@ -1,5 +1,5 @@
 package POJOs;
-// Generated 02-oct-2024 21:21:47 by Hibernate Tools 4.3.1
+// Generated 06-oct-2024 21:01:00 by Hibernate Tools 4.3.1
 
 
 
@@ -12,6 +12,8 @@ public class Docentes  implements java.io.Serializable {
      private Integer usuarioId;
      private Grados grados;
      private Secciones secciones;
+     private String nombreCompleto;
+     private String cui;
      private String nombreUsuario;
      private String contrasenia;
      private String rol;
@@ -20,9 +22,11 @@ public class Docentes  implements java.io.Serializable {
     public Docentes() {
     }
 
-    public Docentes(Grados grados, Secciones secciones, String nombreUsuario, String contrasenia, String rol, boolean borradoLogico) {
+    public Docentes(Grados grados, Secciones secciones, String nombreCompleto, String cui, String nombreUsuario, String contrasenia, String rol, boolean borradoLogico) {
        this.grados = grados;
        this.secciones = secciones;
+       this.nombreCompleto = nombreCompleto;
+       this.cui = cui;
        this.nombreUsuario = nombreUsuario;
        this.contrasenia = contrasenia;
        this.rol = rol;
@@ -49,6 +53,20 @@ public class Docentes  implements java.io.Serializable {
     
     public void setSecciones(Secciones secciones) {
         this.secciones = secciones;
+    }
+    public String getNombreCompleto() {
+        return this.nombreCompleto;
+    }
+    
+    public void setNombreCompleto(String nombreCompleto) {
+        this.nombreCompleto = nombreCompleto;
+    }
+    public String getCui() {
+        return this.cui;
+    }
+    
+    public void setCui(String cui) {
+        this.cui = cui;
     }
     public String getNombreUsuario() {
         return this.nombreUsuario;
