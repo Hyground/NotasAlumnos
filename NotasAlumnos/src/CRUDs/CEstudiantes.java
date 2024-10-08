@@ -7,61 +7,69 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 public class CEstudiantes {
 
     // Método para listar todos los estudiantes activos (borradoLogico = true)
-    public static List<Estudiantes> listarEstudiantes() {
-        Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
+    public static List<Estudiantes> ListarEstudiante() {
+        Session session = HibernateUtil.HibernateUtil.getSessionFactory().getCurrentSession();
         List<Estudiantes> lista = null;
         try {
             session.beginTransaction();
             Criteria criteria = session.createCriteria(Estudiantes.class);
+            criteria.createAlias("grados", "g"); // Relacionar con Grados
+            criteria.createAlias("secciones", "s"); // Relacionar con Secciones
             criteria.add(Restrictions.eq("borradoLogico", true));  // Solo listar estudiantes activos
+            criteria.setProjection(Projections.projectionList()
+                    .add(Projections.property("cui"))
+                    .add(Projections.property("codigoPersonal"))
+                    .add(Projections.property("nombre"))
+                    .add(Projections.property("apellido"))
+                    .add(Projections.property("g.nombreGrado"))  // Alias para nombre del grado
+                    .add(Projections.property("s.nombreSeccion")) // Alias para nombre de la sección
+            );
+            criteria.addOrder(Order.desc("cui"));
             lista = criteria.list();
         } catch (Exception e) {
             System.out.println("Error: " + e);
         } finally {
             session.getTransaction().commit();
-            session.close();
         }
         return lista;
     }
 
     // Método para crear un nuevo estudiante
-    public static boolean crearEstudiante(String cui, String codigoPersonal, String nombre, String apellido, int gradoId, int seccionId) {
+    public static boolean crearEstudiante(String cui, String codigoPersonal, String nombre, String apellido, Integer gradoId, Integer seccionId) {
         boolean flag = false;
         Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = null;
-        
+
         try {
             transaction = session.beginTransaction();
 
-            // Obtener el grado al que pertenece el estudiante
-            Grados grado = (Grados) session.get(Grados.class, gradoId);
-            if (grado == null) {
-                throw new RuntimeException("El grado con ID " + gradoId + " no existe.");
-            }
+            // Crear el estudiante
+            Estudiantes insert = new Estudiantes();
+            insert.setCui(cui);
+            insert.setCodigoPersonal(codigoPersonal);
+            insert.setNombre(nombre);
+            insert.setApellido(apellido);
 
-            // Obtener la sección a la que pertenece el estudiante
-            Secciones seccion = (Secciones) session.get(Secciones.class, seccionId);
-            if (seccion == null) {
-                throw new RuntimeException("La sección con ID " + seccionId + " no existe.");
-            }
+            // Asignar el grado y la sección sin verificar su existencia
+            Grados grados = new Grados();
+            grados.setGradoId(gradoId);
+            insert.setGrados(grados);  // Asignación directa
+            Secciones secciones = new Secciones();
+            secciones.setSeccionId(seccionId);
+            insert.setSecciones(secciones);  // Asignación directa
 
-            // Crear el nuevo estudiante
-            Estudiantes nuevoEstudiante = new Estudiantes();
-            nuevoEstudiante.setCui(cui);
-            nuevoEstudiante.setCodigoPersonal(codigoPersonal);
-            nuevoEstudiante.setNombre(nombre);
-            nuevoEstudiante.setApellido(apellido);
-            nuevoEstudiante.setGrados(grado);
-            nuevoEstudiante.setSecciones(seccion);
-            nuevoEstudiante.setBorradoLogico(true);  // El estudiante está activo por defecto
+            // Estudiante activo por defecto
+            insert.setBorradoLogico(true);
 
             // Guardar el nuevo estudiante
-            session.save(nuevoEstudiante);
+            session.save(insert);
             flag = true;
 
             transaction.commit();
@@ -77,39 +85,32 @@ public class CEstudiantes {
     }
 
     // Método para actualizar un estudiante existente
-    public static boolean actualizarEstudiante(String cui, String nuevoCodigoPersonal, String nuevoNombre, String nuevoApellido, int nuevoGradoId, int nuevaSeccionId) {
+    public static boolean actualizarEstudiante(String cui, String nuevoCodigoPersonal, String nuevoNombre, String nuevoApellido, Integer nuevoGradoId, Integer nuevaSeccionId) {
         boolean flag = false;
         Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
+        Criteria criteria = session.createCriteria(Estudiantes.class);
+        criteria.add(Restrictions.eq("cui", cui));  // Buscar el estudiante por CUI
+        Estudiantes actualizar = (Estudiantes) criteria.uniqueResult();
         Transaction transaction = null;
 
         try {
             transaction = session.beginTransaction();
 
-            // Obtener el estudiante existente
-            Estudiantes estudiante = (Estudiantes) session.get(Estudiantes.class, cui);
-            if (estudiante != null) {
-                estudiante.setCodigoPersonal(nuevoCodigoPersonal);
-                estudiante.setNombre(nuevoNombre);
-                estudiante.setApellido(nuevoApellido);
+            if (actualizar != null) {  // Si el estudiante existe, actualizarlo
+                actualizar.setCodigoPersonal(nuevoCodigoPersonal);
+                actualizar.setNombre(nuevoNombre);
+                actualizar.setApellido(nuevoApellido);
 
-                // Obtener el nuevo grado
-                Grados nuevoGrado = (Grados) session.get(Grados.class, nuevoGradoId);
-                if (nuevoGrado == null) {
-                    throw new RuntimeException("El grado con ID " + nuevoGradoId + " no existe.");
-                }
-
-                // Obtener la nueva sección
-                Secciones nuevaSeccion = (Secciones) session.get(Secciones.class, nuevaSeccionId);
-                if (nuevaSeccion == null) {
-                    throw new RuntimeException("La sección con ID " + nuevaSeccionId + " no existe.");
-                }
-
-                // Asignar el nuevo grado y la nueva sección
-                estudiante.setGrados(nuevoGrado);
-                estudiante.setSecciones(nuevaSeccion);
+                // Asignar el grado y la sección sin verificar su existencia
+                Grados grados = new Grados();
+                grados.setGradoId(nuevoGradoId);
+                actualizar.setGrados(grados);  // Asignación directa
+                Secciones secciones = new Secciones();
+                secciones.setSeccionId(nuevaSeccionId);
+                actualizar.setSecciones(secciones);  // Asignación directa
 
                 // Actualizar el estudiante
-                session.update(estudiante);
+                session.update(actualizar);
                 flag = true;
             } else {
                 System.out.println("No se encontró el estudiante con CUI " + cui);
@@ -131,16 +132,17 @@ public class CEstudiantes {
     public static boolean eliminarEstudiante(String cui) {
         boolean flag = false;
         Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
+        Criteria criteria = session.createCriteria(Estudiantes.class);
+        criteria.add(Restrictions.eq("cui", cui));  // Buscar el estudiante por CUI
+        Estudiantes anular = (Estudiantes) criteria.uniqueResult();
         Transaction transaction = null;
 
         try {
             transaction = session.beginTransaction();
 
-            // Obtener el estudiante existente
-            Estudiantes estudiante = (Estudiantes) session.get(Estudiantes.class, cui);
-            if (estudiante != null) {
-                estudiante.setBorradoLogico(false);  // Borrado lógico
-                session.update(estudiante);
+            if (anular != null) {  // Si el estudiante existe, aplicar borrado lógico
+                anular.setBorradoLogico(false);
+                session.update(anular);
                 flag = true;
             } else {
                 System.out.println("No se encontró el estudiante con CUI " + cui);
@@ -162,15 +164,16 @@ public class CEstudiantes {
     public static boolean reactivarEstudiante(String cui) {
         boolean flag = false;
         Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
+        Criteria criteria = session.createCriteria(Estudiantes.class);
+        criteria.add(Restrictions.eq("cui", cui));  // Buscar el estudiante por CUI
+        Estudiantes estudiante = (Estudiantes) criteria.uniqueResult();
         Transaction transaction = null;
 
         try {
             transaction = session.beginTransaction();
 
-            // Obtener el estudiante existente
-            Estudiantes estudiante = (Estudiantes) session.get(Estudiantes.class, cui);
-            if (estudiante != null && !estudiante.isBorradoLogico()) {
-                estudiante.setBorradoLogico(true);  // Reactivar el estudiante
+            if (estudiante != null && !estudiante.isBorradoLogico()) {  // Reactivar solo si está inactivo
+                estudiante.setBorradoLogico(true);
                 session.update(estudiante);
                 flag = true;
             } else if (estudiante == null) {

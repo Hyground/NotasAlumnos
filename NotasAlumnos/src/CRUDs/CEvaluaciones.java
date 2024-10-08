@@ -1,8 +1,8 @@
 package CRUDs;
 
-import POJOs.Evaluaciones;
 import POJOs.Bimestres;
 import POJOs.Cursos;
+import POJOs.Evaluaciones;
 import POJOs.Grados;
 import POJOs.Secciones;
 import java.math.BigDecimal;
@@ -10,28 +10,44 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 public class CEvaluaciones {
 
     // Método para listar todas las evaluaciones
-    public static List<Evaluaciones> listarEvaluaciones() {
-        Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
+    public static List<Evaluaciones> universo() {
+        Session session = HibernateUtil.HibernateUtil.getSessionFactory().getCurrentSession();
         List<Evaluaciones> lista = null;
         try {
             session.beginTransaction();
             Criteria criteria = session.createCriteria(Evaluaciones.class);
+            criteria.createAlias("bimestres", "b");
+            criteria.createAlias("cursos", "c");
+            criteria.createAlias("grados", "g");
+            criteria.createAlias("secciones", "s");
+            criteria.setProjection(Projections.projectionList()
+                    .add(Projections.property("evaluacionId"))
+                    .add(Projections.property("nombreEvaluacion"))
+                    .add(Projections.property("tipo"))
+                    .add(Projections.property("ponderacion"))
+                    .add(Projections.property("b.nombreBimestre")) // Alias para el bimestre
+                    .add(Projections.property("c.nombreCurso")) // Alias para el curso
+                    .add(Projections.property("g.nombreGrado")) // Alias para el grado
+                    .add(Projections.property("s.nombreSeccion")) // Alias para la sección
+            );
+            criteria.addOrder(Order.desc("evaluacionId"));
             lista = criteria.list();
         } catch (Exception e) {
             System.out.println("Error: " + e);
         } finally {
             session.getTransaction().commit();
-            session.close();
         }
         return lista;
     }
 
-    // Método para crear una nueva evaluación con idSeccion
+    // Método para crear una nueva evaluación sin verificar las relaciones
     public static boolean crearEvaluacion(int bimestreId, int cursoId, int gradoId, int seccionId, String nombreEvaluacion, String tipo, BigDecimal ponderacion) {
         boolean flag = false;
         Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
@@ -40,42 +56,31 @@ public class CEvaluaciones {
         try {
             transaction = session.beginTransaction();
 
-            // Obtener el bimestre al que pertenece la evaluación
-            Bimestres bimestre = (Bimestres) session.get(Bimestres.class, bimestreId);
-            if (bimestre == null) {
-                throw new RuntimeException("El bimestre con ID " + bimestreId + " no existe.");
-            }
-
-            // Obtener el curso al que pertenece la evaluación
-            Cursos curso = (Cursos) session.get(Cursos.class, cursoId);
-            if (curso == null) {
-                throw new RuntimeException("El curso con ID " + cursoId + " no existe.");
-            }
-
-            // Obtener el grado al que pertenece la evaluación
-            Grados grado = (Grados) session.get(Grados.class, gradoId);
-            if (grado == null) {
-                throw new RuntimeException("El grado con ID " + gradoId + " no existe.");
-            }
-
-            // Obtener la sección al que pertenece la evaluación
-            Secciones seccion = (Secciones) session.get(Secciones.class, seccionId);
-            if (seccion == null) {
-                throw new RuntimeException("La sección con ID " + seccionId + " no existe.");
-            }
-
-            // Crear la nueva evaluación
-            Evaluaciones nuevaEvaluacion = new Evaluaciones();
-            nuevaEvaluacion.setBimestres(bimestre);
-            nuevaEvaluacion.setCursos(curso);
-            nuevaEvaluacion.setGrados(grado);
-            nuevaEvaluacion.setSecciones(seccion);
-            nuevaEvaluacion.setNombreEvaluacion(nombreEvaluacion);
-            nuevaEvaluacion.setTipo(tipo);
-            nuevaEvaluacion.setPonderacion(ponderacion);
+            // Crear la nueva evaluación y asignar las relaciones directamente por ID
+            Evaluaciones insert = new Evaluaciones();
+            
+            Bimestres bimestres = new Bimestres();
+            bimestres.setBimestreId(bimestreId);
+            insert.setBimestres(bimestres); // Asignación directa
+            
+            Cursos cursos = new Cursos();
+            cursos.setCursoId(cursoId);
+            insert.setCursos(cursos); // Asignación directa
+            
+            Grados grados = new Grados();
+            grados.setGradoId(gradoId);
+            insert.setGrados(grados); // Asignación directa
+            
+            Secciones secciones = new Secciones();
+            secciones.setSeccionId(seccionId);
+            insert.setSecciones(secciones); // Asignación directa
+            
+            insert.setNombreEvaluacion(nombreEvaluacion);
+            insert.setTipo(tipo);
+            insert.setPonderacion(ponderacion);
 
             // Guardar la evaluación
-            session.save(nuevaEvaluacion);
+            session.save(insert);
             flag = true;
 
             transaction.commit();
@@ -90,84 +95,42 @@ public class CEvaluaciones {
         return flag;
     }
 
-    // Método para actualizar una evaluación existente con idSeccion
-    public static boolean actualizarEvaluacion(int evaluacionId, int nuevoBimestreId, int nuevoCursoId, int nuevoGradoId, int nuevoSeccionId, String nuevoNombreEvaluacion, String nuevoTipo, BigDecimal nuevaPonderacion) {
+    // Método para actualizar una evaluación existente sin verificar las relaciones
+    public static boolean actualizarEvaluacion(Integer evaluacionId, Integer bimestreId, Integer cursoId, Integer gradoId, Integer seccionId, String nombreEvaluacion, String tipo, BigDecimal ponderacion) {
         boolean flag = false;
         Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
+        Criteria criteria = session.createCriteria(Evaluaciones.class);
+        criteria.add(Restrictions.eq("evaluacionId", evaluacionId)); 
+        Evaluaciones actualizar = (Evaluaciones) criteria.uniqueResult();
         Transaction transaction = null;
 
         try {
             transaction = session.beginTransaction();
 
-            // Obtener la evaluación existente
-            Evaluaciones evaluacion = (Evaluaciones) session.get(Evaluaciones.class, evaluacionId);
-            if (evaluacion != null) {
-                evaluacion.setNombreEvaluacion(nuevoNombreEvaluacion);
-                evaluacion.setTipo(nuevoTipo);
-                evaluacion.setPonderacion(nuevaPonderacion);
-
-                // Obtener el nuevo bimestre
-                Bimestres nuevoBimestre = (Bimestres) session.get(Bimestres.class, nuevoBimestreId);
-                if (nuevoBimestre == null) {
-                    throw new RuntimeException("El bimestre con ID " + nuevoBimestreId + " no existe.");
-                }
-
-                // Obtener el nuevo curso
-                Cursos nuevoCurso = (Cursos) session.get(Cursos.class, nuevoCursoId);
-                if (nuevoCurso == null) {
-                    throw new RuntimeException("El curso con ID " + nuevoCursoId + " no existe.");
-                }
-
-                // Obtener el nuevo grado
-                Grados nuevoGrado = (Grados) session.get(Grados.class, nuevoGradoId);
-                if (nuevoGrado == null) {
-                    throw new RuntimeException("El grado con ID " + nuevoGradoId + " no existe.");
-                }
-
-                // Obtener la nueva sección
-                Secciones nuevaSeccion = (Secciones) session.get(Secciones.class, nuevoSeccionId);
-                if (nuevaSeccion == null) {
-                    throw new RuntimeException("La sección con ID " + nuevoSeccionId + " no existe.");
-                }
-
-                // Asignar el nuevo bimestre, curso, grado y sección
-                evaluacion.setBimestres(nuevoBimestre);
-                evaluacion.setCursos(nuevoCurso);
-                evaluacion.setGrados(nuevoGrado);
-                evaluacion.setSecciones(nuevaSeccion);
+            if (actualizar != null) {
+                // Asignar las relaciones directamente por ID
+                Bimestres bimestres = new Bimestres();
+                bimestres.setBimestreId(bimestreId);
+                actualizar.setBimestres(bimestres); // Asignación directa
+                
+                Cursos cursos = new Cursos();
+                cursos.setCursoId(cursoId);
+                actualizar.setCursos(cursos); // Asignación directa
+                
+                Grados grados = new Grados();
+                grados.setGradoId(gradoId);
+                actualizar.setGrados(grados); // Asignación directa
+                
+                Secciones secciones = new Secciones();
+                secciones.setSeccionId(seccionId);
+                actualizar.setSecciones(secciones); // Asignación directa
+                
+                actualizar.setNombreEvaluacion(nombreEvaluacion);
+                actualizar.setTipo(tipo);
+                actualizar.setPonderacion(ponderacion);
 
                 // Actualizar la evaluación
-                session.update(evaluacion);
-                flag = true;
-            } else {
-                System.out.println("No se encontró la evaluación con ID " + evaluacionId);
-            }
-
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
-        return flag;
-    }
-
-    // Método para eliminar una evaluación
-    public static boolean eliminarEvaluacion(int evaluacionId) {
-        boolean flag = false;
-        Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
-        Transaction transaction = null;
-
-        try {
-            transaction = session.beginTransaction();
-
-            // Obtener la evaluación existente
-            Evaluaciones evaluacion = (Evaluaciones) session.get(Evaluaciones.class, evaluacionId);
-            if (evaluacion != null) {
-                session.delete(evaluacion);  // Eliminar la evaluación
+                session.update(actualizar);
                 flag = true;
             } else {
                 System.out.println("No se encontró la evaluación con ID " + evaluacionId);

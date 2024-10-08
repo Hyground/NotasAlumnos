@@ -8,29 +8,38 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 
 public class CNotas {
 
     // Método para listar todas las notas
     public static List<Notas> listarNotas() {
-        Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
+        Session session = HibernateUtil.HibernateUtil.getSessionFactory().getCurrentSession();
         List<Notas> lista = null;
         try {
             session.beginTransaction();
             Criteria criteria = session.createCriteria(Notas.class);
+            criteria.createAlias("estudiantes", "e"); // Relacionar con Estudiantes
+            criteria.createAlias("evaluaciones", "ev"); // Relacionar con Evaluaciones
+            criteria.setProjection(Projections.projectionList()
+                    .add(Projections.property("notaId"))
+                    .add(Projections.property("nota"))
+                    .add(Projections.property("e.nombre")) // Alias para el nombre del estudiante
+                    .add(Projections.property("ev.nombreEvaluacion")) // Alias para el nombre de la evaluación
+            );
+            criteria.addOrder(Order.desc("notaId"));
             lista = criteria.list();
         } catch (Exception e) {
             System.out.println("Error: " + e);
         } finally {
             session.getTransaction().commit();
-            session.close();
         }
         return lista;
     }
 
     // Método para crear una nueva nota
-    public static boolean crearNota(int CUI, int evaluacionId, BigDecimal nota) {
+    public static boolean crearNota(String cui, Integer evaluacionId, BigDecimal nota) {
         boolean flag = false;
         Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = null;
@@ -38,22 +47,17 @@ public class CNotas {
         try {
             transaction = session.beginTransaction();
 
-            // Obtener el estudiante por su CUI
-            Estudiantes estudiante = (Estudiantes) session.get(Estudiantes.class, CUI);
-            if (estudiante == null) {
-                throw new RuntimeException("El estudiante con CUI " + CUI + " no existe.");
-            }
-
-            // Obtener la evaluación por su ID
-            Evaluaciones evaluacion = (Evaluaciones) session.get(Evaluaciones.class, evaluacionId);
-            if (evaluacion == null) {
-                throw new RuntimeException("La evaluación con ID " + evaluacionId + " no existe.");
-            }
-
-            // Crear la nueva nota
+            // Crear la nueva nota y asignar las relaciones directamente por ID
             Notas nuevaNota = new Notas();
+
+            Estudiantes estudiante = new Estudiantes();
+            estudiante.setCui(cui);  // Asignación directa del CUI
             nuevaNota.setEstudiantes(estudiante);
+
+            Evaluaciones evaluacion = new Evaluaciones();
+            evaluacion.setEvaluacionId(evaluacionId);  // Asignación directa del evaluacionId
             nuevaNota.setEvaluaciones(evaluacion);
+
             nuevaNota.setNota(nota);
 
             // Guardar la nota en la base de datos
@@ -73,7 +77,7 @@ public class CNotas {
     }
 
     // Método para actualizar una nota existente
-    public static boolean actualizarNota(int notaId, BigDecimal nuevaNota) {
+    public static boolean actualizarNota(Integer notaId, BigDecimal nuevaNota) {
         boolean flag = false;
         Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = null;
@@ -89,8 +93,6 @@ public class CNotas {
                 // Actualizar la nota en la base de datos
                 session.update(nota);
                 flag = true;
-            } else {
-                System.out.println("No se encontró la nota con ID " + notaId);
             }
 
             transaction.commit();
@@ -105,8 +107,8 @@ public class CNotas {
         return flag;
     }
 
-    // Método para eliminar una nota
-    public static boolean eliminarNota(int notaId) {
+    /* Método para eliminar una nota
+    public static boolean eliminarNota(Integer notaId) {
         boolean flag = false;
         Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = null;
@@ -119,8 +121,6 @@ public class CNotas {
             if (nota != null) {
                 session.delete(nota);  // Eliminar la nota
                 flag = true;
-            } else {
-                System.out.println("No se encontró la nota con ID " + notaId);
             }
 
             transaction.commit();
@@ -133,10 +133,10 @@ public class CNotas {
             session.close();
         }
         return flag;
-    }
+    }*/
 
     // Método para obtener una nota por su ID
-    public static Notas obtenerNotaPorId(int notaId) {
+    public static Notas obtenerNotaPorId(Integer notaId) {
         Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
         Notas nota = null;
         try {
