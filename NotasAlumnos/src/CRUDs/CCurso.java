@@ -6,23 +6,33 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 public class CCurso {
 
     // Método para listar todos los cursos
     public static List<Cursos> listarCursos() {
-        Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
-        List<Cursos> lista = null;
+        Session session=HibernateUtil.HibernateUtil.getSessionFactory().getCurrentSession();
+        List<Cursos> lista=null;
         try {
             session.beginTransaction();
-            Criteria criteria = session.createCriteria(Cursos.class);
-            lista = criteria.list();
+            Criteria criteria=session.createCriteria(Cursos.class);
+            criteria.createAlias("grados", "c");
+            criteria.setProjection(Projections.projectionList()
+                    .add(Projections.property("cursoId"))
+                    .add(Projections.property("c.grados"))
+                    .add(Projections.property("nombreCurso"))
+            );
+            criteria.addOrder(Order.desc("cursoId"));
+            lista =criteria.list();
+                    
         } catch (Exception e) {
-            System.out.println("Error: " + e);
-        } finally {
-            session.getTransaction().commit();
-            session.close();
+            System.out.println("error"+e);
+        } finally{
+        session.getTransaction().commit();
+        
         }
         return lista;
     }
@@ -151,80 +161,6 @@ public static boolean crearCursos() {
 }
 
 
-    // Método para actualizar un curso existente
-   /* 
-    public static boolean actualizarCurso(int cursoId, String nuevoNombreCurso, int nuevoGradoId) {
-        boolean flag = false;
-        Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
-        Transaction transaction = null;
-        
-        try {
-            transaction = session.beginTransaction();
-            
-            // Obtener el curso existente
-            Cursos curso = (Cursos) session.get(Cursos.class, cursoId);
-            if (curso != null) {
-                curso.setNombreCurso(nuevoNombreCurso);
-
-                // Obtener el nuevo grado
-                Grados nuevoGrado = (Grados) session.get(Grados.class, nuevoGradoId);
-                if (nuevoGrado == null) {
-                    throw new RuntimeException("El grado con ID " + nuevoGradoId + " no existe.");
-                }
-
-                // Asignar el nuevo grado al curso
-                curso.setGrados(nuevoGrado);
-                
-                // Actualizar el curso
-                session.update(curso);
-                flag = true;
-            } else {
-                System.out.println("No se encontró el curso con ID " + cursoId);
-            }
-
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
-        return flag;
-    }
-
-    // Método para eliminar un curso
-    public static boolean eliminarCurso(int cursoId) {
-        boolean flag = false;
-        Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
-        Transaction transaction = null;
-        
-        try {
-            transaction = session.beginTransaction();
-            
-            // Obtener el curso existente
-            Cursos curso = (Cursos) session.get(Cursos.class, cursoId);
-            if (curso != null) {
-                session.delete(curso);  // Eliminar el curso
-                flag = true;
-            } else {
-                System.out.println("No se encontró el curso con ID " + cursoId);
-            }
-
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
-        return flag;
-    }
-*/
-    // Método para obtener un curso por su ID
     public static Cursos obtenerCursoPorId(int cursoId) {
         Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
         Cursos curso = null;

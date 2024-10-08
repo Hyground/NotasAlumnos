@@ -30,50 +30,51 @@ public class CDocentes {
     }
 
     // Método para crear un nuevo docente
-    public static boolean crearDocente(String nombreUsuario, String contrasenia, String rol, int gradoId, int seccionId) {
-        boolean flag = false;
-        Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
-        Transaction transaction = null;
-        
-        try {
-            transaction = session.beginTransaction();
+   public static boolean crearDocente(String nombreCompleto, String cui, String nombreUsuario, String contrasenia, String rol, int gradoId, int seccionId) {
+    boolean flag = false;
+    Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
+               Criteria criteria=session.createCriteria(Docentes.class);
+            criteria.add(Restrictions.eq("nombreUsuario", nombreUsuario));
+            criteria.add(Restrictions.eq("estado", true));
+            Docentes insert = (Docentes)criteria.uniqueResult();
+            Transaction transaction = null;
 
-            // Obtener el grado al que pertenece el docente
-            Grados grado = (Grados) session.get(Grados.class, gradoId);
-            if (grado == null) {
-                throw new RuntimeException("El grado con ID " + gradoId + " no existe.");
-            }
+    try {
+        transaction = session.beginTransaction();
+       if (insert==null) {
+        // Crear el nuevo docente
+        insert = new Docentes();
+        insert.setNombreCompleto(nombreCompleto);
+        insert.setCui(cui);
+        insert.setNombreUsuario(nombreUsuario);
+        insert.setContrasenia(contrasenia);
+        insert.setRol(rol);
 
-            // Obtener la sección a la que pertenece el docente
-            Secciones seccion = (Secciones) session.get(Secciones.class, seccionId);
-            if (seccion == null) {
-                throw new RuntimeException("La sección con ID " + seccionId + " no existe.");
-            }
+        // Aquí es donde relaciono la entidad Grados
+        Grados grado = new Grados();
+        insert.setGrados(grado); // Relaciono el docente con el grado
 
-            // Crear el nuevo docente
-            Docentes nuevoDocente = new Docentes();
-            nuevoDocente.setNombreUsuario(nombreUsuario);
-            nuevoDocente.setContrasenia(contrasenia);
-            nuevoDocente.setRol(rol);
-            nuevoDocente.setGrados(grado);
-            nuevoDocente.setSecciones(seccion);
-            nuevoDocente.setBorradoLogico(true);  // El docente está activo por defecto
+        // Aquí es donde relaciono la entidad Secciones
+        Secciones seccion = new Secciones();
+        insert.setSecciones(seccion); // Relaciono el docente con la sección
 
-            // Guardar el nuevo docente
-            session.save(nuevoDocente);
-            flag = true;
+        // El docente está activo por defecto (borrado lógico = true)
+        insert.setBorradoLogico(true);
 
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
-        return flag;
+        // Guardar el nuevo docente
+        session.save(insert);
+        flag = true;
+                        }
+
+        transaction.commit();
+    } catch (Exception e) {
+            transaction.rollback();
+    } finally {
+        session.close();
     }
+    return flag;
+}
+
 
     // Método para actualizar un docente existente
     public static boolean actualizarDocente(int usuarioId, String nuevoNombreUsuario, String nuevaContrasenia, String nuevoRol, int nuevoGradoId, int nuevaSeccionId) {
