@@ -2,7 +2,6 @@ package Controlador;
 
 import CRUDs.CBimestres;
 import CRUDs.CCurso;
-import CRUDs.CEvaluaciones;
 import POJOs.Bimestres;
 import POJOs.Cursos;
 import javafx.collections.FXCollections;
@@ -12,7 +11,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
-import java.math.BigDecimal;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;

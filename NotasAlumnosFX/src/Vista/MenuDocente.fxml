@@ -12,6 +12,17 @@
         <URL value="@menudocente.css" />
     </stylesheets>
    <children>
-      <Label layoutX="230.0" layoutY="37.0" text="Menu Docente" />
+      <Label layoutX="132.0" layoutY="24.0" text="Que gusto Verte: " />
+      <Label fx:id="labelNomDocente" layoutX="234.0" layoutY="24.0" text="Nombre Docente " />
+      <Label layoutX="132.0" layoutY="54.0" text="Grado:" />
+      <Label fx:id="labelGrado" layoutX="189.0" layoutY="54.0" text="Primero" />
+      <Label layoutX="132.0" layoutY="79.0" text="Sección:" />
+      <Label fx:id="labelSeccion" layoutX="189.0" layoutY="79.0" text="A" />
+      <Button layoutX="66.0" layoutY="131.0" mnemonicParsing="false" onAction="#btnInscripcion" text="Inscribir Estudiantes" />
+      <Button layoutX="220.0" layoutY="131.0" mnemonicParsing="false" onAction="#btnRegistoActividades" text="Registar Actividades" />
+      <Button layoutX="66.0" layoutY="226.0" mnemonicParsing="false" onAction="#btnRegistrarNotas" text="Registrar Notas" />
+      <Button layoutX="225.0" layoutY="226.0" mnemonicParsing="false" text="Imprimir Boletínes" />
+      <Button layoutX="387.0" layoutY="29.0" mnemonicParsing="false" onAction="#btnCerrarSesion" text="Cerrar sesión" />
+      <Button layoutX="148.0" layoutY="288.0" mnemonicParsing="false" onAction="#btnCambiarContrasenia" text="Cambiar Contraseña" />
    </children>
 </AnchorPane>

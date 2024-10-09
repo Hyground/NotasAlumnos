@@ -51,7 +51,6 @@ public class LoginController implements Initializable {
 
     @FXML
     private void cambio(javafx.event.ActionEvent event) {
-        // Lógica para permitir solo una checkbox seleccionada a la vez
         if (event.getSource() == docenteOn) {
             if (docenteOn.isSelected()) {
                 adminOn.setSelected(false); // Deselecciona el otro checkbox
@@ -64,7 +63,7 @@ public class LoginController implements Initializable {
             }
         }
 
-        // Lógica para cambiar los textos
+        // Cambiar los textos según el rol
         if (docenteOn.isSelected()) {
             label1.setText("Bienvenido");
             label2.setText("INGRESA SU USUARIO DOCENTE");
@@ -76,46 +75,61 @@ public class LoginController implements Initializable {
 
     @FXML
     private void iniciar(javafx.event.ActionEvent event) {
-        // Obtener el nombre de usuario y la contraseña
         String nombreUsuario = txtUser.getText();
         String contrasenia = txtContra.getText();
 
-        // Validar que se ha seleccionado un checkbox
         if (!docenteOn.isSelected() && !adminOn.isSelected()) {
             System.out.println("Por favor, selecciona un rol.");
             return;
         }
 
-        // Lógica para verificar las restricciones
         if (docenteOn.isSelected() && (nombreUsuario.equalsIgnoreCase("admin") || nombreUsuario.trim().isEmpty())) {
-            errorUsPas.setVisible(true); // Mostrar error si el usuario es "admin" o vacío
+            errorUsPas.setVisible(true); 
             return;
         }
 
         if (adminOn.isSelected() && !nombreUsuario.equalsIgnoreCase("admin")) {
-            errorUsPas.setVisible(true); // Mostrar error si el usuario no es "admin"
+            errorUsPas.setVisible(true); 
             return;
         }
 
-        // Llamar al método de inicio de sesión
         boolean isAuthenticated = CLogin.CLogin(nombreUsuario, contrasenia);
 
         if (isAuthenticated) {
-            // Cargar la vista correspondiente según el rol
             if (docenteOn.isSelected()) {
                 cargarFXML("/Vista/MenuDocente.fxml");
             } else if (adminOn.isSelected()) {
                 cargarFXML("/Vista/MenuAdmin.fxml");
             }
-            errorUsPas.setVisible(false); // Ocultar el label de error si la autenticación es exitosa
+            errorUsPas.setVisible(false); 
         } else {
-            errorUsPas.setVisible(true); // Mostrar el label de error
+            errorUsPas.setVisible(true); 
         }
     }
 
     private void cargarFXML(String fxml) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+
+            Stage loginStage = (Stage) btnIngreso.getScene().getWindow(); 
+            loginStage.close();
+
+            stage.setOnCloseRequest(event -> {
+                abrirLogin();  
+            });
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void abrirLogin() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/login.fxml"));
             Parent root = loader.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
@@ -129,42 +143,36 @@ public class LoginController implements Initializable {
     private void limpiar(javafx.event.ActionEvent event) {
         txtContra.setText("");
         txtUser.setText("");
-        errorUsPas.setVisible(false); // Ocultar el label de error al limpiar
+        errorUsPas.setVisible(false); 
     }
 
-    private boolean animacionEjecutada = false; // Variable de control para la animación
-    private boolean animacionEjecutada2 = false; // Variable de control para la animación2
+    private boolean animacionEjecutada = false;
+    private boolean animacionEjecutada2 = false;
 
     @FXML
     private void mover(javafx.scene.input.MouseEvent event) {
-        // Verifica si la animación ya se ejecutó
         if (!animacionEjecutada) {
-            // Configura la animación
             TranslateTransition move = new TranslateTransition();
             move.setNode(lblUser);
             move.setDuration(Duration.millis(1000));
-            move.setCycleCount(1); // Asegúrate de que se ejecute solo una vez
+            move.setCycleCount(1);
             move.setByY(-30);
             move.play();
 
-            // Cambia el estado para evitar que se ejecute nuevamente
             animacionEjecutada = true;
         }
     }
 
     @FXML
     private void mover2(javafx.scene.input.MouseEvent event) {
-        // Verifica si la animación ya se ejecutó
         if (!animacionEjecutada2) {
-            // ConfiguraR la animación
             TranslateTransition move = new TranslateTransition();
             move.setNode(lblContra);
             move.setDuration(Duration.millis(1000));
-            move.setCycleCount(1); // se ejecute solo una vez
+            move.setCycleCount(1);
             move.setByY(-30);
             move.play();
 
-            // Cambia el estado para evitar que se ejecute nuevamente
             animacionEjecutada2 = true;
         }
     }
