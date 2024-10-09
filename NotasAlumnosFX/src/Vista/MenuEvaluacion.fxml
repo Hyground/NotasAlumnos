@@ -7,8 +7,37 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.MenuEvaluacionController">
+<AnchorPane id="AnchorPane" prefHeight="509.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="Controlador.MenuEvaluacionController">
     <stylesheets>
-        <URL value="@menuevaluacion.css"/>
+        <URL value="@menuevaluacion.css" />
     </stylesheets>
+   <children>
+      <Label layoutX="226.0" layoutY="24.0" text="Registo de Actividades" />
+      <Label layoutX="68.0" layoutY="171.0" text="Nombre: " />
+      <Label layoutX="333.0" layoutY="94.0" text="Curso:" />
+      <Label layoutX="68.0" layoutY="94.0" text="Bimestre:" />
+      <Label layoutX="72.0" layoutY="50.0" text="Grado:" />
+      <Label layoutX="196.0" layoutY="50.0" text="Sección:" />
+      <Label layoutX="68.0" layoutY="130.0" text="Tipo:" />
+      <Label layoutX="323.0" layoutY="130.0" text="Ponderación:" />
+      <Button layoutX="167.0" layoutY="206.0" mnemonicParsing="false" onAction="#btnGuardar" text="Guardar" />
+      <Button layoutX="276.0" layoutY="206.0" mnemonicParsing="false" onAction="#btnActualizar" text="Actualizar" />
+      <ChoiceBox fx:id="conCurso" layoutX="405.0" layoutY="90.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="conBimestre" layoutX="150.0" layoutY="90.0" prefWidth="150.0" />
+      <Label fx:id="rGrado" layoutX="129.0" layoutY="50.0" text="Primero" />
+      <Label fx:id="rSeccion" layoutX="252.0" layoutY="50.0" text="A" />
+      <ChoiceBox fx:id="conTipo" layoutX="150.0" layoutY="126.0" prefWidth="150.0" />
+      <TextField fx:id="txtNombre" layoutX="152.0" layoutY="167.0" />
+      <TextField fx:id="txtPonderacion" layoutX="405.0" layoutY="126.0" />
+      <Label layoutX="60.0" layoutY="246.0" text="Listar Actividades " />
+      <ChoiceBox layoutX="156.0" layoutY="242.0" onDragDetected="#btnListar" prefWidth="150.0" />
+      <TableView fx:id="tblPersona" layoutX="60.0" layoutY="279.0" onMouseClicked="#seleccionaModificar" prefHeight="216.0" prefWidth="483.0">
+         <columns>
+            <TableColumn fx:id="EvaluacionId" prefWidth="75.0" text="id Actividad" />
+            <TableColumn fx:id="nombreActividad" prefWidth="231.0" text="Nombre Actividad" />
+            <TableColumn fx:id="tipoActividad" prefWidth="95.0" text="Tipo" />
+            <TableColumn fx:id="ponderacionActividad" prefWidth="81.0" text="Ponderación" />
+         </columns>
+      </TableView>
+   </children>
 </AnchorPane>
