@@ -1,13 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Controlador;
 
-import POJOs.Docentes;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
+import CRUDs.CLogin;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -23,15 +16,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
 
-/**
- * FXML Controller class
- *
- * @author hygro
- */
 public class LoginController implements Initializable {
 
     @FXML
@@ -55,62 +40,71 @@ public class LoginController implements Initializable {
     @FXML
     private Label lblContra;
     @FXML
-    private Label label3;
+    private Label label21;
+    @FXML
+    private Label errorUsPas; // Label para mostrar el error
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-
+        errorUsPas.setVisible(false); // Ocultar el label de error al inicio
     }
-//ARREGLALO SI ESTA MAL XD
-    public static Docentes validarUsuario(String nombreUsuario, String contrasenia, CheckBox checkboxDocente, CheckBox checkboxAdmin) {
-        Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
-        Docentes docente = null;
-        try {
-            session.beginTransaction();
 
-            // Buscar al usuario por nombre de usuario
-            Criteria criteria = session.createCriteria(Docentes.class);
-            criteria.add(Restrictions.eq("nombreUsuario", nombreUsuario));
-            docente = (Docentes) criteria.uniqueResult();
-
-            // Si se encuentra el usuario, validar su rol y contraseña
-            if (docente != null) {
-                if (docente.getContrasenia().equals(contrasenia)) {
-                    String rol = docente.getRol();
-
-                    // Validar el rol según el checkbox seleccionado
-                    if (checkboxDocente.isSelected() && rol.equalsIgnoreCase("docente")) {
-                        cargarFXML("Docente.fxml");
-                    } else if (checkboxAdmin.isSelected() && rol.equalsIgnoreCase("admin")) {
-                        cargarFXML("Admin.fxml");
-                    } else {
-                        System.out.println("Rol o selección no reconocidos.");
-                    }
-                } else {
-                    System.out.println("Contraseña incorrecta.");
-                }
-            } else {
-                System.out.println("Usuario no encontrado.");
+    @FXML
+    private void cambio(javafx.event.ActionEvent event) {
+        // Lógica para permitir solo una checkbox seleccionada a la vez
+        if (event.getSource() == docenteOn) {
+            if (docenteOn.isSelected()) {
+                adminOn.setSelected(false); // Deselecciona el otro checkbox
+                label21.setVisible(false); // Oculta label21
             }
-
-        } catch (Exception e) {
-            System.out.println("Error: " + e);
-        } finally {
-            session.getTransaction().commit();
-            session.close();
+        } else if (event.getSource() == adminOn) {
+            if (adminOn.isSelected()) {
+                docenteOn.setSelected(false); // Deselecciona el otro checkbox
+                label21.setVisible(false); // Oculta label21
+            }
         }
 
-        return docente;
+        // Lógica para cambiar los textos
+        if (docenteOn.isSelected()) {
+            label1.setText("Bienvenido docente");
+            label2.setText("INGRESA TU USUARIO DOCENTE");
+        } else if (adminOn.isSelected()) {
+            label1.setText("BIENVENIDO ADMIN");
+            label2.setText("INGRESA TU USUARIO ADMIN");
+        }
     }
-    // Método para cargar el FXML
 
-    private static void cargarFXML(String fxml) {
+    @FXML
+    private void iniciar(javafx.event.ActionEvent event) {
+        // Obtener el nombre de usuario y la contraseña
+        String nombreUsuario = txtUser.getText();
+        String contrasenia = txtContra.getText();
+
+        // Validar que se ha seleccionado un checkbox
+        if (!docenteOn.isSelected() && !adminOn.isSelected()) {
+            System.out.println("Por favor, selecciona un rol.");
+            return;
+        }
+
+        // Llamar al método de inicio de sesión
+        boolean isAuthenticated = CLogin.CLogin(nombreUsuario, contrasenia);
+
+        if (isAuthenticated) {
+            // Cargar la vista correspondiente según el rol
+            if (docenteOn.isSelected()) {
+                cargarFXML("/Vista/MenuDocente.fxml");
+            } else if (adminOn.isSelected()) {
+                cargarFXML("/Vista/MenuAdmin.fxml");
+            }
+            errorUsPas.setVisible(false); // Ocultar el label de error si la autenticación es exitosa
+        } else {
+            errorUsPas.setVisible(true); // Mostrar el label de error
+        }
+    }
+
+    private void cargarFXML(String fxml) {
         try {
-            FXMLLoader loader = new FXMLLoader(Docentes.class.getResource("/Controlador/"+fxml));  // Ajustar según tu clase
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
             Parent root = loader.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
@@ -120,29 +114,11 @@ public class LoginController implements Initializable {
         }
     }
 
-    //TODO PARA EL CSS NO TOCAR XD
     @FXML
-    private void cambio(javafx.event.ActionEvent event) {
-        // Lógica para permitir solo una checkbox seleccionada a la vez
-        if (event.getSource() == docenteOn) {
-            if (docenteOn.isSelected()) {
-                adminOn.setSelected(false); // Deselecciona el otro checkbox
-            }
-        } else if (event.getSource() == adminOn) {
-            if (adminOn.isSelected()) {
-                docenteOn.setSelected(false); // Deselecciona el otro checkbox
-            }
-        }
-        // Lógica para cambiar los textos
-        if (docenteOn.isSelected()) {
-            label1.setText("Bienvenido docente");
-            label2.setText("Por favor inicia sesión con los");
-            label3.setText("datos que se te proporcionaron");
-        } else if (adminOn.isSelected()) {
-            label1.setText("BIENVENIDO ADMIN");
-            label2.setText("INGRESA TU USUARIO ADMIN");
-            label3.setText("");
-        }
+    private void limpiar(javafx.event.ActionEvent event) {
+        txtContra.setText("");
+        txtUser.setText("");
+        errorUsPas.setVisible(false); // Ocultar el label de error al limpiar
     }
 
     private boolean animacionEjecutada = false; // Variable de control para la animación
@@ -180,15 +156,5 @@ public class LoginController implements Initializable {
             // Cambia el estado para evitar que se ejecute nuevamente
             animacionEjecutada2 = true;
         }
-    }
-
-    @FXML
-    private void limpiar(javafx.event.ActionEvent event) {
-        txtContra.setText("");
-        txtUser.setText("");
-    }
-
-    @FXML
-    private void validarUsuario(javafx.event.ActionEvent event) {
     }
 }
