@@ -45,10 +45,32 @@ public class MenuDocenteController implements Initializable {
 
     @FXML
     private void btnRegistoActividades(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/MenuEvaluacion.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Inscripsion");
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException ex) {
+            Logger.getLogger(MenuEvaluacionController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML
     private void btnRegistrarNotas(ActionEvent event) {
+         try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/MenuNotas.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Registro de Notas");
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException ex) {
+            Logger.getLogger(MenuNotasController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML
