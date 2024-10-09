@@ -86,6 +86,17 @@ public class LoginController implements Initializable {
             return;
         }
 
+        // Lógica para verificar las restricciones
+        if (docenteOn.isSelected() && (nombreUsuario.equalsIgnoreCase("admin") || nombreUsuario.trim().isEmpty())) {
+            errorUsPas.setVisible(true); // Mostrar error si el usuario es "admin" o vacío
+            return;
+        }
+
+        if (adminOn.isSelected() && !nombreUsuario.equalsIgnoreCase("admin")) {
+            errorUsPas.setVisible(true); // Mostrar error si el usuario no es "admin"
+            return;
+        }
+
         // Llamar al método de inicio de sesión
         boolean isAuthenticated = CLogin.CLogin(nombreUsuario, contrasenia);
 

@@ -7,11 +7,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="Controlador.MenuDocenteController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.MenuDocenteController">
     <stylesheets>
         <URL value="@menudocente.css" />
     </stylesheets>
    <children>
-      <Label layoutX="230.0" layoutY="37.0" text="Prueba" />
+      <Label layoutX="230.0" layoutY="37.0" text="Menu Docente" />
    </children>
 </AnchorPane>
