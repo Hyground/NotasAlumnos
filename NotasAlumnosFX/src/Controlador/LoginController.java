@@ -66,11 +66,11 @@ public class LoginController implements Initializable {
 
         // Lógica para cambiar los textos
         if (docenteOn.isSelected()) {
-            label1.setText("Bienvenido docente");
-            label2.setText("INGRESA TU USUARIO DOCENTE");
+            label1.setText("Bienvenido");
+            label2.setText("INGRESA SU USUARIO DOCENTE");
         } else if (adminOn.isSelected()) {
-            label1.setText("BIENVENIDO ADMIN");
-            label2.setText("INGRESA TU USUARIO ADMIN");
+            label1.setText("BIENVENIDO ");
+            label2.setText("INGRESA SU USUARIO ADMIN");
         }
     }
 
@@ -156,11 +156,11 @@ public class LoginController implements Initializable {
     private void mover2(javafx.scene.input.MouseEvent event) {
         // Verifica si la animación ya se ejecutó
         if (!animacionEjecutada2) {
-            // Configura la animación
+            // ConfiguraR la animación
             TranslateTransition move = new TranslateTransition();
             move.setNode(lblContra);
             move.setDuration(Duration.millis(1000));
-            move.setCycleCount(1); // Asegúrate de que se ejecute solo una vez
+            move.setCycleCount(1); // se ejecute solo una vez
             move.setByY(-30);
             move.play();
 
