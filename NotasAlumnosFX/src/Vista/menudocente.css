@@ -1,7 +1,52 @@
-/*
- * Empty Stylesheet file.
- */
-
 .mainFxmlClass {
+    -fx-background-image: url("../Imagenes/Fondoreal.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover; 
+    -fx-background-position: center center;
+}
 
+.button{
+    -fx-font-size: 150%;
+    -fx-font-family: Arial;
+    -fx-text-fill: black;
+    -fx-background-color: rgba(265,256,256,1);
+    -fx-pref-width: 190px;
+    -fx-pref-height: 60px;
+    -fx-background-radius: 25px;
+}
+
+.button:hover{
+    -fx-background-color: rgba(1,1,1,0.7);
+    -fx-text-fill: white;
+    
+}
+
+.label{
+    -fx-text-fill: black;
+    -fx-font-family: Arial;
+    -fx-font-size: 170%;
+    -fx-display: flex; 
+    -fx-alignment: center;
+}
+
+.text-field{
+    -fx-background-color: rgba(265,256,256,1);
+    -fx-text-fill: black;
+    -fx-font-family: Arial;
+    -fx-font-size: 20px;
+    -fx-display: flex; 
+    -fx-alignment: center;
+}
+
+
+.text-field:hover{
+    -fx-background-color: rgba(265,256,256, 0.8);
+}
+
+.check-box{
+    -fx-text-fill: black;
+    -fx-font-family: Arial;
+    -fx-font-size: 20px;
+    -fx-display: flex; 
+    -fx-alignment: center;
 }

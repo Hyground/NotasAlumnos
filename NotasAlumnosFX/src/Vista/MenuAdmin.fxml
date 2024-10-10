@@ -7,11 +7,40 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="Controlador.MenuAdminController">
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1024.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.MenuAdminController">
     <stylesheets>
         <URL value="@menuadmin.css" />
     </stylesheets>
    <children>
-      <Label layoutX="235.0" layoutY="30.0" text="Menu Administrador" />
+      <Label fx:id="MENUADMIN" layoutX="93.0" layoutY="14.0" text="Menu Administrador" />
+      <Label layoutX="182.0" layoutY="46.0" text="CUI" />
+      <Label layoutX="135.0" layoutY="96.0" text="Nombre de usuario" />
+      <Label layoutX="159.0" layoutY="147.0" text="Contraseña" />
+      <TextField fx:id="txtCui" layoutX="106.0" layoutY="63.0" />
+      <TextField fx:id="txtUsuario" layoutX="106.0" layoutY="113.0" />
+      <TextField fx:id="txtContra" layoutX="108.0" layoutY="164.0" />
+      <Label layoutX="176.0" layoutY="198.0" text="Grado" />
+      <TextField fx:id="txtGrado" layoutX="106.0" layoutY="215.0" />
+      <Label layoutX="169.0" layoutY="250.0" text="Seccion" />
+      <TextField fx:id="txtSeccion" layoutX="106.0" layoutY="267.0" />
+      <TableView fx:id="tablawe" layoutX="393.0" layoutY="19.0" onMouseClicked="#seleccionar" prefHeight="536.0" prefWidth="598.0">
+        <columns>
+          <TableColumn fx:id="UsuarioID" prefWidth="39.0" text="ID" />
+            <TableColumn fx:id="CUI" prefWidth="134.0" text="CUI" />
+            <TableColumn fx:id="nombreUsuario" prefWidth="129.0" text="Nombre" />
+            <TableColumn fx:id="Contrasenia" prefWidth="98.0" text="Contraseña" />
+            <TableColumn fx:id="Rol" prefWidth="87.0" text="Rol" />
+            <TableColumn fx:id="GradoID" prefWidth="57.0" text="Grado" />
+            <TableColumn fx:id="SeccionID" prefWidth="69.0" text="Seccion" />
+        </columns>
+      </TableView>
+      <Button fx:id="btnCrear" layoutX="64.0" layoutY="427.0" mnemonicParsing="false" onAction="#crear" text="Crear Usuario" />
+      <Button fx:id="btnBorrar" layoutX="64.0" layoutY="482.0" mnemonicParsing="false" onAction="#eliminar" text="Eliminar" />
+      <Button fx:id="btnModificar" layoutX="232.0" layoutY="427.0" mnemonicParsing="false" onAction="#modificar" text="Modificar" />
+      <Button fx:id="BtnLimpiar" layoutX="232.0" layoutY="482.0" mnemonicParsing="false" onAction="#limpiar" text="Limpiar" />
+      <TextField fx:id="txtRol" layoutX="102.0" layoutY="317.0" />
+      <Label layoutX="179.0" layoutY="300.0" text="Rol" />
+      <Label layoutX="184.0" layoutY="351.0" text="Nombre" />
+      <TextField fx:id="txtNombre" layoutX="107.0" layoutY="368.0" />
    </children>
 </AnchorPane>

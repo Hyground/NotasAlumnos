@@ -8,29 +8,29 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onDragDetected="#mover" prefHeight="555.0" prefWidth="850.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.LoginController">
+<AnchorPane id="AnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onDragDetected="#mover" prefHeight="600.0" prefWidth="1024.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.LoginController">
     <stylesheets>
         <URL value="@login.css" />
     </stylesheets>
    <children>
-      <Button fx:id="btnIngreso" layoutX="79.0" layoutY="427.0" mnemonicParsing="false" onAction="#iniciar" prefHeight="37.0" prefWidth="96.0" text="Ingresar" />
-      <CheckBox fx:id="docenteOn" layoutX="173.0" layoutY="131.0" mnemonicParsing="false" onAction="#cambio" text="Docente" />
-      <Label fx:id="label1" layoutX="103.0" layoutY="37.0" prefHeight="25.0" prefWidth="251.0" text="¡Bienvenido!" />
-      <Button fx:id="btnLimpiar" layoutX="260.0" layoutY="427.0" mnemonicParsing="false" onAction="#limpiar" text="Limpiar" />
-      <Label fx:id="label2" layoutX="46.0" layoutY="62.0" prefHeight="25.0" prefWidth="378.0" text="Para continuar, por favor indica si eres">
+      <Button fx:id="btnIngreso" layoutX="109.0" layoutY="477.0" mnemonicParsing="false" onAction="#iniciar" prefHeight="37.0" prefWidth="96.0" text="Ingresar" />
+      <CheckBox fx:id="docenteOn" layoutX="229.0" layoutY="169.0" mnemonicParsing="false" onAction="#cambio" text="Docente" />
+      <Label fx:id="label1" layoutX="160.0" layoutY="37.0" prefHeight="25.0" prefWidth="251.0" text="¡Bienvenido!" />
+      <Button fx:id="btnLimpiar" layoutX="322.0" layoutY="477.0" mnemonicParsing="false" onAction="#limpiar" text="Limpiar" />
+      <Label fx:id="label2" layoutX="101.0" layoutY="75.0" prefHeight="25.0" prefWidth="378.0" text="Para continuar, por favor indica si eres">
          <font>
             <Font name="Bell MT" size="12.0" />
          </font></Label>
-      <CheckBox fx:id="adminOn" layoutX="173.0" layoutY="169.0" mnemonicParsing="false" onAction="#cambio" text="Administrador" />
-      <TextField fx:id="txtUser" layoutX="109.0" layoutY="268.0" onMouseClicked="#mover" />
-      <TextField fx:id="txtContra" layoutX="109.0" layoutY="343.0" onMouseClicked="#mover2" />
-      <Label fx:id="lblUser" layoutX="194.0" layoutY="274.0" text="Usuario" />
-      <Label fx:id="lblContra" layoutX="176.0" layoutY="349.0" text="Contraseña" />
-      <Label fx:id="label21" layoutX="50.0" layoutY="87.0" prefHeight="17.0" prefWidth="370.0" text="parte de los administradores o docente">
+      <CheckBox fx:id="adminOn" layoutX="229.0" layoutY="214.0" mnemonicParsing="false" onAction="#cambio" text="Administrador" />
+      <TextField fx:id="txtUser" layoutX="160.0" layoutY="282.0" onMouseClicked="#mover" />
+      <TextField fx:id="txtContra" layoutX="164.0" layoutY="356.0" onMouseClicked="#mover2" />
+      <Label fx:id="lblUser" layoutX="250.0" layoutY="288.0" text="Usuario" />
+      <Label fx:id="lblContra" layoutX="232.0" layoutY="362.0" text="Contraseña" />
+      <Label fx:id="label21" layoutX="100.0" layoutY="122.0" prefHeight="17.0" prefWidth="370.0" text="parte de los administradores o docente">
          <font>
             <Font name="Bell MT" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="errorUsPas" layoutX="95.0" layoutY="389.0" text="Usuario o Contraseña Incorrecta " textAlignment="CENTER" textFill="#ff0101" />
+      <Label fx:id="errorUsPas" layoutX="135.0" layoutY="413.0" text="Usuario o Contraseña Incorrecta " textAlignment="CENTER" textFill="#ff0101" />
    </children>
 </AnchorPane>

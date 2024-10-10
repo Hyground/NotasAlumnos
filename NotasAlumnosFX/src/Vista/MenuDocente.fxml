@@ -7,22 +7,22 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.MenuDocenteController">
+<AnchorPane id="AnchorPane" prefHeight="555.0" prefWidth="850.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.MenuDocenteController">
     <stylesheets>
         <URL value="@menudocente.css" />
     </stylesheets>
    <children>
-      <Label layoutX="132.0" layoutY="24.0" text="Que gusto Verte: " />
-      <Label fx:id="labelNomDocente" layoutX="234.0" layoutY="24.0" text="Nombre Docente " />
-      <Label layoutX="132.0" layoutY="54.0" text="Grado:" />
-      <Label fx:id="labelGrado" layoutX="189.0" layoutY="54.0" text="Primero" />
-      <Label layoutX="132.0" layoutY="79.0" text="Sección:" />
-      <Label fx:id="labelSeccion" layoutX="189.0" layoutY="79.0" text="A" />
-      <Button layoutX="66.0" layoutY="131.0" mnemonicParsing="false" onAction="#btnInscripcion" text="Inscribir Estudiantes" />
-      <Button layoutX="220.0" layoutY="131.0" mnemonicParsing="false" onAction="#btnRegistoActividades" text="Registar Actividades" />
-      <Button layoutX="66.0" layoutY="226.0" mnemonicParsing="false" onAction="#btnRegistrarNotas" text="Registrar Notas" />
-      <Button layoutX="225.0" layoutY="226.0" mnemonicParsing="false" text="Imprimir Boletínes" />
-      <Button layoutX="387.0" layoutY="29.0" mnemonicParsing="false" onAction="#btnCerrarSesion" text="Cerrar sesión" />
-      <Button layoutX="148.0" layoutY="288.0" mnemonicParsing="false" onAction="#btnCambiarContrasenia" text="Cambiar Contraseña" />
+      <Label layoutX="66.0" layoutY="64.0" text="Que gusto Verte: " />
+      <Label fx:id="labelNomDocente" layoutX="237.0" layoutY="64.0" text="Nombre Docente " />
+      <Label layoutX="157.0" layoutY="174.0" text="Grado:" />
+      <Label fx:id="labelGrado" layoutX="238.0" layoutY="174.0" text="Primero" />
+      <Label layoutX="140.0" layoutY="216.0" text="Sección:" />
+      <Label fx:id="labelSeccion" layoutX="238.0" layoutY="216.0" text="A" />
+      <Button layoutX="36.0" layoutY="316.0" mnemonicParsing="false" onAction="#btnInscripcion" text="Inscribir Estudiantes" />
+      <Button layoutX="237.0" layoutY="316.0" mnemonicParsing="false" onAction="#btnRegistoActividades" text="Registar Actividades" />
+      <Button layoutX="36.0" layoutY="387.0" mnemonicParsing="false" onAction="#btnRegistrarNotas" text="Registrar Notas" />
+      <Button layoutX="237.0" layoutY="387.0" mnemonicParsing="false" text="Imprimir Boletínes" />
+      <Button layoutX="237.0" layoutY="456.0" mnemonicParsing="false" onAction="#btnCerrarSesion" text="Cerrar sesión" />
+      <Button layoutX="36.0" layoutY="456.0" mnemonicParsing="false" onAction="#btnCambiarContrasenia" prefWidth="247.0" text="Cambiar Contraseña" />
    </children>
 </AnchorPane>
