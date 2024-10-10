@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="Controlador.MenuEstudianteController">
+    <stylesheets>
+        <URL value="@menuestudiante.css" />
+    </stylesheets>
+   <children>
+      <Pane prefHeight="493.0" prefWidth="962.0">
+         <children>
+            <Button layoutX="72.0" layoutY="364.0" mnemonicParsing="false" onAction="#btnAgregar" text="Agregar" />
+            <Button layoutX="77.0" layoutY="416.0" mnemonicParsing="false" onAction="#btnAnular" text="Anular" />
+            <Button layoutX="175.0" layoutY="364.0" mnemonicParsing="false" onAction="#btnActualizar" text="Actualizar" />
+            <Button layoutX="177.0" layoutY="416.0" mnemonicParsing="false" onAction="#btnReactivar" text="Reactivar" />
+            <Label layoutX="88.0" layoutY="54.0" text="Cui" />
+            <Label layoutX="42.0" layoutY="103.0" text="Codigo Personal" />
+            <Label layoutX="71.0" layoutY="163.0" text="Nombre" />
+            <Label layoutX="71.0" layoutY="213.0" text="Apellido" />
+            <Label layoutX="78.0" layoutY="260.0" text="Grado" />
+            <Label layoutX="73.0" layoutY="305.0" text="Sección" />
+            <TextField fx:id="txtCui" layoutX="167.0" layoutY="49.0" />
+            <TextField fx:id="txtCodigoPersonal" layoutX="167.0" layoutY="98.0" />
+            <TextField fx:id="txtNombre" layoutX="167.0" layoutY="158.0" />
+            <TextField fx:id="txtApellido" layoutX="167.0" layoutY="208.0" />
+            <TextField fx:id="txtGrado" layoutX="167.0" layoutY="255.0" />
+            <TextField fx:id="txtSeccion" layoutX="167.0" layoutY="300.0" />
+            <TableView fx:id="tblEstudiante" layoutX="377.0" layoutY="58.0" prefHeight="363.0" prefWidth="544.0">
+              <columns>
+                <TableColumn fx:id="cui" prefWidth="92.0" text="Cui" />
+                <TableColumn fx:id="codigopersonal" prefWidth="134.0" text="Codigo Personal" />
+                  <TableColumn fx:id="nombre" prefWidth="97.0" text="Nombre" />
+                  <TableColumn fx:id="apellido" prefWidth="91.0" text="Apellido" />
+                  <TableColumn fx:id="grado" prefWidth="66.0" text="Grado" />
+                  <TableColumn fx:id="seccion" minWidth="0.0" prefWidth="62.0" text="Sección" />
+              </columns>
+            </TableView>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
