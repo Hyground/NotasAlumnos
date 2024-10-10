@@ -49,7 +49,7 @@ public class MenuDocenteController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/MenuEvaluacion.fxml"));
             Parent root = loader.load();
             Stage stage = new Stage();
-            stage.setTitle("Inscripsion");
+            stage.setTitle("Evaluacion");
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
