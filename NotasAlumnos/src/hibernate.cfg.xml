@@ -43,17 +43,17 @@ Contributor(s):
   <session-factory>
     <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
     <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-    <property name="hibernate.connection.url">jdbc:mysql://basedepapus.c7sigcqciuuw.us-east-2.rds.amazonaws.com:3306/eduscore?serverTimezone=UTC</property>
-    <property name="hibernate.connection.username">admin</property>
+    <property name="hibernate.connection.url">jdbc:mysql://serverpaps.mysql.database.azure.com:3306/eduscore?serverTimezone=UTC</property>
+    <property name="hibernate.connection.username">adminpapu</property>
     <property name="hibernate.connection.password">Papu#1235</property>
     <property name="hibernate.current_session_context_class">thread</property>
-    <mapping resource="POJOs/Cursos.hbm.xml"/>
-    <mapping resource="POJOs/Docentes.hbm.xml"/>
-    <mapping resource="POJOs/Grados.hbm.xml"/>
     <mapping resource="POJOs/Estudiantes.hbm.xml"/>
-    <mapping resource="POJOs/Evaluaciones.hbm.xml"/>
-    <mapping resource="POJOs/Notas.hbm.xml"/>
     <mapping resource="POJOs/Secciones.hbm.xml"/>
+    <mapping resource="POJOs/Docentes.hbm.xml"/>
+    <mapping resource="POJOs/Evaluaciones.hbm.xml"/>
+    <mapping resource="POJOs/Grados.hbm.xml"/>
+    <mapping resource="POJOs/Notas.hbm.xml"/>
     <mapping resource="POJOs/Bimestres.hbm.xml"/>
+    <mapping resource="POJOs/Cursos.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>
