@@ -7,8 +7,32 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.MenuInscripsionController">
+<AnchorPane id="AnchorPane" layoutX="-1.0" prefHeight="509.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="Controlador.MenuInscripsionController">
     <stylesheets>
-        <URL value="@menuinscripsion.css"/>
+        <URL value="@menuinscripsion.css" />
     </stylesheets>
+   <children>
+      <TextField fx:id="txtCodigoPersonal" layoutX="202.0" layoutY="239.0" />
+      <Label layoutX="214.0" layoutY="17.0" text="Inscripcion de Estudiantes" />
+      <Label layoutX="83.0" layoutY="51.0" text="Grado:   Primero" />
+      <Label layoutX="256.0" layoutY="51.0" text="Seccion:  A" />
+      <Label layoutX="83.0" layoutY="193.0" text="CUI:" />
+      <Label layoutX="82.0" layoutY="244.0" text="Codigo Personal:" />
+      <TextField fx:id="txtCui" layoutX="202.0" layoutY="188.0" />
+      <Label layoutX="83.0" layoutY="90.0" text="Nombre:" />
+      <Label layoutX="83.0" layoutY="141.0" text="Apellido:" />
+      <TextField fx:id="txtApellido" layoutX="202.0" layoutY="136.0" />
+      <TextField fx:id="txtNombre" layoutX="202.0" layoutY="85.0" />
+      <Button fx:id="btnGuardar" layoutX="454.0" layoutY="100.0" mnemonicParsing="false" onAction="#guardar" text="Guardar" />
+      <Button fx:id="btnEliminar" layoutX="455.0" layoutY="219.0" mnemonicParsing="false" onAction="#eliminar" text="Eliminar" />
+      <Button fx:id="btnModificar" layoutX="450.0" layoutY="160.0" mnemonicParsing="false" onAction="#modificar" text="Modificar" />
+      <TableView layoutX="50.0" layoutY="305.0" prefHeight="193.0" prefWidth="505.0">
+        <columns>
+          <TableColumn prefWidth="97.0" text="CUI" />
+          <TableColumn prefWidth="107.0" text="Codigo Personal" />
+            <TableColumn prefWidth="160.0" text="Nombre" />
+            <TableColumn fx:id="tblInscripcionEstudiantes" prefWidth="140.0" text="Apellido" />
+        </columns>
+      </TableView>
+   </children>
 </AnchorPane>
