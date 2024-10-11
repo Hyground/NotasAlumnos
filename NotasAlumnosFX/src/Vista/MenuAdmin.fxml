@@ -21,7 +21,7 @@
       <TextField fx:id="txtContra" layoutX="113.0" layoutY="197.0" />
       <Label layoutX="181.0" layoutY="223.0" text="Grado" />
       <Label layoutX="172.0" layoutY="265.0" text="Seccion" />
-      <TableView fx:id="tablawe" layoutX="393.0" layoutY="19.0" onMouseClicked="#seleccionar" prefHeight="536.0" prefWidth="598.0">
+      <TableView fx:id="tablaView" layoutX="393.0" layoutY="19.0" onMouseClicked="#seleccionar" prefHeight="536.0" prefWidth="598.0">
         <columns>
           <TableColumn fx:id="UsuarioID" prefWidth="39.0" text="ID" />
             <TableColumn fx:id="CUI" prefWidth="134.0" text="CUI" />
@@ -39,8 +39,8 @@
       <Label layoutX="193.0" layoutY="307.0" text="Rol" />
       <Label layoutX="172.0" layoutY="94.0" text="Nombre" />
       <TextField fx:id="txtNombre" layoutX="113.0" layoutY="111.0" />
-      <ChoiceBox fx:id="conGrado" layoutX="112.0" layoutY="240.0" prefHeight="25.0" prefWidth="177.0" />
-      <ChoiceBox fx:id="conSeccion" layoutX="115.0" layoutY="282.0" prefHeight="25.0" prefWidth="177.0" />
-      <ChoiceBox fx:id="conROl" layoutX="115.0" layoutY="324.0" prefHeight="25.0" prefWidth="177.0" />
+      <ComboBox fx:id="conSeccion" layoutX="115.0" layoutY="282.0" prefHeight="25.0" prefWidth="177.0" />
+      <ComboBox fx:id="conGrado" layoutX="115.0" layoutY="240.0" prefHeight="25.0" prefWidth="177.0" />
+      <ComboBox fx:id="conROl" layoutX="115.0" layoutY="324.0" prefHeight="25.0" prefWidth="177.0" />
    </children>
 </AnchorPane>

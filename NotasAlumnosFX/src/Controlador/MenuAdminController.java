@@ -5,23 +5,26 @@
  */
 package Controlador;
 
+import CRUDs.CDocentes;
+import CRUDs.CGrados;
+import CRUDs.CSecciones;
 import Modelo.TablaUsuarios;
+import POJOs.Grados;
+import POJOs.Secciones;
 import java.net.URL;
-import java.util.Iterator;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
 /**
@@ -41,8 +44,6 @@ public class MenuAdminController implements Initializable {
     private TextField txtContra;
     private TextField txtGrado;
     private TextField txtSeccion;
-    @FXML
-    private TableView<TablaUsuarios> tablawe;
     
     private ObservableList<TablaUsuarios> listaUsuario;
     private Integer UsuarioIDV;
@@ -72,178 +73,126 @@ public class MenuAdminController implements Initializable {
     @FXML
     private TextField txtNombre;
     @FXML
-    private ChoiceBox<?> conGrado;
+    private ComboBox<String> conGrado;
     @FXML
-    private ChoiceBox<?> conSeccion;
+    private ComboBox<String> conSeccion;
     @FXML
-    private ChoiceBox<?> conROl;
+    private ComboBox<String> conROl;
+    @FXML
+    private TableView<?> tablaView;
     /**
      * Initializes the controller class.
+     * @param url
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-        //mostrar();
-        
-    }    
+public void initialize(URL url, ResourceBundle rb) {
+    cargarGrados();
+    cargarSecciones();
+    cargarRoles();
+}
 
-    
-   /* public void mostrar(){
-        listaUsuario = FXCollections.observableArrayList();
-        for (Iterator it = CRUDs.CDocentes.listarDocentes().iterator(); it.hasNext();) {
-            Object[] item = (Object[]) it.next();
-            listaUsuario.add(new TablaUsuarios((Integer) item[0], (String) item[1], (String) item[2], (String) item[3],(String) item[4], (String) item[5], (Integer) item[6], (Integer) item[8]));
-
-        }
-        this.UsuarioID.setCellValueFactory(new PropertyValueFactory("UsuarioID"));
-        this.CUI.setCellValueFactory(new PropertyValueFactory("CUI"));
-        this.nombreUsuario.setCellValueFactory(new PropertyValueFactory("NombreUsuario"));
-        this.Contrasenia.setCellValueFactory(new PropertyValueFactory("Contrasenia"));
-        this.Rol.setCellValueFactory(new PropertyValueFactory("Rol"));
-        this.GradoID.setCellValueFactory(new PropertyValueFactory("GradoID"));
-        this.SeccionID.setCellValueFactory(new PropertyValueFactory("SeccionID"));
-        tablawe.setItems(listaUsuario);
+private void cargarGrados() {
+    List<Grados> listaGrados = CGrados.listarGrados();
+    ObservableList<String> grados = FXCollections.observableArrayList();
+    for (Grados grado : listaGrados) {
+        grados.add(grado.getNombreGrado());
     }
-*/
+    conGrado.setItems(grados); // conGrado es tu ChoiceBox
+}
+
+private void cargarSecciones() {
+    List<Secciones> listaSecciones = CSecciones.listarSecciones();
+    ObservableList<String> secciones = FXCollections.observableArrayList();
+    for (Secciones seccion : listaSecciones) {
+        secciones.add(seccion.getNombreSeccion());
+    }
+    conSeccion.setItems(secciones); // conSeccion es tu ChoiceBox
+}
+private void cargarRoles() {
+    ObservableList<String> roles = FXCollections.observableArrayList("Administrador", "Docente");
+    conROl.setItems(roles);  // Solo permitir Administrador o Docente
+}
+
+
     @FXML
     private void seleccionar(MouseEvent event) {
-        TablaUsuarios p = this.tablawe.getSelectionModel().getSelectedItem();
-        txtContra.setText(p.getContrasenia());
-        txtCui.setText(p.getCUI()+ "");
-        txtGrado.setText(p.getGradoID()+ "");
-        txtSeccion.setText(p.getSeccionID()+ "");
-        txtRol.setText(p.getRol()+"");
-        UsuarioIDV = p.getUsuarioID();
+
     }
+@FXML
+private void crear(ActionEvent event) {
+    String nombreCompleto = txtNombre.getText();
+    String cui = txtCui.getText();
+    String nombreUsuario = txtUsuario.getText();
+    String contrasenia = txtContra.getText();
+    String rol = conROl.getValue();  // Obtienes el rol seleccionado
+    
+    // Obtener el nombre seleccionado de los ComboBox
+    String nombreGrado = conGrado.getValue();
+    String nombreSeccion = conSeccion.getValue();
+    
+    // Obtener el objeto Grado a partir del nombre seleccionado
+    Grados gradoSeleccionado = CGrados.obtenerGradoPorNombre(nombreGrado);
+    Secciones seccionSeleccionada = CSecciones.obtenerSeccionPorNombre(nombreSeccion);
 
-    @FXML
-    private void crear(ActionEvent event) {
-        try {
-            String cui, Usuario, contra, rol,nombre;
-            Integer grado, seccion;
-            nombre = txtNombre.getText();
-            Usuario = txtUsuario.getText();
-            rol = txtRol.getText();
-            contra = txtContra.getText();
-            cui = txtCui.getText();
-            grado = Integer.parseInt(txtGrado.getText());
-            seccion = Integer.parseInt(txtSeccion.getText());
-            if (CRUDs.CDocentes.crearDocente(nombre, cui, Usuario, contra, rol, grado, seccion)) {
-                //mostrar();
-                Alert alerta = new Alert(Alert.AlertType.INFORMATION);
-                alerta.setTitle("Informacion xd");
-                alerta.setHeaderText(null);
-                alerta.setContentText("Operacion Exitosa");
-                alerta.showAndWait();
-                limpiar();
-            } else {
-                Alert alerta = new Alert(Alert.AlertType.INFORMATION);
-                alerta.setTitle("Informacion IMPORTANTE");
-                alerta.setHeaderText(null);
-                alerta.setContentText("No eres un papulince :'v");
-                alerta.showAndWait();
-            }
-        } catch (Exception e) {
-            Alert alerta = new Alert(Alert.AlertType.INFORMATION);
-            alerta.setTitle("Informacion Importante");
-            alerta.setHeaderText(null);
-            alerta.setContentText("Error en: " + e);
-            alerta.showAndWait();
+    if (gradoSeleccionado != null && seccionSeleccionada != null) {
+        // Extraer los IDs del grado y sección
+        int gradoId = gradoSeleccionado.getGradoId();
+        int seccionId = seccionSeleccionada.getSeccionId();
 
+        // Llamar al método para crear un nuevo docente
+        boolean creado = CDocentes.crearDocente(
+            nombreCompleto, 
+            cui, 
+            nombreUsuario, 
+            contrasenia, 
+            rol, 
+            gradoId, 
+            seccionId
+        );
+
+        if (creado) {
+            System.out.println("Usuario creado exitosamente.");
+            limpiarCampos();  // Opcional: limpiar los campos después de crear el usuario
+        } else {
+            System.out.println("Error al crear el usuario.");
         }
+    } else {
+        System.out.println("Error: grado o sección no válidos.");
     }
+}
+
 
     @FXML
     private void eliminar(ActionEvent event) {
-        try {
-
-            if (CRUDs.CDocentes.eliminarDocente(UsuarioIDV)) {
-               // mostrar();
-                Alert alerta = new Alert(Alert.AlertType.INFORMATION);
-                alerta.setTitle("Informacion xd");
-                alerta.setHeaderText(null);
-                alerta.setContentText("Registro Anulado");
-                alerta.showAndWait();
-
-                limpiar();
-            } else {
-                Alert alerta = new Alert(Alert.AlertType.INFORMATION);
-                alerta.setTitle("Informacion IMPORTANTE MAMAHUEVO");
-                alerta.setHeaderText(null);
-                alerta.setContentText("Registro no anulado");
-                alerta.showAndWait();
-            }
-        } catch (Exception e) {
-            Alert alerta = new Alert(Alert.AlertType.INFORMATION);
-            alerta.setTitle("Informacion IMPORTANTE MAMAHUEVO");
-            alerta.setHeaderText(null);
-            alerta.setContentText("Error en: " + e);
-            alerta.showAndWait();
-
-        }
+      
     }
 
     @FXML
     private void modificar(ActionEvent event) {
-        try {
-            String Usuario, contra, rol;
-            Integer cui, grado, seccion;
-            Usuario = txtUsuario.getText();
-            rol = txtRol.getText();
-            contra = txtContra.getText();
-            cui = Integer.parseInt(txtCui.getText());
-            grado = Integer.parseInt(txtGrado.getText());
-            seccion = Integer.parseInt(txtSeccion.getText());
-            if (CRUDs.CDocentes.actualizarDocente(UsuarioIDV, Usuario, contra, rol, grado, seccion)) {
-             //  mostrar();
-                Alert alerta = new Alert(Alert.AlertType.INFORMATION);
-                alerta.setTitle("Informacion xd");
-                alerta.setHeaderText(null);
-                alerta.setContentText("La grasa lo respalda ;v");
-                alerta.showAndWait();
-                // aqui se agrega el resto
-
-
-                limpiar();
-            } else {
-                Alert alerta = new Alert(Alert.AlertType.INFORMATION);
-                alerta.setTitle("Informacion IMPORTANTE MAMAHUEVO");
-                alerta.setHeaderText(null);
-                alerta.setContentText("No eres un papulince :'v");
-                alerta.showAndWait();
-            }
-        } catch (Exception e) {
-            Alert alerta = new Alert(Alert.AlertType.INFORMATION);
-            alerta.setTitle("Informacion IMPORTANTE MAMAHUEVO");
-            alerta.setHeaderText(null);
-            alerta.setContentText("Error en: " + e);
-            alerta.showAndWait();
-
-        }
+        
     }
 
-    @FXML
-    private void limpiar() {
-        txtContra.setText("");
-        txtCui.setText("");
-        txtGrado.setText("");
-        txtSeccion.setText("");
-        txtUsuario.setText("");
-    }
+
 
     /**
      * @return the UsuarioIDV
      */
     public Integer getUsuarioIDV() {
-        return UsuarioIDV;
-    }
+        return null;
 
-    /**
-     * @param UsuarioIDV the UsuarioIDV to set
-     */
-    public void setUsuarioIDV(Integer UsuarioIDV) {
-        this.UsuarioIDV = UsuarioIDV;
+    
+}
+    private void limpiarCampos() {
+    txtNombre.clear();
+    txtCui.clear();
+    txtUsuario.clear();
+    txtContra.clear();
+    conGrado.getSelectionModel().clearSelection();
+    conSeccion.getSelectionModel().clearSelection();
+    conROl.getSelectionModel().clearSelection();
+}
+
+    @FXML
+    private void limpiar(ActionEvent event) {
     }
-    
-    
 }
