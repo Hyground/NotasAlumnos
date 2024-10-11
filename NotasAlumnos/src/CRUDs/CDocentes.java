@@ -100,54 +100,66 @@ public class CDocentes {
         }
         return flag;
     }
+    // metodo para actualizar docente, 
 
-    // Método para actualizar un docente existente
-    public static boolean actualizarDocente(int usuarioId,String cui, String nuevoNombreUsuario, String nuevaContrasenia, String nuevoRol, int nuevoGradoId, int nuevaSeccionId) {
-        boolean flag = false;
-        Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
-        Transaction transaction = null;
+public static boolean actualizarDocente(int usuarioId, String cui, String nuevoNombreUsuario, String nuevaContrasenia, String nuevoRol, int nuevoGradoId, int nuevaSeccionId) {
+    boolean flag = false;
+    Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
+    Transaction transaction = null;
 
-        try {
-            transaction = session.beginTransaction();
+    try {
+        transaction = session.beginTransaction();
 
-            // Obtener el docente existente
-            Docentes docente = (Docentes) session.get(Docentes.class, usuarioId);
-            if (docente != null) {
-                // Obtener el grado y la sección por sus IDs
-                Grados nuevoGrado = (Grados) session.get(Grados.class, nuevoGradoId);
-                Secciones nuevaSeccion = (Secciones) session.get(Secciones.class, nuevaSeccionId);
+        // Obtener el docente existente
+        Docentes docente = (Docentes) session.get(Docentes.class, usuarioId);
+        if (docente != null) {
+            // Obtener el grado y la sección por sus IDs
+            Grados nuevoGrado = (Grados) session.get(Grados.class, nuevoGradoId);
+            Secciones nuevaSeccion = (Secciones) session.get(Secciones.class, nuevaSeccionId);
 
-                if (nuevoGrado == null) {
-                    throw new RuntimeException("El grado con ID " + nuevoGradoId + " no existe.");
-                }
-                if (nuevaSeccion == null) {
-                    throw new RuntimeException("La sección con ID " + nuevaSeccionId + " no existe.");
-                }
-
-                // Actualizar los datos del docente
-                docente.setCui(cui);  
-                docente.setNombreUsuario(nuevoNombreUsuario);
-                docente.setContrasenia(nuevaContrasenia);
-                docente.setRol(nuevoRol);
-                docente.setGrados(nuevoGrado);
-                docente.setSecciones(nuevaSeccion);
-
-                // Actualizar el docente
-                session.update(docente);
-                flag = true;
+            if (nuevoGrado == null) {
+                throw new RuntimeException("El grado con ID " + nuevoGradoId + " no existe.");
+            }
+            if (nuevaSeccion == null) {
+                throw new RuntimeException("La sección con ID " + nuevaSeccionId + " no existe.");
             }
 
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
+            // Verificar si ya existe un docente asignado a la misma sección y grado, pero que no sea el mismo docente
+            Criteria criteriaAsignacion = session.createCriteria(Docentes.class);
+            criteriaAsignacion.add(Restrictions.eq("grados", nuevoGrado));
+            criteriaAsignacion.add(Restrictions.eq("secciones", nuevaSeccion));
+            criteriaAsignacion.add(Restrictions.ne("usuarioId", usuarioId)); // Asegurarse de que no sea el mismo docente
+            Docentes docenteAsignado = (Docentes) criteriaAsignacion.uniqueResult();
+
+            if (docenteAsignado != null) {
+                throw new RuntimeException("Ya existe un docente asignado al grado '" + nuevoGrado.getNombreGrado() + "' y sección '" + nuevaSeccion.getNombreSeccion() + "'.");
             }
-            e.printStackTrace();
-        } finally {
-            session.close();
+
+            // Actualizar los datos del docente
+            docente.setCui(cui);  
+            docente.setNombreUsuario(nuevoNombreUsuario);
+            docente.setContrasenia(nuevaContrasenia);
+            docente.setRol(nuevoRol);
+            docente.setGrados(nuevoGrado);
+            docente.setSecciones(nuevaSeccion);
+
+            // Actualizar el docente
+            session.update(docente);
+            flag = true;
         }
-        return flag;
+
+        transaction.commit();
+    } catch (Exception e) {
+        if (transaction != null) {
+            transaction.rollback();
+        }
+        e.printStackTrace();
+    } finally {
+        session.close();
     }
+    return flag;
+}
+
 
     // Método para eliminar (borrado lógico) un docente
     public static boolean eliminarDocente(int usuarioId) {
