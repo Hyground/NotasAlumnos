@@ -143,6 +143,10 @@ public class TablaUsuarios {
     public void setSeccionID(Integer SeccionID) {
         this.SeccionID = SeccionID;
     }
+
+    public Object getGrados() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     
     
