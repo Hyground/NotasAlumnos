@@ -10,12 +10,14 @@ import POJOs.Estudiantes;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -56,76 +58,115 @@ public class MenuInscripsionController implements Initializable {
     private TableColumn<Estudiantes, String> seccion;
 
     private ObservableList<Estudiantes> listaEstudiantes;
-   
-
+    private Integer idEstudiante;
+    @FXML
+    private Button btnAgregar;
+    @FXML
+    private Button btnModificar;
+    @FXML
+    private Button btnAnular;
+    @FXML
+    private Button btnReactivar;
+ 
     /**
      * Initializes the controller class.
      */
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-    // Configurar las columnas de la tabla
+        Platform.runLater(() -> txtCui.requestFocus());
+        configurarColumnas();
+        cargarEstudiantes();
+    }
+
+    private void configurarColumnas() {
         cui.setCellValueFactory(new PropertyValueFactory<>("cui"));
         codigopersonal.setCellValueFactory(new PropertyValueFactory<>("codigoPersonal"));
         nombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         apellido.setCellValueFactory(new PropertyValueFactory<>("apellido"));
         grado.setCellValueFactory(new PropertyValueFactory<>("nombreGrado"));
         seccion.setCellValueFactory(new PropertyValueFactory<>("nombreSeccion"));
-        
-        // Cargar los estudiantes en la tabla
-        cargarEstudiantes();
     }
 
     private void cargarEstudiantes() {
-    List<Estudiantes> estudiantes = CEstudiantes.ListarEstudiante(); // Cambiar datos a lista observable
-    listaEstudiantes = FXCollections.observableArrayList(estudiantes);
-    tblEstudiante.setItems(listaEstudiantes);
-}
+        List<Estudiantes> estudiantes = CEstudiantes.ListarEstudiante(); // Cargar los estudiantes desde el controlador
+        listaEstudiantes = FXCollections.observableArrayList(estudiantes);
+        tblEstudiante.setItems(listaEstudiantes);
+    }
 
     @FXML
     private void btnAgregar(ActionEvent event) {
-    String cui = txtCui.getText();
-        String codigoPersonal = txtCodigoPersonal.getText();
-        String nombre = txtNombre.getText();
-        String apellido = txtApellido.getText();
-        Integer gradoId = Integer.parseInt(txtGrado.getText());
-        Integer seccionId = Integer.parseInt(txtSeccion.getText());
+    try {
+            String cui = txtCui.getText();
+            String codigoPersonal = txtCodigoPersonal.getText();
+            String nombre = txtNombre.getText();
+            String apellido = txtApellido.getText();
+            Integer gradoId = Integer.parseInt(txtGrado.getText());
+            Integer seccionId = Integer.parseInt(txtSeccion.getText());
 
-        if (CEstudiantes.crearEstudiante(cui, codigoPersonal, nombre, apellido, gradoId, seccionId)) {
-            cargarEstudiantes();
-            limpiarCampos();
+            if (CEstudiantes.crearEstudiante(cui, codigoPersonal, nombre, apellido, gradoId, seccionId)) {
+                cargarEstudiantes();
+                mostrarAlerta("El estudiante ha sido registrado exitosamente.");
+                limpiarCampos();
+            } else {
+                mostrarAlerta("No se pudo registrar el estudiante.");
+            }
+        } catch (Exception e) {
+            mostrarAlerta("Ocurrió un error: " + e.getMessage());
         }
     }
     
     @FXML
     private void btnModificar(ActionEvent event) {
-    String cui = txtCui.getText();
-        String codigoPersonal = txtCodigoPersonal.getText();
-        String nombre = txtNombre.getText();
-        String apellido = txtApellido.getText();
-        Integer gradoId = Integer.parseInt(txtGrado.getText());
-        Integer seccionId = Integer.parseInt(txtSeccion.getText());
+     try {
+            String cui = txtCui.getText();
+            String codigoPersonal = txtCodigoPersonal.getText();
+            String nombre = txtNombre.getText();
+            String apellido = txtApellido.getText();
+            Integer gradoId = Integer.parseInt(txtGrado.getText());
+            Integer seccionId = Integer.parseInt(txtSeccion.getText());
 
-        if (CEstudiantes.actualizarEstudiante(cui, codigoPersonal, nombre, apellido, gradoId, seccionId)) {
-            cargarEstudiantes();
-            limpiarCampos();
+            if (CEstudiantes.actualizarEstudiante(cui, codigoPersonal, nombre, apellido, gradoId, seccionId)) {
+                cargarEstudiantes();
+                mostrarAlerta("El estudiante ha sido modificado exitosamente.");
+                limpiarCampos();
+            } else {
+                mostrarAlerta("No se pudo modificar el estudiante.");
+            }
+        } catch (Exception e) {
+            mostrarAlerta("Ocurrió un error: " + e.getMessage());
         }
     }
 
     @FXML
     private void btnAnular(ActionEvent event) {
-     String cui = txtCui.getText();
-        if (CEstudiantes.eliminarEstudiante(cui)) {
-            cargarEstudiantes();
-            limpiarCampos();
+      try {
+            String cui = txtCui.getText();
+            if (CEstudiantes.eliminarEstudiante(cui)) {
+                cargarEstudiantes();
+                mostrarAlerta("El estudiante ha sido anulado exitosamente.");
+                limpiarCampos();
+            } else {
+                mostrarAlerta("No se pudo anular el estudiante.");
+            }
+        } catch (Exception e) {
+            mostrarAlerta("Ocurrió un error: " + e.getMessage());
         }
     }
 
     @FXML
     private void btnReactivar(ActionEvent event) {
-      String cui = txtCui.getText();
-        if (CEstudiantes.reactivarEstudiante(cui)) {
-            cargarEstudiantes();
-            limpiarCampos();
+       try {
+            String cui = txtCui.getText();
+            if (CEstudiantes.reactivarEstudiante(cui)) {
+                cargarEstudiantes();
+                mostrarAlerta("El estudiante ha sido reactivado exitosamente.");
+                limpiarCampos();
+            } else {
+                mostrarAlerta("No se pudo reactivar el estudiante.");
+            }
+        } catch (Exception e) {
+            mostrarAlerta("Ocurrió un error: " + e.getMessage());
         }
     }
 
@@ -138,4 +179,14 @@ public class MenuInscripsionController implements Initializable {
         txtSeccion.clear();
     }
 
+private void mostrarAlerta(String mensaje) {
+    Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+    alerta.setTitle("Información");
+    alerta.setHeaderText(null);
+    alerta.setContentText(mensaje);
+    alerta.showAndWait();
 }
+}
+
+
+//  FALTA QUE LA TABLA MUESTRE LOS DATOS 
