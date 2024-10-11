@@ -16,6 +16,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -38,9 +39,7 @@ public class MenuAdminController implements Initializable {
     private TextField txtUsuario;
     @FXML
     private TextField txtContra;
-    @FXML
     private TextField txtGrado;
-    @FXML
     private TextField txtSeccion;
     @FXML
     private TableView<TablaUsuarios> tablawe;
@@ -69,21 +68,27 @@ public class MenuAdminController implements Initializable {
     private Button btnModificar;
     @FXML
     private Button BtnLimpiar;
-    @FXML
     private TextField txtRol;
     @FXML
     private TextField txtNombre;
+    @FXML
+    private ChoiceBox<?> conGrado;
+    @FXML
+    private ChoiceBox<?> conSeccion;
+    @FXML
+    private ChoiceBox<?> conROl;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        mostrar();
+        //mostrar();
+        
     }    
 
     
-    public void mostrar(){
+   /* public void mostrar(){
         listaUsuario = FXCollections.observableArrayList();
         for (Iterator it = CRUDs.CDocentes.listarDocentes().iterator(); it.hasNext();) {
             Object[] item = (Object[]) it.next();
@@ -99,7 +104,7 @@ public class MenuAdminController implements Initializable {
         this.SeccionID.setCellValueFactory(new PropertyValueFactory("SeccionID"));
         tablawe.setItems(listaUsuario);
     }
-
+*/
     @FXML
     private void seleccionar(MouseEvent event) {
         TablaUsuarios p = this.tablawe.getSelectionModel().getSelectedItem();
@@ -124,7 +129,7 @@ public class MenuAdminController implements Initializable {
             grado = Integer.parseInt(txtGrado.getText());
             seccion = Integer.parseInt(txtSeccion.getText());
             if (CRUDs.CDocentes.crearDocente(nombre, cui, Usuario, contra, rol, grado, seccion)) {
-                mostrar();
+                //mostrar();
                 Alert alerta = new Alert(Alert.AlertType.INFORMATION);
                 alerta.setTitle("Informacion xd");
                 alerta.setHeaderText(null);
@@ -153,7 +158,7 @@ public class MenuAdminController implements Initializable {
         try {
 
             if (CRUDs.CDocentes.eliminarDocente(UsuarioIDV)) {
-                mostrar();
+               // mostrar();
                 Alert alerta = new Alert(Alert.AlertType.INFORMATION);
                 alerta.setTitle("Informacion xd");
                 alerta.setHeaderText(null);
@@ -190,7 +195,7 @@ public class MenuAdminController implements Initializable {
             grado = Integer.parseInt(txtGrado.getText());
             seccion = Integer.parseInt(txtSeccion.getText());
             if (CRUDs.CDocentes.actualizarDocente(UsuarioIDV, Usuario, contra, rol, grado, seccion)) {
-                mostrar();
+             //  mostrar();
                 Alert alerta = new Alert(Alert.AlertType.INFORMATION);
                 alerta.setTitle("Informacion xd");
                 alerta.setHeaderText(null);
