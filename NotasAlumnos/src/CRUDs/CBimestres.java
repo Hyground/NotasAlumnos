@@ -12,23 +12,22 @@ import org.hibernate.criterion.Restrictions;
 public class CBimestres {
 
     // Método para listar todos los bimestres
-    public static List<Bimestres> listarBimestres() {
-       List<Bimestres> lista = null;
-    try (Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession()) {
-    session.setDefaultReadOnly(true);
-    Criteria criteria = session.createCriteria(Bimestres.class);
-    criteria.setProjection(Projections.projectionList()
-        .add(Projections.property("bimestreId"))
-        .add(Projections.property("nombreBimestre"))
-    );
-    criteria.addOrder(Order.desc("bimestreId"));
-    lista = criteria.list();
-} catch (Exception e) {
-    System.out.println("Error: " + e);
-}
-return lista;
-
+public static List<Bimestres> listarBimestres() {
+    Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
+    List<Bimestres> lista = null;
+    try {
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(Bimestres.class);
+        lista = criteria.list();
+    } catch (Exception e) {
+        System.out.println("Error: " + e);
+    } finally {
+        session.getTransaction().commit();
+        session.close();
     }
+    return lista;
+}
+
 
     // Método para crear un nuevo bimestre
    public static boolean crearBimestres() {
@@ -97,4 +96,20 @@ return lista;
         }
         return bimestre;
     }
+        public static Bimestres obtenerSeccionPorNombre(String nombreBimestre) {
+    Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
+    Bimestres bimestre = null;
+    try {
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(Bimestres.class);
+        criteria.add(Restrictions.eq("nombreBimestre", nombreBimestre));
+        bimestre = (Bimestres) criteria.uniqueResult();
+    } catch (Exception e) {
+        e.printStackTrace();
+    } finally {
+        session.getTransaction().commit();
+        session.close();
+    }
+    return bimestre;
+}
 }

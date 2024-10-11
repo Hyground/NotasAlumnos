@@ -5,8 +5,13 @@
  */
 package Controlador;
 
+import POJOs.Bimestres;
+import CRUDs.CBimestres;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -25,15 +30,15 @@ import javafx.scene.input.MouseEvent;
 public class MenuEvaluacionController implements Initializable {
 
     @FXML
-    private ChoiceBox<?> conCurso;
+    private ChoiceBox<String> conCurso;
     @FXML
-    private ChoiceBox<?> conBimestre;
+    private ChoiceBox<String> conBimestre;
     @FXML
     private Label rGrado;
     @FXML
     private Label rSeccion;
     @FXML
-    private ChoiceBox<?> conTipo;
+    private ChoiceBox<String> conTipo;
     @FXML
     private TextField txtNombre;
     @FXML
@@ -48,6 +53,9 @@ public class MenuEvaluacionController implements Initializable {
     private TableColumn<?, ?> tipoActividad;
     @FXML
     private TableColumn<?, ?> ponderacionActividad;
+    private Integer gradoId;
+    private Integer seccionId;
+            
 
     /**
      * Initializes the controller class.
@@ -55,7 +63,34 @@ public class MenuEvaluacionController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
+        cargarBimestre();
+        cargarTipo();
+    }
+    // este codigo tambien, tiene una parte que va en nuestro menu docente, si no
+    //no lo trae
+    public  void setDatosGradoSeccion (String grado, String seccion, Integer gradoId, Integer seccionId){
+           this.gradoId = gradoId;       // Almacenar el ID del grado
+        this.seccionId = seccionId;   // Almacenar el ID de la sección
+        rGrado.setText(grado);      // Mostrar el nombre del grado
+        rSeccion.setText(seccion);  // Mostrar el nombre de la sección
+        
+    }
+    // tipo de evaluacion conbobox
+    public  void cargarTipo() {
+    ObservableList<String> tipo = FXCollections.observableArrayList("Evaluacion","Actividad");
+    conTipo.setItems(tipo);
+    }
+    //aqui cargamos bimestres faker
+    public void cargarBimestre(){
+        List<Bimestres> listtaBimestres = CBimestres.listarBimestres();
+        ObservableList<String> bimestres = FXCollections.observableArrayList();
+        for(Bimestres bimestre:listtaBimestres){
+        bimestres.add(bimestre.getNombreBimestre());
+        }
+        conBimestre.setItems(bimestres);
+    }
+    
+    
 
     @FXML
     private void btnGuardar(ActionEvent event) {
