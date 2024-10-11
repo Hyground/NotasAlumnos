@@ -48,7 +48,7 @@ public class CEvaluaciones {
     }
 
     // Método para crear una nueva evaluación sin verificar las relaciones
-    public static boolean crearEvaluacion(int bimestreId, int cursoId, int gradoId, int seccionId, String nombreEvaluacion, String tipo, BigDecimal ponderacion) {
+    public static boolean crearEvaluacion(Integer bimestreId, Integer cursoId, int gradoId, int seccionId, String nombreEvaluacion, String tipo, BigDecimal ponderacion) {
         boolean flag = false;
         Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = null;
