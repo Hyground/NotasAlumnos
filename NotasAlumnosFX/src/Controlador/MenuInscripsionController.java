@@ -5,57 +5,139 @@
  */
 package Controlador;
 
+import CRUDs.CEstudiantes;
+import POJOs.Estudiantes;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 /**
  * FXML Controller class
  *
- * @author wissegt
+ * @author Alonzo Morales
  */
 public class MenuInscripsionController implements Initializable {
 
     @FXML
-    private TextField txtCodigoPersonal;
-    @FXML
     private TextField txtCui;
     @FXML
-    private TextField txtApellido;
+    private TextField txtCodigoPersonal;
     @FXML
     private TextField txtNombre;
     @FXML
-    private Button btnGuardar;
+    private TextField txtApellido;
     @FXML
-    private Button btnEliminar;
+    private TextField txtGrado;
     @FXML
-    private Button btnModificar;
+    private TextField txtSeccion;
     @FXML
-    private TableColumn<?, ?> tblInscripcionEstudiantes;
+     private TableView<Estudiantes> tblEstudiante;
+    @FXML
+    private TableColumn<Estudiantes, String> cui;
+    @FXML
+    private TableColumn<Estudiantes, String> codigopersonal;
+    @FXML
+    private TableColumn<Estudiantes, String> nombre;
+    @FXML
+    private TableColumn<Estudiantes, String> apellido;
+    @FXML
+    private TableColumn<Estudiantes, String> grado;
+    @FXML
+    private TableColumn<Estudiantes, String> seccion;
+
+    private ObservableList<Estudiantes> listaEstudiantes;
+   
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
-
-    @FXML
-    private void guardar(ActionEvent event) {
+    // Configurar las columnas de la tabla
+        cui.setCellValueFactory(new PropertyValueFactory<>("cui"));
+        codigopersonal.setCellValueFactory(new PropertyValueFactory<>("codigoPersonal"));
+        nombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        apellido.setCellValueFactory(new PropertyValueFactory<>("apellido"));
+        grado.setCellValueFactory(new PropertyValueFactory<>("nombreGrado"));
+        seccion.setCellValueFactory(new PropertyValueFactory<>("nombreSeccion"));
+        
+        // Cargar los estudiantes en la tabla
+        cargarEstudiantes();
     }
 
-    @FXML
-    private void eliminar(ActionEvent event) {
-    }
+    private void cargarEstudiantes() {
+    List<Estudiantes> estudiantes = CEstudiantes.ListarEstudiante(); // Cambiar datos a lista observable
+    listaEstudiantes = FXCollections.observableArrayList(estudiantes);
+    tblEstudiante.setItems(listaEstudiantes);
+}
 
     @FXML
-    private void modificar(ActionEvent event) {
+    private void btnAgregar(ActionEvent event) {
+    String cui = txtCui.getText();
+        String codigoPersonal = txtCodigoPersonal.getText();
+        String nombre = txtNombre.getText();
+        String apellido = txtApellido.getText();
+        Integer gradoId = Integer.parseInt(txtGrado.getText());
+        Integer seccionId = Integer.parseInt(txtSeccion.getText());
+
+        if (CEstudiantes.crearEstudiante(cui, codigoPersonal, nombre, apellido, gradoId, seccionId)) {
+            cargarEstudiantes();
+            limpiarCampos();
+        }
     }
     
+    private void btnModificar(ActionEvent event) {
+    String cui = txtCui.getText();
+        String codigoPersonal = txtCodigoPersonal.getText();
+        String nombre = txtNombre.getText();
+        String apellido = txtApellido.getText();
+        Integer gradoId = Integer.parseInt(txtGrado.getText());
+        Integer seccionId = Integer.parseInt(txtSeccion.getText());
+
+        if (CEstudiantes.actualizarEstudiante(cui, codigoPersonal, nombre, apellido, gradoId, seccionId)) {
+            cargarEstudiantes();
+            limpiarCampos();
+        }
+    }
+
+    @FXML
+    private void btnAnular(ActionEvent event) {
+     String cui = txtCui.getText();
+        if (CEstudiantes.eliminarEstudiante(cui)) {
+            cargarEstudiantes();
+            limpiarCampos();
+        }
+    }
+
+    @FXML
+    private void btnReactivar(ActionEvent event) {
+      String cui = txtCui.getText();
+        if (CEstudiantes.reactivarEstudiante(cui)) {
+            cargarEstudiantes();
+            limpiarCampos();
+        }
+    }
+
+    private void limpiarCampos() {
+        txtCui.clear();
+        txtCodigoPersonal.clear();
+        txtNombre.clear();
+        txtApellido.clear();
+        txtGrado.clear();
+        txtSeccion.clear();
+    }
+
+    @FXML
+    private void brnModificar(ActionEvent event) {
+    }
 }
