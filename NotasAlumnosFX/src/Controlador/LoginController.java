@@ -1,6 +1,7 @@
 package Controlador;
 
 import CRUDs.CLogin;
+import POJOs.Docentes;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -97,13 +98,44 @@ public class LoginController implements Initializable {
 
         if (isAuthenticated) {
             if (docenteOn.isSelected()) {
-                cargarFXML("/Vista/MenuDocente.fxml");
+                // Obtener el docente con sus datos
+                Docentes docente = CLogin.obtenerDocentePorNombreUsuario(nombreUsuario);
+                
+                // Cargar la vista de MenuDocente y pasar los datos
+                cargarFXMLConDatos("/Vista/MenuDocente.fxml", docente);
             } else if (adminOn.isSelected()) {
                 cargarFXML("/Vista/MenuAdmin.fxml");
             }
             errorUsPas.setVisible(false); 
         } else {
             errorUsPas.setVisible(true); 
+        }
+    }
+
+    // Método para cargar el FXML y pasar los datos
+    private void cargarFXMLConDatos(String fxml, Docentes docente) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
+            Parent root = loader.load();
+
+            // Obtener el controlador de la vista cargada
+            MenuDocenteController controller = loader.getController();
+            // Pasar los datos del docente al controlador
+            controller.setDatosDocente(docente.getNombreCompleto(), docente.getGrados().getNombreGrado(), docente.getSecciones().getNombreSeccion());
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+
+            // Cerrar la ventana de login
+            Stage loginStage = (Stage) btnIngreso.getScene().getWindow();
+            loginStage.close();
+
+            stage.setOnCloseRequest(event -> {
+                abrirLogin();  
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -154,7 +186,7 @@ public class LoginController implements Initializable {
         if (!animacionEjecutada) {
             TranslateTransition move = new TranslateTransition();
             move.setNode(lblUser);
-            move.setDuration(Duration.millis(1000));
+            move.setDuration(Duration.millis(500));
             move.setCycleCount(1);
             move.setByY(-30);
             move.play();
@@ -168,7 +200,7 @@ public class LoginController implements Initializable {
         if (!animacionEjecutada2) {
             TranslateTransition move = new TranslateTransition();
             move.setNode(lblContra);
-            move.setDuration(Duration.millis(1000));
+            move.setDuration(Duration.millis(500));
             move.setCycleCount(1);
             move.setByY(-30);
             move.play();

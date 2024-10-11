@@ -25,8 +25,15 @@ public class MenuDocenteController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        // Inicialización
     }    
+
+    // Método para establecer los datos del docente
+    public void setDatosDocente(String nombreDocente, String grado, String seccion) {
+        labelNomDocente.setText(nombreDocente);
+        labelGrado.setText(grado);
+        labelSeccion.setText(seccion);
+    }
 
     @FXML
     private void btnInscripcion(ActionEvent event) {
@@ -34,7 +41,7 @@ public class MenuDocenteController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/MenuInscripsion.fxml"));
             Parent root = loader.load();
             Stage stage = new Stage();
-            stage.setTitle("Inscripsion");
+            stage.setTitle("Inscripción");
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
@@ -49,7 +56,7 @@ public class MenuDocenteController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/MenuEvaluacion.fxml"));
             Parent root = loader.load();
             Stage stage = new Stage();
-            stage.setTitle("Evaluacion");
+            stage.setTitle("Evaluación");
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
@@ -94,6 +101,6 @@ public class MenuDocenteController implements Initializable {
 
     @FXML
     private void btnCambiarContrasenia(ActionEvent event) {
+        // Implementación del cambio de contraseña si lo necesitas
     }
-    
 }
