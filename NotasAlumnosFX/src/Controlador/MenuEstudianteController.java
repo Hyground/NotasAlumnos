@@ -5,6 +5,8 @@ import POJOs.Estudiantes;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -60,21 +62,33 @@ public class MenuEstudianteController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // Configurar las columnas de la tabla
+        //Configurar las columnas de la tabla
+        mostrar();
+    }
+
+    private void mostrar() {
+        // Configurar las columnas de la tabla con los datos de los estudiantes
         cui.setCellValueFactory(new PropertyValueFactory<>("cui"));
         codigopersonal.setCellValueFactory(new PropertyValueFactory<>("codigoPersonal"));
         nombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         apellido.setCellValueFactory(new PropertyValueFactory<>("apellido"));
-        grado.setCellValueFactory(new PropertyValueFactory<>("nombreGrado"));
-        seccion.setCellValueFactory(new PropertyValueFactory<>("nombreSeccion"));
-        
-        // Cargar los estudiantes en la tabla
+
+        // Utilizar SimpleStringProperty para acceder a los nombres de grado y sección
+        grado.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getGrados().getNombreGrado()));
+        seccion.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getSecciones().getNombreSeccion()));
+
+        // Cargar los estudiantes filtrados por grado y sección
         cargarEstudiantes();
     }
 
     private void cargarEstudiantes() {
-        List<Estudiantes> estudiantes = CEstudiantes.ListarEstudiante(); 
-        listaEstudiantes = FXCollections.observableArrayList(estudiantes);
+        List<Estudiantes> estudiantes = CEstudiantes.ListarEstudiante();
+        // Filtrar estudiantes según el grado y la sección seleccionados
+        List<Estudiantes> estudiantesFiltrados = estudiantes.stream()
+                .filter(est -> est.getGrados().getGradoId().equals(gradoId) && est.getSecciones().getSeccionId().equals(seccionId))
+                .collect(Collectors.toList());
+
+        listaEstudiantes = FXCollections.observableArrayList(estudiantesFiltrados);
         tblEstudiante.setItems(listaEstudiantes);
     }
 
@@ -84,8 +98,12 @@ public class MenuEstudianteController implements Initializable {
         this.seccionId = seccionId;   // Almacenar el ID de la sección
         txtGrado.setText(grado);      // Mostrar el nombre del grado
         txtSeccion.setText(seccion);  // Mostrar el nombre de la sección
+        
+        // Después de establecer los datos, cargar los estudiantes correspondientes
+        cargarEstudiantes();
     }
 
+    //////////////////////////////////////estos son muy imporantes, no se tocan, /////////////////
     @FXML
     private void btnAgregar(ActionEvent event) {
         String cui = txtCui.getText();
@@ -95,7 +113,7 @@ public class MenuEstudianteController implements Initializable {
 
         // Utilizar el gradoId y seccionId almacenados
         if (CEstudiantes.crearEstudiante(cui, codigoPersonal, nombre, apellido, gradoId, seccionId)) {
-            cargarEstudiantes();
+            cargarEstudiantes();  // Recargar la tabla después de agregar un nuevo estudiante
             limpiarCampos();
         }
     }
@@ -104,7 +122,7 @@ public class MenuEstudianteController implements Initializable {
     private void btnAnular(ActionEvent event) {
         String cui = txtCui.getText();
         if (CEstudiantes.eliminarEstudiante(cui)) {
-            cargarEstudiantes();
+            cargarEstudiantes();  // Recargar la tabla después de anular un estudiante
             limpiarCampos();
         }
     }
@@ -116,9 +134,9 @@ public class MenuEstudianteController implements Initializable {
         String nombre = txtNombre.getText();
         String apellido = txtApellido.getText();
 
-        // aqui tratamos de validar y usar lo informacion 
+        // aquí tratamos de validar y usar la información
         if (CEstudiantes.actualizarEstudiante(cui, codigoPersonal, nombre, apellido, gradoId, seccionId)) {
-            cargarEstudiantes();
+            cargarEstudiantes();  // Recargar la tabla después de actualizar un estudiante
             limpiarCampos();
         }
     }
@@ -127,7 +145,7 @@ public class MenuEstudianteController implements Initializable {
     private void btnReactivar(ActionEvent event) {
         String cui = txtCui.getText();
         if (CEstudiantes.reactivarEstudiante(cui)) {
-            cargarEstudiantes();
+            cargarEstudiantes();  // Recargar la tabla después de reactivar un estudiante
             limpiarCampos();
         }
     }
@@ -137,6 +155,6 @@ public class MenuEstudianteController implements Initializable {
         txtCodigoPersonal.clear();
         txtNombre.clear();
         txtApellido.clear();
-        // No limpiar txtGrado y txtSeccion, ya que son los datos del docente que cargamos antes, por eso lo elimine alonzo
+        // No limpiar txtGrado y txtSeccion, ya que son los datos del docente que cargamos antes
     }
 }

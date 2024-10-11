@@ -14,32 +14,26 @@ import org.hibernate.criterion.Restrictions;
 public class CEstudiantes {
 
     // Método para listar todos los estudiantes activos (borradoLogico = true)
-    public static List<Estudiantes> ListarEstudiante() {
-        Session session = HibernateUtil.HibernateUtil.getSessionFactory().getCurrentSession();
-        List<Estudiantes> lista = null;
-        try {
-            session.beginTransaction();
-            Criteria criteria = session.createCriteria(Estudiantes.class);
-            criteria.createAlias("grados", "g"); // Relacionar con Grados
-            criteria.createAlias("secciones", "s"); // Relacionar con Secciones
-            criteria.add(Restrictions.eq("borradoLogico", true));  // Solo listar estudiantes activos
-            criteria.setProjection(Projections.projectionList()
-                    .add(Projections.property("cui"))
-                    .add(Projections.property("codigoPersonal"))
-                    .add(Projections.property("nombre"))
-                    .add(Projections.property("apellido"))
-                    .add(Projections.property("g.nombreGrado"))  // Alias para nombre del grado
-                    .add(Projections.property("s.nombreSeccion")) // Alias para nombre de la sección
-            );
-            criteria.addOrder(Order.desc("cui"));
-            lista = criteria.list();
-        } catch (Exception e) {
-            System.out.println("Error: " + e);
-        } finally {
-            session.getTransaction().commit();
-        }
-        return lista;
+public static List<Estudiantes> ListarEstudiante() {
+    Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
+    List<Estudiantes> lista = null;
+    try {
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(Estudiantes.class);
+        criteria.createAlias("grados", "g"); // Relacionar con Grados
+        criteria.createAlias("secciones", "s"); // Relacionar con Secciones
+        criteria.add(Restrictions.eq("borradoLogico", true));  // Solo listar estudiantes activos
+        criteria.addOrder(Order.asc("nombre"));  // Ordenar por nombre
+        lista = criteria.list(); // Retornar una lista completa de Estudiantes
+    } catch (Exception e) {
+        System.out.println("Error: " + e);
+    } finally {
+        session.getTransaction().commit();
+        session.close();
     }
+    return lista;
+}
+
 
     // Método para crear un nuevo estudiante
     public static boolean crearEstudiante(String cui, String codigoPersonal, String nombre, String apellido, Integer gradoId, Integer seccionId) {
