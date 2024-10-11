@@ -88,4 +88,20 @@ public class CSecciones {
         }
         return seccion;
     }
+    public static Secciones obtenerSeccionPorNombre(String nombreSeccion) {
+    Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
+    Secciones seccion = null;
+    try {
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(Secciones.class);
+        criteria.add(Restrictions.eq("nombreSeccion", nombreSeccion));
+        seccion = (Secciones) criteria.uniqueResult();
+    } catch (Exception e) {
+        e.printStackTrace();
+    } finally {
+        session.getTransaction().commit();
+        session.close();
+    }
+    return seccion;
+}
 }

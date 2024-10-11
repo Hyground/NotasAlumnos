@@ -88,4 +88,20 @@ public static boolean crearGrados() {
         }
         return grado;
     }
+    public static Grados obtenerGradoPorNombre(String nombreGrado) {
+    Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
+    Grados grado = null;
+    try {
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(Grados.class);
+        criteria.add(Restrictions.eq("nombreGrado", nombreGrado));
+        grado = (Grados) criteria.uniqueResult();
+    } catch (Exception e) {
+        e.printStackTrace();
+    } finally {
+        session.getTransaction().commit();
+        session.close();
+    }
+    return grado;
+}
 }
