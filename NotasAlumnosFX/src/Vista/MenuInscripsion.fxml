@@ -23,7 +23,7 @@
       <TextField fx:id="txtNombre" layoutX="142.0" layoutY="157.0" />
       <Button layoutX="460.0" layoutY="75.0" mnemonicParsing="false" onAction="#btnAgregar" text="Agregar" />
       <Button layoutX="461.0" layoutY="178.0" mnemonicParsing="false" onAction="#btnAnular" text="Anular" />
-      <Button layoutX="455.0" layoutY="126.0" mnemonicParsing="false" onAction="#brnModificar" text="Modificar" />
+      <Button layoutX="455.0" layoutY="126.0" mnemonicParsing="false" onAction="#btnModificar" text="Modificar" />
       <TableView fx:id="tblEstudiante" layoutX="56.0" layoutY="383.0" prefHeight="193.0" prefWidth="666.0">
         <columns>
           <TableColumn fx:id="cui" prefWidth="97.0" text="CUI" />

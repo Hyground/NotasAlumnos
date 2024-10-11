@@ -96,6 +96,7 @@ public class MenuInscripsionController implements Initializable {
         }
     }
     
+    @FXML
     private void btnModificar(ActionEvent event) {
     String cui = txtCui.getText();
         String codigoPersonal = txtCodigoPersonal.getText();
@@ -137,7 +138,4 @@ public class MenuInscripsionController implements Initializable {
         txtSeccion.clear();
     }
 
-    @FXML
-    private void brnModificar(ActionEvent event) {
-    }
 }
