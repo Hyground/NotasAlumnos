@@ -7,8 +7,35 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.MenuNotasController">
+<AnchorPane id="AnchorPane" prefHeight="509.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="Controlador.MenuNotasController">
     <stylesheets>
-        <URL value="@menunotas.css"/>
+        <URL value="@menunotas.css" />
     </stylesheets>
+   <children>
+      <TableView fx:id="tblNotas" layoutX="50.0" layoutY="82.0" prefHeight="188.0" prefWidth="505.0">
+         <columns>
+            <TableColumn prefWidth="71.0" text="CUI" />
+            <TableColumn prefWidth="125.0" text="Nombre" />
+            <TableColumn fx:id="tblNotas" prefWidth="109.0" text="Apellido" />
+            <TableColumn prefWidth="109.0" text="Tipo de Evaluacion" />
+            <TableColumn prefWidth="90.0" text="Nota" />
+         </columns>
+      </TableView>
+      <Button fx:id="btnModificar" layoutX="450.0" layoutY="361.0" mnemonicParsing="false" onAction="#modificar" text="Modificar" />
+      <Button fx:id="btnEliminar" layoutX="455.0" layoutY="424.0" mnemonicParsing="false" onAction="#eliminar" text="Eliminar" />
+      <Button fx:id="btnGuardar" layoutX="454.0" layoutY="301.0" mnemonicParsing="false" onAction="#guardar" text="Guardar" />
+      <TextField fx:id="txtNombre" layoutX="201.0" layoutY="287.0" />
+      <TextField fx:id="txtApellido" layoutX="201.0" layoutY="332.0" />
+      <Label layoutX="82.0" layoutY="337.0" text="Apellido:" />
+      <Label layoutX="82.0" layoutY="292.0" text="Nombre:" />
+      <TextField fx:id="txtCui" layoutX="201.0" layoutY="375.0" />
+      <Label layoutX="81.0" layoutY="423.0" text="Tipo de evaluacio:" />
+      <Label layoutX="82.0" layoutY="380.0" text="CUI:" />
+      <Label layoutX="256.0" layoutY="51.0" text="Seccion:  A" />
+      <Label layoutX="82.0" layoutY="51.0" text="Grado:   Primero" />
+      <Label layoutX="290.0" layoutY="23.0" text="Notas" />
+      <Label layoutX="82.0" layoutY="464.0" text="Nota:" />
+      <TextField fx:id="txtNota" layoutX="201.0" layoutY="459.0" />
+      <ChoiceBox fx:id="choTipo" layoutX="202.0" layoutY="417.0" prefHeight="31.0" prefWidth="187.0" />
+   </children>
 </AnchorPane>
