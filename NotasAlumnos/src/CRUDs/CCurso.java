@@ -9,9 +9,12 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class CCurso {
-
+    
+private static final Logger logger = LoggerFactory.getLogger(CCurso.class);
     // Método para listar todos los cursos
     public static List<Cursos> listarCursos() {
         Session session=HibernateUtil.HibernateUtil.getSessionFactory().getCurrentSession();
@@ -29,7 +32,7 @@ public class CCurso {
             lista =criteria.list();
                     
         } catch (Exception e) {
-            System.out.println("error"+e);
+            logger.error("error"+e);
         } finally{
         session.getTransaction().commit();
         
@@ -103,13 +106,13 @@ public static boolean crearCursos() {
                         // Guardar el nuevo curso
                         session.save(nuevoCurso);
                         flag = true;
-                        System.out.println("Curso " + nombreCurso + " para grado " + nombreGrado + " creado.");
+                        logger.info("Curso " + nombreCurso + " para grado " + nombreGrado + " creado.");
                     } else {
-                        System.out.println("Curso " + nombreCurso + " para grado " + nombreGrado + " ya existe.");
+                        logger.info("Curso " + nombreCurso + " para grado " + nombreGrado + " ya existe.");
                     }
                 }
             } else {
-                System.out.println("No se encontró el grado " + nombreGrado);
+                logger.error("No se encontró el grado " + nombreGrado);
             }
         }
 
@@ -138,13 +141,13 @@ public static boolean crearCursos() {
                         // Guardar el nuevo curso
                         session.save(nuevoCurso);
                         flag = true;
-                        System.out.println("Curso " + nombreCurso + " para grado " + nombreGrado + " creado.");
+                        logger.info("Curso " + nombreCurso + " para grado " + nombreGrado + " creado.");
                     } else {
-                        System.out.println("Curso " + nombreCurso + " para grado " + nombreGrado + " ya existe.");
+                       logger.info("Curso " + nombreCurso + " para grado " + nombreGrado + " ya existe.");
                     }
                 }
             } else {
-                System.out.println("No se encontró el grado " + nombreGrado);
+                logger.error("No se encontró el grado " + nombreGrado);
             }
         }
 
@@ -168,7 +171,7 @@ public static boolean crearCursos() {
             session.beginTransaction();
             curso = (Cursos) session.get(Cursos.class, cursoId);
         } catch (Exception e) {
-            System.out.println("Error: " + e);
+            logger.error("Error: " + e);
         } finally {
             session.getTransaction().commit();
             session.close();
