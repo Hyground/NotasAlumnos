@@ -23,30 +23,41 @@ public class MenuDocenteController implements Initializable {
     @FXML
     private Label labelSeccion;
 
+    private Integer gradoId;   // Variable para almacenar el ID del grado
+    private Integer seccionId; // Variable para almacenar el ID de la sección
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // Inicialización
-    }    
+    }
 
-    // Método para establecer los datos del docente
-    public void setDatosDocente(String nombreDocente, String grado, String seccion) {
+    // Método para establecer los datos del docente, incluyendo los IDs
+    public void setDatosDocente(String nombreDocente, String grado, String seccion, Integer gradoId, Integer seccionId) {
         labelNomDocente.setText(nombreDocente);
         labelGrado.setText(grado);
         labelSeccion.setText(seccion);
+        this.gradoId = gradoId;   // Guardar el ID del grado
+        this.seccionId = seccionId; // Guardar el ID de la sección
     }
 
     @FXML
     private void btnInscripcion(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/MenuInscripsion.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/MenuEstudiante.fxml"));
             Parent root = loader.load();
+
+            // Obtener el controlador de la vista cargada
+            MenuEstudianteController controller = loader.getController();
+            // Pasar los datos de grado, sección y sus IDs al controlador de estudiantes
+            controller.setDatosGradoSeccion(labelGrado.getText(), labelSeccion.getText(), gradoId, seccionId);
+
             Stage stage = new Stage();
-            stage.setTitle("Inscripción");
+            stage.setTitle("Inscripción de Estudiantes");
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
         } catch (IOException ex) {
-            Logger.getLogger(MenuInscripsionController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MenuDocenteController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

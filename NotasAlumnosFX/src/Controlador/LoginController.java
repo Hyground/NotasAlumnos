@@ -113,31 +113,38 @@ public class LoginController implements Initializable {
     }
 
     // Método para cargar el FXML y pasar los datos
-    private void cargarFXMLConDatos(String fxml, Docentes docente) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
-            Parent root = loader.load();
+ private void cargarFXMLConDatos(String fxml, Docentes docente) {
+    try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
+        Parent root = loader.load();
 
-            // Obtener el controlador de la vista cargada
-            MenuDocenteController controller = loader.getController();
-            // Pasar los datos del docente al controlador
-            controller.setDatosDocente(docente.getNombreCompleto(), docente.getGrados().getNombreGrado(), docente.getSecciones().getNombreSeccion());
+        // Obtener el controlador de la vista cargada
+        MenuDocenteController controller = loader.getController();
+        // Pasar los datos del docente al controlador en texto plano y los IDs
+        controller.setDatosDocente(
+            docente.getNombreCompleto(), 
+            docente.getGrados().getNombreGrado(), 
+            docente.getSecciones().getNombreSeccion(), 
+            docente.getGrados().getGradoId(),  // Pasar el ID del grado
+            docente.getSecciones().getSeccionId()  // Pasar el ID de la sección
+        );
 
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.show();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.show();
 
-            // Cerrar la ventana de login
-            Stage loginStage = (Stage) btnIngreso.getScene().getWindow();
-            loginStage.close();
+        // Cerrar la ventana de login
+        Stage loginStage = (Stage) btnIngreso.getScene().getWindow();
+        loginStage.close();
 
-            stage.setOnCloseRequest(event -> {
-                abrirLogin();  
-            });
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        stage.setOnCloseRequest(event -> {
+            abrirLogin();  
+        });
+    } catch (IOException e) {
+        e.printStackTrace();
     }
+}
+
 
     private void cargarFXML(String fxml) {
         try {
