@@ -64,6 +64,8 @@ public class MenuEstudianteController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         //Configurar las columnas de la tabla
         mostrar();
+        // Configurar la selección de estudiantes
+        seleccionarEstudiante();
     }
 
     private void mostrar() {
@@ -157,4 +159,18 @@ public class MenuEstudianteController implements Initializable {
         txtApellido.clear();
         // No limpiar txtGrado y txtSeccion, ya que son los datos del docente que cargamos antes
     }
+
+    private void seleccionarEstudiante() {
+    // Escuchar cambios de selección en la tabla
+    tblEstudiante.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+        // Verificar que haya un estudiante seleccionado
+        if (newValue != null) {
+            // Llenar los campos de texto con los datos del estudiante seleccionado
+            txtCui.setText(newValue.getCui());
+            txtCodigoPersonal.setText(newValue.getCodigoPersonal());
+            txtNombre.setText(newValue.getNombre());
+            txtApellido.setText(newValue.getApellido());
+        }
+    });
+}
 }
