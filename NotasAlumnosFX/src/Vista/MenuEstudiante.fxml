@@ -13,49 +13,51 @@
         <URL value="@menuestudiante.css" />
     </stylesheets>
    <children>
-      <Pane layoutX="-7.0" prefHeight="493.0" prefWidth="962.0">
+      <Pane layoutX="-20.0" layoutY="-7.0" prefHeight="600.0" prefWidth="1024.0">
          <children>
-            <Button layoutX="72.0" layoutY="364.0" mnemonicParsing="false" onAction="#btnAgregar" text="Agregar" />
-            <Button layoutX="77.0" layoutY="416.0" mnemonicParsing="false" onAction="#btnAnular" text="Anular" />
-            <Button layoutX="175.0" layoutY="364.0" mnemonicParsing="false" onAction="#btnActualizar" text="Actualizar" />
-            <Button layoutX="177.0" layoutY="416.0" mnemonicParsing="false" onAction="#btnReactivar" text="Reactivar" />
-            <Label layoutX="86.0" layoutY="142.0" text="Cui" />
-            <Label layoutX="40.0" layoutY="191.0" text="Codigo Personal" />
-            <Label layoutX="69.0" layoutY="251.0" text="Nombre" />
-            <Label layoutX="69.0" layoutY="301.0" text="Apellido" />
-            <Label layoutX="59.0" layoutY="79.0" text="Grado:">
+            <Button layoutX="88.0" layoutY="391.0" mnemonicParsing="false" onAction="#btnAgregar" text="Agregar" />
+            <Button layoutX="88.0" layoutY="440.0" mnemonicParsing="false" onAction="#btnAnular" text="Anular" />
+            <Button layoutX="230.0" layoutY="391.0" mnemonicParsing="false" onAction="#btnActualizar" text="Actualizar" />
+            <Button layoutX="230.0" layoutY="440.0" mnemonicParsing="false" onAction="#btnReactivar" text="Reactivar" />
+            <Label layoutX="121.0" layoutY="103.0" text="Cui" />
+            <Label layoutX="55.0" layoutY="183.0" text="Codigo Personal" />
+            <Label layoutX="99.0" layoutY="260.0" text="Nombre" />
+            <Label layoutX="101.0" layoutY="330.0" text="Apellido" />
+            <Label layoutX="64.0" layoutY="47.0" text="Grado:">
                <font>
                   <Font size="17.0" />
                </font></Label>
-            <Label layoutX="210.0" layoutY="80.0" text="Sección:">
+            <Label layoutX="247.0" layoutY="47.0" text="Sección:">
                <font>
                   <Font size="16.0" />
                </font></Label>
-            <TextField fx:id="txtCui" layoutX="165.0" layoutY="137.0" />
-            <TextField fx:id="txtCodigoPersonal" layoutX="165.0" layoutY="186.0" />
-            <TextField fx:id="txtNombre" layoutX="165.0" layoutY="246.0" />
-            <TextField fx:id="txtApellido" layoutX="165.0" layoutY="296.0" />
-            <TableView fx:id="tblEstudiante" layoutX="377.0" layoutY="58.0" prefHeight="363.0" prefWidth="544.0">
+            <TextField fx:id="txtCui" layoutX="186.0" layoutY="98.0" />
+            <TextField fx:id="txtCodigoPersonal" layoutX="186.0" layoutY="178.0" />
+            <TextField fx:id="txtNombre" layoutX="186.0" layoutY="255.0" />
+            <TextField fx:id="txtApellido" layoutX="186.0" layoutY="325.0" />
+            <TableView fx:id="tblEstudiante" layoutX="404.0" layoutY="23.0" prefHeight="570.0" prefWidth="655.0">
               <columns>
-                <TableColumn fx:id="cui" prefWidth="92.0" text="Cui" />
-                <TableColumn fx:id="codigopersonal" prefWidth="134.0" text="Codigo Personal" />
-                  <TableColumn fx:id="nombre" prefWidth="97.0" text="Nombre" />
-                  <TableColumn fx:id="apellido" prefWidth="91.0" text="Apellido" />
-                  <TableColumn fx:id="grado" prefWidth="66.0" text="Grado" />
-                  <TableColumn fx:id="seccion" minWidth="0.0" prefWidth="62.0" text="Sección" />
+                <TableColumn fx:id="cui" prefWidth="106.0" text="Cui" />
+                <TableColumn fx:id="codigopersonal" prefWidth="142.0" text="Codigo Personal" />
+                  <TableColumn fx:id="nombre" prefWidth="117.0" text="Nombre" />
+                  <TableColumn fx:id="apellido" prefWidth="90.0" text="Apellido" />
+                  <TableColumn fx:id="grado" prefWidth="77.0" text="Grado" />
+                  <TableColumn fx:id="seccion" minWidth="0.0" prefWidth="81.0" text="Sección" />
               </columns>
             </TableView>
-            <Label fx:id="txtGrado" layoutX="120.0" layoutY="79.0" prefHeight="17.0" prefWidth="64.0" text="Primero">
+            <Label fx:id="txtGrado" layoutX="114.0" layoutY="47.0" prefHeight="17.0" prefWidth="64.0" text="Primero">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="txtSeccion" graphicTextGap="10.0" layoutX="284.0" layoutY="79.0" text="A">
+            <Label fx:id="txtSeccion" graphicTextGap="10.0" layoutX="317.0" layoutY="47.0" text="A">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Separator layoutX="30.0" layoutY="99.0" prefHeight="10.0" prefWidth="324.0" />
+            <Separator layoutX="42.0" layoutY="64.0" prefHeight="10.0" prefWidth="324.0" />
+            <Button layoutX="230.0" layoutY="487.0" mnemonicParsing="false" onAction="#btnLimpiar" text="Limpiar" />
+            <Button layoutX="88.0" layoutY="487.0" mnemonicParsing="false" onAction="#btnAtras" text="Atras" />
          </children>
       </Pane>
    </children>

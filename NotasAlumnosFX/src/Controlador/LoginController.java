@@ -48,6 +48,8 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         errorUsPas.setVisible(false); // Ocultar el label de error al inicio
+        mover();
+        mover2();
     }
 
     @FXML
@@ -189,11 +191,11 @@ public class LoginController implements Initializable {
     private boolean animacionEjecutada2 = false;
 
     @FXML
-    private void mover(javafx.scene.input.MouseEvent event) {
+    private void mover() {
         if (!animacionEjecutada) {
             TranslateTransition move = new TranslateTransition();
             move.setNode(lblUser);
-            move.setDuration(Duration.millis(500));
+            move.setDuration(Duration.millis(1700));
             move.setCycleCount(1);
             move.setByY(-30);
             move.play();
@@ -203,11 +205,11 @@ public class LoginController implements Initializable {
     }
 
     @FXML
-    private void mover2(javafx.scene.input.MouseEvent event) {
+    private void mover2() {
         if (!animacionEjecutada2) {
             TranslateTransition move = new TranslateTransition();
             move.setNode(lblContra);
-            move.setDuration(Duration.millis(500));
+            move.setDuration(Duration.millis(1700));
             move.setCycleCount(1);
             move.setByY(-30);
             move.play();

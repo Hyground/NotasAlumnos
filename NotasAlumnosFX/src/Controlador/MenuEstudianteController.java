@@ -2,21 +2,29 @@ package Controlador;
 
 import CRUDs.CEstudiantes;
 import POJOs.Estudiantes;
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -173,4 +181,29 @@ public class MenuEstudianteController implements Initializable {
         }
     });
 }
+
+    @FXML
+    private void btnLimpiar(ActionEvent event) {
+        txtApellido.clear();
+        txtCodigoPersonal.clear();
+        txtCui.clear();
+        txtNombre.clear();
+    }
+
+    @FXML
+    private void btnAtras(ActionEvent event) {
+        try{
+            Stage stage = new Stage();
+            Parent root=FXMLLoader.load(getClass().getResource("/Vista/MenuDocente.fxml"));
+            stage.setTitle("MENU DOCENTE");
+            stage.setScene(new Scene(root));
+            stage.show();
+           
+            // Cerrar la ventana actual
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            currentStage.close();
+        }catch (Exception e){
+            System.out.println("error="+e);
+        }
+    }
 }

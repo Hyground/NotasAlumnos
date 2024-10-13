@@ -22,7 +22,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
         try{
             Parent root=FXMLLoader.load(getClass().getResource("/Vista/login.fxml"));
-            primaryStage.setTitle("Persona");
+            primaryStage.setTitle("MENU PRINCIPAL");
             primaryStage.setScene(new Scene(root));
             primaryStage.show();
         }catch (Exception e){
