@@ -4,7 +4,10 @@
  * and open the template in the editor.
  */
 package Controlador;
-
+import CRUDs.CBimestres;
+import CRUDs.CCurso;
+import CRUDs.CEvaluaciones;
+import POJOs.Cursos;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -17,6 +20,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import Modelo.TablaNotas;
+import java.util.List;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  * FXML Controller class
@@ -38,7 +44,7 @@ public class MenuNotasController implements Initializable {
     @FXML
     private TextField txtApellido;
     @FXML
-    private ChoiceBox<?> chCurso;
+    private ChoiceBox<String> chCurso;
     @FXML
     private ChoiceBox<?> chActividad;
     @FXML
@@ -63,6 +69,7 @@ public class MenuNotasController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        cargarCurso();
       mostrar();
         // TODO
     }  
@@ -81,6 +88,14 @@ public class MenuNotasController implements Initializable {
         rSeccion.setText(seccion);  // Mostrar el nombre de la sección
         
     }
+        public void cargarCurso(){
+            List<Cursos> listtaCurso = CCurso.listarCursos();
+            ObservableList<String> curso = FXCollections.observableArrayList();
+            for (Cursos cursos: listtaCurso) {
+                curso.add(cursos.getNombreCurso());
+            }
+            chCurso.setItems(curso);
+}
 
     @FXML
     private void modificar(ActionEvent event) {

@@ -66,6 +66,10 @@ public class MenuDocenteController implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/MenuEvaluacion.fxml"));
             Parent root = loader.load();
+                        // Obtener el controlador de la vista cargada
+            MenuEvaluacionController controller = loader.getController();
+            // Pasar los datos de grado, sección y sus IDs al controlador de estudiantes
+            controller.setDatosGradoSeccion(labelGrado.getText(), labelSeccion.getText(), gradoId, seccionId);
             Stage stage = new Stage();
             stage.setTitle("Evaluación");
             Scene scene = new Scene(root);
@@ -81,6 +85,10 @@ public class MenuDocenteController implements Initializable {
          try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/MenuNotas.fxml"));
             Parent root = loader.load();
+                // Obtener el controlador de la vista cargada
+            MenuNotasController controller = loader.getController();
+            // Pasar los datos de grado, sección y sus IDs al controlador de estudiantes
+            controller.setDatosGradoSeccion(labelGrado.getText(), labelSeccion.getText(), gradoId, seccionId);
             Stage stage = new Stage();
             stage.setTitle("Registro de Notas");
             Scene scene = new Scene(root);

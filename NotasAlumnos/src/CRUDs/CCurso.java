@@ -6,8 +6,6 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,29 +14,22 @@ public class CCurso {
     
 private static final Logger logger = LoggerFactory.getLogger(CCurso.class);
     // Método para listar todos los cursos
-    public static List<Cursos> listarCursos() {
-        Session session=HibernateUtil.HibernateUtil.getSessionFactory().getCurrentSession();
-        List<Cursos> lista=null;
-        try {
-            session.beginTransaction();
-            Criteria criteria=session.createCriteria(Cursos.class);
-            criteria.createAlias("grados", "c");
-            criteria.setProjection(Projections.projectionList()
-                    .add(Projections.property("cursoId"))
-                    .add(Projections.property("c.grados"))
-                    .add(Projections.property("nombreCurso"))
-            );
-            criteria.addOrder(Order.desc("cursoId"));
-            lista =criteria.list();
-                    
-        } catch (Exception e) {
-            logger.error("error"+e);
-        } finally{
+public static List<Cursos> listarCursos() {
+    Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
+    List<Cursos> lista = null;
+    try {
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(Cursos.class);
+        lista = criteria.list();
+    } catch (Exception e) {
+        System.out.println("Error: " + e);
+    } finally {
         session.getTransaction().commit();
-        
-        }
-        return lista;
+        session.close();
     }
+    return lista;
+}
+
 
     // Método para crear un nuevo curso
 public static boolean crearCursos() {
