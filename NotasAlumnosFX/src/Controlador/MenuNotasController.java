@@ -8,6 +8,7 @@ import CRUDs.CBimestres;
 import CRUDs.CCurso;
 import CRUDs.CEvaluaciones;
 import POJOs.Cursos;
+import POJOs.Evaluaciones;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -46,11 +47,14 @@ public class MenuNotasController implements Initializable {
     @FXML
     private ChoiceBox<String> chCurso;
     @FXML
-    private ChoiceBox<?> chActividad;
+    private ChoiceBox<String> chActividad;
     @FXML
     private TextField txtNota;
-    private Integer gradoId;
-    private Integer seccionId;
+    ////////////////////////////////////////////////////
+    /////// ya no me lo vuelvan a eliminar me sirve////
+   /*/////////////*/ private Integer gradoId;/////////
+   /*/////////////*/ private Integer seccionId;//////
+    ////////////////////////////////////////////////
     @FXML
     private Label rGrado;
     @FXML
@@ -95,6 +99,14 @@ public class MenuNotasController implements Initializable {
                 curso.add(cursos.getNombreCurso());
             }
             chCurso.setItems(curso);
+}
+                public void cargarActividades(){
+            List<Evaluaciones> listtaEvaluaciones = CEvaluaciones.universo();
+            ObservableList<String> evaluacion = FXCollections.observableArrayList();
+            for (Evaluaciones Evaluaciones: listtaEvaluaciones) {
+                evaluacion.add(Evaluaciones.getNombreEvaluacion());
+            }
+            chActividad.setItems(evaluacion);
 }
 
     @FXML
