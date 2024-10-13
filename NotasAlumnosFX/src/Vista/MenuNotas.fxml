@@ -14,10 +14,10 @@
    <children>
       <TableView fx:id="tblNotas" layoutX="50.0" layoutY="82.0" prefHeight="214.0" prefWidth="505.0">
          <columns>
-            <TableColumn prefWidth="139.0" text="Nombre" />
-            <TableColumn fx:id="tblNotas" prefWidth="140.0" text="Apellido" />
-            <TableColumn prefWidth="132.0" text="Actividad" />
-            <TableColumn prefWidth="93.0" text="Nota" />
+            <TableColumn fx:id="tbNombre" prefWidth="139.0" text="Nombre" />
+            <TableColumn fx:id="tbApellido" prefWidth="140.0" text="Apellido" />
+            <TableColumn fx:id="tbActividad" prefWidth="132.0" text="Actividad" />
+            <TableColumn fx:id="tbPunto" prefWidth="93.0" text="Nota" />
          </columns>
       </TableView>
       <Button fx:id="btnModificar" layoutX="450.0" layoutY="384.0" mnemonicParsing="false" onAction="#modificar" text="Modificar" />
@@ -28,13 +28,15 @@
       <Label layoutX="81.0" layoutY="353.0" text="Apellido:" />
       <Label layoutX="81.0" layoutY="316.0" text="Nombre:" />
       <Label layoutX="80.0" layoutY="393.0" text="Curso:" />
-      <Label layoutX="256.0" layoutY="51.0" text="Seccion:  A" />
-      <Label layoutX="82.0" layoutY="51.0" text="Grado:   Primero" />
+      <Label layoutX="256.0" layoutY="51.0" text="Seccion:" />
+      <Label layoutX="82.0" layoutY="51.0" text="Grado: " />
       <Label layoutX="290.0" layoutY="23.0" text="Notas" />
       <ChoiceBox fx:id="chCurso" layoutX="200.0" layoutY="387.0" prefHeight="31.0" prefWidth="187.0" />
       <ChoiceBox fx:id="chActividad" layoutX="200.0" layoutY="425.0" prefHeight="31.0" prefWidth="187.0" />
       <Label layoutX="80.0" layoutY="431.0" text="Actividad:" />
       <Label layoutX="80.0" layoutY="469.0" text="Nota:" />
       <TextField fx:id="txtNota" layoutX="199.0" layoutY="464.0" />
+      <Label fx:id="rGrado" layoutX="128.0" layoutY="51.0" text="Primero" />
+      <Label fx:id="rSeccion" layoutX="306.0" layoutY="51.0" prefHeight="7.0" prefWidth="44.0" text="A" />
    </children>
 </AnchorPane>
