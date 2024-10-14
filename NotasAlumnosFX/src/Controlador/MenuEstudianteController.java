@@ -64,6 +64,7 @@ public class MenuEstudianteController implements Initializable {
 
     private Integer gradoId;    // Variable para almacenar el ID del grado
     private Integer seccionId;  // Variable para almacenar el ID de la sección
+    private Stage menuDocenteStage; // Referencia de la ventana del MenuDocente
 
     /**
      * Initializes the controller class.
@@ -102,18 +103,21 @@ public class MenuEstudianteController implements Initializable {
         tblEstudiante.setItems(listaEstudiantes);
     }
 
-    // Método para recibir los datos de Grado y Sección y sus IDs
-    public void setDatosGradoSeccion(String grado, String seccion, Integer gradoId, Integer seccionId) {
-        this.gradoId = gradoId;       // Almacenar el ID del grado
-        this.seccionId = seccionId;   // Almacenar el ID de la sección
-        txtGrado.setText(grado);      // Mostrar el nombre del grado
-        txtSeccion.setText(seccion);  // Mostrar el nombre de la sección
+    // Método para recibir los datos de Grado, Sección y la referencia de la ventana de MenuDocente
+    public void setDatosGradoSeccion(String grado, String seccion, Integer gradoId, Integer seccionId, Stage docenteStage) {
+        this.gradoId = gradoId;       
+        this.seccionId = seccionId;
+        this.menuDocenteStage = docenteStage; // Guardar la referencia del MenuDocente
+        txtGrado.setText(grado);      
+        txtSeccion.setText(seccion);  
         
-        // Después de establecer los datos, cargar los estudiantes correspondientes
+        // Cargar los estudiantes correspondientes
         cargarEstudiantes();
     }
 
-    //////////////////////////////////////estos son muy imporantes, no se tocan, /////////////////
+
+
+    ////////////////////////////////////// Métodos importantes, no se tocan ///////////////////////////
     @FXML
     private void btnAgregar(ActionEvent event) {
         String cui = txtCui.getText();
@@ -144,7 +148,6 @@ public class MenuEstudianteController implements Initializable {
         String nombre = txtNombre.getText();
         String apellido = txtApellido.getText();
 
-        // aquí tratamos de validar y usar la información
         if (CEstudiantes.actualizarEstudiante(cui, codigoPersonal, nombre, apellido, gradoId, seccionId)) {
             cargarEstudiantes();  // Recargar la tabla después de actualizar un estudiante
             limpiarCampos();
@@ -165,22 +168,19 @@ public class MenuEstudianteController implements Initializable {
         txtCodigoPersonal.clear();
         txtNombre.clear();
         txtApellido.clear();
-        // No limpiar txtGrado y txtSeccion, ya que son los datos del docente que cargamos antes
     }
 
     private void seleccionarEstudiante() {
-    // Escuchar cambios de selección en la tabla
-    tblEstudiante.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-        // Verificar que haya un estudiante seleccionado
-        if (newValue != null) {
-            // Llenar los campos de texto con los datos del estudiante seleccionado
-            txtCui.setText(newValue.getCui());
-            txtCodigoPersonal.setText(newValue.getCodigoPersonal());
-            txtNombre.setText(newValue.getNombre());
-            txtApellido.setText(newValue.getApellido());
-        }
-    });
-}
+        // Escuchar cambios de selección en la tabla
+        tblEstudiante.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                txtCui.setText(newValue.getCui());
+                txtCodigoPersonal.setText(newValue.getCodigoPersonal());
+                txtNombre.setText(newValue.getNombre());
+                txtApellido.setText(newValue.getApellido());
+            }
+        });
+    }
 
     @FXML
     private void btnLimpiar(ActionEvent event) {
@@ -189,21 +189,11 @@ public class MenuEstudianteController implements Initializable {
         txtCui.clear();
         txtNombre.clear();
     }
-
-    @FXML
+        @FXML
     private void btnAtras(ActionEvent event) {
-        try{
-            Stage stage = new Stage();
-            Parent root=FXMLLoader.load(getClass().getResource("/Vista/MenuDocente.fxml"));
-            stage.setTitle("MENU DOCENTE");
-            stage.setScene(new Scene(root));
-            stage.show();
-           
-            // Cerrar la ventana actual
-            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            currentStage.close();
-        }catch (Exception e){
-            System.out.println("error="+e);
-        }
+        menuDocenteStage.show();
+
+        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        currentStage.close();
     }
 }

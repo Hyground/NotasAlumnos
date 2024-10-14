@@ -26,6 +26,8 @@ public class MenuDocenteController implements Initializable {
     private Integer gradoId;   // Variable para almacenar el ID del grado
     private Integer seccionId; // Variable para almacenar el ID de la sección
 
+    private Stage docenteStage; // Referencia de la ventana del MenuDocente
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // Inicialización
@@ -43,13 +45,19 @@ public class MenuDocenteController implements Initializable {
     @FXML
     private void btnInscripcion(ActionEvent event) {
         try {
+            // Guardar referencia de la ventana actual
+            docenteStage = (Stage) labelNomDocente.getScene().getWindow();
+            
+            // Ocultar la ventana de MenuDocente
+            docenteStage.hide();
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/MenuEstudiante.fxml"));
             Parent root = loader.load();
 
             // Obtener el controlador de la vista cargada
             MenuEstudianteController controller = loader.getController();
-            // Pasar los datos de grado, sección y sus IDs al controlador de estudiantes
-            controller.setDatosGradoSeccion(labelGrado.getText(), labelSeccion.getText(), gradoId, seccionId);
+            // Pasar los datos de grado, sección y sus IDs al controlador de estudiantes y la referencia de la ventana
+            controller.setDatosGradoSeccion(labelGrado.getText(), labelSeccion.getText(), gradoId, seccionId, docenteStage);
 
             Stage stage = new Stage();
             stage.setTitle("Inscripción de Estudiantes");
@@ -66,7 +74,7 @@ public class MenuDocenteController implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/MenuEvaluacion.fxml"));
             Parent root = loader.load();
-                        // Obtener el controlador de la vista cargada
+            // Obtener el controlador de la vista cargada
             MenuEvaluacionController controller = loader.getController();
             // Pasar los datos de grado, sección y sus IDs al controlador de estudiantes
             controller.setDatosGradoSeccion(labelGrado.getText(), labelSeccion.getText(), gradoId, seccionId);
@@ -85,7 +93,7 @@ public class MenuDocenteController implements Initializable {
          try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/MenuNotas.fxml"));
             Parent root = loader.load();
-                // Obtener el controlador de la vista cargada
+            // Obtener el controlador de la vista cargada
             MenuNotasController controller = loader.getController();
             // Pasar los datos de grado, sección y sus IDs al controlador de estudiantes
             controller.setDatosGradoSeccion(labelGrado.getText(), labelSeccion.getText(), gradoId, seccionId);
