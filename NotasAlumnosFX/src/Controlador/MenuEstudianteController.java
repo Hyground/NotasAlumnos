@@ -6,8 +6,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -195,5 +193,32 @@ public class MenuEstudianteController implements Initializable {
 
         Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         currentStage.close();
+    }
+
+    @FXML
+    private void btnPdf(ActionEvent event) {
+            try {
+        // Cargar el archivo FXML de la nueva ventana
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/CargarDatos.fxml"));
+        Parent root = loader.load();
+        
+        // Obtener el controlador del nuevo FXML
+        CargarDatosController cargarDatosController = loader.getController();
+        
+        // Pasar los valores de txtGrado y txtSeccion
+        cargarDatosController.setGradoSeccion(txtGrado.getText(), txtSeccion.getText());
+        
+        // Crear una nueva ventana
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.show();
+        
+        // Cerrar la ventana actual si es necesario
+        ((Stage) ((Node) event.getSource()).getScene().getWindow()).close();
+        
+    } catch (IOException ex) {
+        ex.printStackTrace();
+    }
+        
     }
 }

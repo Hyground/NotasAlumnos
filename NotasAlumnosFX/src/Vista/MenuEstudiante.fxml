@@ -58,6 +58,7 @@
             <Separator layoutX="42.0" layoutY="64.0" prefHeight="10.0" prefWidth="324.0" />
             <Button layoutX="230.0" layoutY="487.0" mnemonicParsing="false" onAction="#btnLimpiar" text="Limpiar" />
             <Button layoutX="88.0" layoutY="487.0" mnemonicParsing="false" onAction="#btnAtras" text="Atras" />
+            <Button layoutX="230.0" layoutY="539.0" mnemonicParsing="false" onAction="#btnPdf" text="Cargar Datos" />
          </children>
       </Pane>
    </children>
