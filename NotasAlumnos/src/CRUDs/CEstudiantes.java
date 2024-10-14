@@ -8,32 +8,30 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 public class CEstudiantes {
 
     // Método para listar todos los estudiantes activos (borradoLogico = true)
-public static List<Estudiantes> ListarEstudiante() {
-    Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
-    List<Estudiantes> lista = null;
-    try {
-        session.beginTransaction();
-        Criteria criteria = session.createCriteria(Estudiantes.class);
-        criteria.createAlias("grados", "g"); // Relacionar con Grados
-        criteria.createAlias("secciones", "s"); // Relacionar con Secciones
-        criteria.add(Restrictions.eq("borradoLogico", true));  // Solo listar estudiantes activos
-        criteria.addOrder(Order.asc("nombre"));  // Ordenar por nombre
-        lista = criteria.list(); // Retornar una lista completa de Estudiantes
-    } catch (Exception e) {
-        System.out.println("Error: " + e);
-    } finally {
-        session.getTransaction().commit();
-        session.close();
+    public static List<Estudiantes> ListarEstudiante() {
+        Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
+        List<Estudiantes> lista = null;
+        try {
+            session.beginTransaction();
+            Criteria criteria = session.createCriteria(Estudiantes.class);
+            criteria.createAlias("grados", "g"); // Relacionar con Grados
+            criteria.createAlias("secciones", "s"); // Relacionar con Secciones
+            criteria.add(Restrictions.eq("borradoLogico", true));  // Solo listar estudiantes activos
+            criteria.addOrder(Order.asc("nombre"));  // Ordenar por nombre
+            lista = criteria.list(); // Retornar una lista completa de Estudiantes
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.getTransaction().commit();
+            session.close();
+        }
+        return lista;
     }
-    return lista;
-}
-
 
     // Método para crear un nuevo estudiante
     public static boolean crearEstudiante(String cui, String codigoPersonal, String nombre, String apellido, Integer gradoId, Integer seccionId) {
@@ -44,20 +42,26 @@ public static List<Estudiantes> ListarEstudiante() {
         try {
             transaction = session.beginTransaction();
 
-            // Crear el estudiante
+            // Verificar si el estudiante ya existe
+            Estudiantes existente = obtenerEstudiantePorCui(cui);
+            if (existente != null) {
+                return false;  // El estudiante ya está inscrito, retornar false
+            }
+
+            // Crear el nuevo estudiante si no existe
             Estudiantes insert = new Estudiantes();
             insert.setCui(cui);
             insert.setCodigoPersonal(codigoPersonal);
             insert.setNombre(nombre);
             insert.setApellido(apellido);
 
-            // Asignar el grado y la sección sin verificar su existencia
+            // Asignar el grado y la sección
             Grados grados = new Grados();
             grados.setGradoId(gradoId);
-            insert.setGrados(grados);  // Asignación directa
+            insert.setGrados(grados);
             Secciones secciones = new Secciones();
             secciones.setSeccionId(seccionId);
-            insert.setSecciones(secciones);  // Asignación directa
+            insert.setSecciones(secciones);
 
             // Estudiante activo por defecto
             insert.setBorradoLogico(true);
@@ -106,8 +110,6 @@ public static List<Estudiantes> ListarEstudiante() {
                 // Actualizar el estudiante
                 session.update(actualizar);
                 flag = true;
-            } else {
-                System.out.println("No se encontró el estudiante con CUI " + cui);
             }
 
             transaction.commit();
@@ -138,8 +140,6 @@ public static List<Estudiantes> ListarEstudiante() {
                 anular.setBorradoLogico(false);
                 session.update(anular);
                 flag = true;
-            } else {
-                System.out.println("No se encontró el estudiante con CUI " + cui);
             }
 
             transaction.commit();
@@ -170,10 +170,6 @@ public static List<Estudiantes> ListarEstudiante() {
                 estudiante.setBorradoLogico(true);
                 session.update(estudiante);
                 flag = true;
-            } else if (estudiante == null) {
-                System.out.println("No se encontró el estudiante con CUI " + cui);
-            } else {
-                System.out.println("El estudiante ya está activo.");
             }
 
             transaction.commit();
@@ -196,7 +192,7 @@ public static List<Estudiantes> ListarEstudiante() {
             session.beginTransaction();
             estudiante = (Estudiantes) session.get(Estudiantes.class, cui);
         } catch (Exception e) {
-            System.out.println("Error: " + e);
+            e.printStackTrace();
         } finally {
             session.getTransaction().commit();
             session.close();
