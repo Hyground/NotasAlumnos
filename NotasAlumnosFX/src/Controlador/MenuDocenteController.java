@@ -11,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
@@ -27,6 +28,8 @@ public class MenuDocenteController implements Initializable {
     private Integer seccionId; // Variable para almacenar el ID de la sección
 
     private Stage docenteStage; // Referencia de la ventana del MenuDocente
+    @FXML
+    private Button btnCambiarContrasenia;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -127,7 +130,22 @@ public class MenuDocenteController implements Initializable {
     }
 
     @FXML
-    private void btnCambiarContrasenia(ActionEvent event) {
-        // Implementación del cambio de contraseña si lo necesitas
+public void btnCambiarContrasenia(ActionEvent event) {
+        try {
+            // Cargar la vista de cambio de contraseña
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/MenuContrasenia.fxml"));
+            Parent root = loader.load();
+
+            // Crear una nueva ventana (Stage) para cambiar contraseña
+            Stage stage = new Stage();
+            stage.setTitle("Cambiar Contraseña");
+            stage.setScene(new Scene(root));
+
+            // Mostrar la ventana
+            stage.show();
+        } catch (IOException e) {
+            // Imprime errores si no se encuentra el FXML o hay problemas de carga
+            
+        }
     }
 }

@@ -7,7 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="509.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="Controlador.MenuEvaluacionController">
+<AnchorPane id="AnchorPane" prefHeight="509.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.MenuEvaluacionController">
     <stylesheets>
         <URL value="@menuevaluacion.css" />
     </stylesheets>
@@ -30,7 +30,7 @@
       <TextField fx:id="txtNombre" layoutX="152.0" layoutY="167.0" />
       <TextField fx:id="txtPonderacion" layoutX="405.0" layoutY="126.0" />
       <Label layoutX="60.0" layoutY="246.0" text="Listar Actividades " />
-      <ChoiceBox layoutX="156.0" layoutY="242.0" onDragDetected="#btnListar" prefWidth="150.0" />
+      <ChoiceBox layoutX="187.0" layoutY="241.0" onDragDetected="#btnListar" prefWidth="150.0" />
       <TableView fx:id="tblPersona" layoutX="60.0" layoutY="279.0" onMouseClicked="#seleccionaModificar" prefHeight="216.0" prefWidth="483.0">
          <columns>
             <TableColumn fx:id="EvaluacionId" prefWidth="75.0" text="id Actividad" />

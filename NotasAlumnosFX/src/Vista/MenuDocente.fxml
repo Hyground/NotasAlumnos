@@ -23,6 +23,6 @@
       <Button layoutX="36.0" layoutY="387.0" mnemonicParsing="false" onAction="#btnRegistrarNotas" text="Registrar Notas" />
       <Button layoutX="237.0" layoutY="387.0" mnemonicParsing="false" text="Imprimir Boletínes" />
       <Button layoutX="237.0" layoutY="456.0" mnemonicParsing="false" onAction="#btnCerrarSesion" text="Cerrar sesión" />
-      <Button layoutX="36.0" layoutY="456.0" mnemonicParsing="false" onAction="#btnCambiarContrasenia" prefWidth="247.0" text="Cambiar Contraseña" />
+      <Button fx:id="btnCambiarContrasenia" layoutX="36.0" layoutY="456.0" mnemonicParsing="false" onAction="#btnCambiarContrasenia" prefWidth="247.0" text="Cambiar Contraseña" />
    </children>
 </AnchorPane>
