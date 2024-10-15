@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <stylesheets>
+        <URL value="@menucontrasenia.css" />
+    </stylesheets>
+   <children>
+      <ImageView fitHeight="400.0" fitWidth="600.0">
+         <image>
+            <Image url="@../Imagenes/FondoRealGrande.png" />
+         </image>
+      </ImageView>
+      <Label cacheHint="SPEED" depthTest="ENABLE" layoutX="72.0" layoutY="39.0" prefHeight="36.0" prefWidth="189.0" scaleShape="false" styleClass="mainFxmlClass" text="INGRESA CONTRASEÑA ANTERIOR">
+         <opaqueInsets>
+            <Insets top="20.0" />
+         </opaqueInsets>
+         <effect>
+            <Blend mode="EXCLUSION" opacity="0.64">
+               <topInput>
+                  <Glow level="0.8" />
+               </topInput>
+            </Blend>
+         </effect>
+      </Label>
+      <TextField layoutX="54.0" layoutY="75.0" prefHeight="28.0" prefWidth="225.0" />
+      <Label cacheHint="SPEED" depthTest="ENABLE" layoutX="72.0" layoutY="127.0" prefHeight="36.0" prefWidth="189.0" scaleShape="false" styleClass="mainFxmlClass" text="INGRESA NUEVA CONTRASEÑA">
+         <effect>
+            <Blend mode="EXCLUSION" opacity="0.64">
+               <topInput>
+                  <Glow level="0.8" />
+               </topInput>
+            </Blend>
+         </effect>
+         <opaqueInsets>
+            <Insets top="20.0" />
+         </opaqueInsets>
+      </Label>
+      <TextField layoutX="72.0" layoutY="163.0" prefHeight="28.0" prefWidth="189.0" />
+      <Button layoutX="108.0" layoutY="237.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="118.0" text="ACEPTAR" />
+   </children>
+</AnchorPane>

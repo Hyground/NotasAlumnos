@@ -1,0 +1,13 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+.mainFxmlClass {
+
+}
+<AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="Controlador.MenuContraseniaController">
+    <children>
+        <PasswordField fx:id="txtPassword" layoutX="50" layoutY="50" promptText="Nueva Contraseña"/>
+        <Button text="Cambiar" layoutX="50" layoutY="100" onAction="#handleCambiarPassword"/>
+    </children>
+</AnchorPane>
