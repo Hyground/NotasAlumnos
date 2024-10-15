@@ -59,6 +59,7 @@
             <Button layoutX="230.0" layoutY="487.0" mnemonicParsing="false" onAction="#btnLimpiar" text="Limpiar" />
             <Button layoutX="88.0" layoutY="487.0" mnemonicParsing="false" onAction="#btnAtras" text="Atras" />
             <Button layoutX="230.0" layoutY="539.0" mnemonicParsing="false" onAction="#btnPdf" text="Cargar Datos" />
+            <Button layoutX="340.0" layoutY="396.0" mnemonicParsing="false" onAction="#btnMostrarAnulados" />
          </children>
       </Pane>
    </children>
