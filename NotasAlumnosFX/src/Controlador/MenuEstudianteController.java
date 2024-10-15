@@ -114,7 +114,18 @@ public class MenuEstudianteController implements Initializable {
     }
 
 
-
+    public void setEstudianteSeleccionado(Estudiantes estudiante) {
+    if (estudiante != null) {
+        System.out.println("Estudiante seleccionado: " + estudiante.getNombre()); // Depuración
+        txtCui.setText(estudiante.getCui());
+        txtCodigoPersonal.setText(estudiante.getCodigoPersonal());
+        txtNombre.setText(estudiante.getNombre());
+        txtApellido.setText(estudiante.getApellido());
+        txtGrado.setText(estudiante.getGrados().getNombreGrado());
+        txtSeccion.setText(estudiante.getSecciones().getNombreSeccion());
+    }
+}
+    
     ////////////////////////////////////// Métodos importantes, no se tocan ///////////////////////////
     @FXML
     private void btnAgregar(ActionEvent event) {
@@ -218,7 +229,26 @@ public class MenuEstudianteController implements Initializable {
         
     } catch (IOException ex) {
         ex.printStackTrace();
+    }   
     }
+
+    @FXML
+    private void btnMostrarAnulados(ActionEvent event) {
+try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/AnuladosEstudiantes.fxml"));
+        Parent root = loader.load();
+
+        // Obtener el controlador de AnuladosEstudiantes
+        AnuladosEstudiantesController anuladosController = loader.getController();
         
+        // Pasar el controlador del MenuEstudianteController a AnuladosEstudiantesController
+        anuladosController.setMenuEstudianteController(this);
+
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.show();
+    } catch (IOException e) {
+        e.printStackTrace();
     }
+}
 }
