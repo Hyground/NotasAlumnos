@@ -128,6 +128,25 @@ public class MenuDocenteController implements Initializable {
             Logger.getLogger(MenuDocenteController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    @FXML
+private void btnImprimirBoletines(ActionEvent event) {
+    try {
+        // Cargar la vista de la tabla de boletines
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/MenuImprimirBoletin.fxml"));
+        Parent root = loader.load();
+
+        // Crear una nueva ventana (Stage) para la vista de la tabla de boletines
+        Stage stage = new Stage();
+        stage.setTitle("Imprimir Boletín");
+        stage.setScene(new Scene(root));
+
+        // Mostrar la ventana
+        stage.show();
+    } catch (IOException e) {
+        // Registrar el error si ocurre
+        Logger.getLogger(MenuDocenteController.class.getName()).log(Level.SEVERE, null, e);
+    }
+}
 
     @FXML
 public void btnCambiarContrasenia(ActionEvent event) {
