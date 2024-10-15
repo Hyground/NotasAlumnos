@@ -7,6 +7,8 @@ package Controlador;
 
 import POJOs.Bimestres;
 import CRUDs.CBimestres;
+import CRUDs.CCurso;
+import POJOs.Cursos;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -65,6 +67,7 @@ public class MenuEvaluacionController implements Initializable {
         // TODO
         cargarBimestre();
         cargarTipo();
+        cargaCurso();
     }
     // este codigo tambien, tiene una parte que va en nuestro menu docente, si no
     //no lo trae
@@ -90,6 +93,14 @@ public class MenuEvaluacionController implements Initializable {
         conBimestre.setItems(bimestres);
     }
     
+    public void cargaCurso(){
+        List<Cursos> listtaCursos = CCurso.listarCursos(); 
+        ObservableList<String> cursos = FXCollections.observableArrayList();
+        for(Cursos curso:listtaCursos){
+        cursos.add(curso.getNombreCurso());
+        }
+        conCurso.setItems(cursos);
+    }
     
 
     @FXML
