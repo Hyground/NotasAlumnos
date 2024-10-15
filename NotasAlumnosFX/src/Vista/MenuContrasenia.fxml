@@ -48,5 +48,10 @@
       </Label>
       <TextField layoutX="72.0" layoutY="163.0" prefHeight="28.0" prefWidth="189.0" />
       <Button layoutX="108.0" layoutY="237.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="118.0" text="ACEPTAR" />
+      <ImageView fitHeight="200.0" fitWidth="200.0" layoutX="357.0" layoutY="127.0">
+         <image>
+            <Image url="@../Imagenes/llave.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
