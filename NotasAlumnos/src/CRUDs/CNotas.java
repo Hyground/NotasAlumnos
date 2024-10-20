@@ -40,59 +40,55 @@ public class CNotas {
     }
 
     // Método para crear una nueva nota
-// Método para crear una nueva nota
-public static boolean crearNota(String cui, Integer evaluacionId, BigDecimal nota) {
-    boolean flag = false;
-    Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
-    Transaction transaction = null;
-    
-    try {
-        transaction = session.beginTransaction();
+    public static boolean crearNota(String cui, Integer evaluacionId, BigDecimal nota) {
+        boolean flag = false;
+        Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = null;
+        
+        try {
+            transaction = session.beginTransaction();
 
-        // Verificar si ya existe una nota para el estudiante y la evaluación
-        Criteria criteria = session.createCriteria(Notas.class);
-        criteria.createAlias("estudiantes", "e");
-        criteria.createAlias("evaluaciones", "ev");
-        criteria.add(Restrictions.eq("e.cui", cui));
-        criteria.add(Restrictions.eq("ev.evaluacionId", evaluacionId));
+            // Verificar si ya existe una nota para el estudiante y la evaluación
+            Criteria criteria = session.createCriteria(Notas.class);
+            criteria.createAlias("estudiantes", "e");
+            criteria.createAlias("evaluaciones", "ev");
+            criteria.add(Restrictions.eq("e.cui", cui));
+            criteria.add(Restrictions.eq("ev.evaluacionId", evaluacionId));
 
-        Notas notaExistente = (Notas) criteria.uniqueResult();
+            Notas notaExistente = (Notas) criteria.uniqueResult();
 
-        if (notaExistente != null) {
-            // Ya existe una nota para este estudiante en esta evaluación
-            System.out.println("Ya existe una nota para este estudiante en esta evaluación.");
-            return flag;
+            if (notaExistente != null) {
+                System.out.println("Ya existe una nota para este estudiante en esta evaluación.");
+                return flag;
+            }
+
+            // Crear la nueva nota si no existe
+            Notas nuevaNota = new Notas();
+
+            Estudiantes estudiante = new Estudiantes();
+            estudiante.setCui(cui);  // Asignación directa del CUI
+            nuevaNota.setEstudiantes(estudiante);
+
+            Evaluaciones evaluacion = new Evaluaciones();
+            evaluacion.setEvaluacionId(evaluacionId);  // Asignación directa del evaluacionId
+            nuevaNota.setEvaluaciones(evaluacion);
+
+            nuevaNota.setNota(nota);
+
+            session.save(nuevaNota);
+            flag = true;
+
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
         }
-
-        // Crear la nueva nota si no existe
-        Notas nuevaNota = new Notas();
-
-        Estudiantes estudiante = new Estudiantes();
-        estudiante.setCui(cui);  // Asignación directa del CUI
-        nuevaNota.setEstudiantes(estudiante);
-
-        Evaluaciones evaluacion = new Evaluaciones();
-        evaluacion.setEvaluacionId(evaluacionId);  // Asignación directa del evaluacionId
-        nuevaNota.setEvaluaciones(evaluacion);
-
-        nuevaNota.setNota(nota);
-
-        // Guardar la nota en la base de datos
-        session.save(nuevaNota);
-        flag = true;
-
-        transaction.commit();
-    } catch (Exception e) {
-        if (transaction != null) {
-            transaction.rollback();
-        }
-        e.printStackTrace();
-    } finally {
-        session.close();
+        return flag;
     }
-    return flag;
-}
-
 
     // Método para actualizar una nota existente
     public static boolean actualizarNota(Integer notaId, BigDecimal nuevaNota) {
@@ -102,17 +98,12 @@ public static boolean crearNota(String cui, Integer evaluacionId, BigDecimal not
 
         try {
             transaction = session.beginTransaction();
-
-            // Obtener la nota existente
             Notas nota = (Notas) session.get(Notas.class, notaId);
             if (nota != null) {
-                nota.setNota(nuevaNota);  // Actualizar la nota
-
-                // Actualizar la nota en la base de datos
+                nota.setNota(nuevaNota);
                 session.update(nota);
                 flag = true;
             }
-
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
