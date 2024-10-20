@@ -23,14 +23,14 @@
          </font></Label>
       <CheckBox fx:id="adminOn" layoutX="229.0" layoutY="214.0" mnemonicParsing="false" onAction="#cambio" text="Administrador" />
       <TextField fx:id="txtUser" layoutX="160.0" layoutY="282.0" onMouseClicked="#mover" />
-      <TextField fx:id="txtContra" layoutX="164.0" layoutY="356.0" onMouseClicked="#mover2" />
       <Label fx:id="lblUser" layoutX="250.0" layoutY="288.0" text="Usuario" />
-      <Label fx:id="lblContra" layoutX="232.0" layoutY="362.0" text="Contraseña" />
       <Label fx:id="label21" layoutX="100.0" layoutY="122.0" prefHeight="17.0" prefWidth="370.0" text="parte de los administradores o docente">
          <font>
             <Font name="Bell MT" size="12.0" />
          </font>
       </Label>
       <Label fx:id="errorUsPas" layoutX="135.0" layoutY="413.0" text="Usuario o Contraseña Incorrecta " textAlignment="CENTER" textFill="#ff0101" />
+      <PasswordField fx:id="txtContra" layoutX="160.0" layoutY="359.0" onMouseClicked="#mover2" />
+      <Label fx:id="lblContra" layoutX="237.0" layoutY="365.0" text="Contraseña" />
    </children>
 </AnchorPane>

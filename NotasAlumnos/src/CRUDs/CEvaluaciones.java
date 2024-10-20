@@ -17,35 +17,26 @@ import org.hibernate.criterion.Restrictions;
 public class CEvaluaciones {
 
     // Método para listar todas las evaluaciones
-    public static List<Evaluaciones> universo() {
-        Session session = HibernateUtil.HibernateUtil.getSessionFactory().getCurrentSession();
-        List<Evaluaciones> lista = null;
-        try {
-            session.beginTransaction();
-            Criteria criteria = session.createCriteria(Evaluaciones.class);
-            criteria.createAlias("bimestres", "b");
-            criteria.createAlias("cursos", "c");
-            criteria.createAlias("grados", "g");
-            criteria.createAlias("secciones", "s");
-            criteria.setProjection(Projections.projectionList()
-                    .add(Projections.property("evaluacionId"))
-                    .add(Projections.property("nombreEvaluacion"))
-                    .add(Projections.property("tipo"))
-                    .add(Projections.property("ponderacion"))
-                    .add(Projections.property("b.nombreBimestre")) // Alias para el bimestre
-                    .add(Projections.property("c.nombreCurso")) // Alias para el curso
-                    .add(Projections.property("g.nombreGrado")) // Alias para el grado
-                    .add(Projections.property("s.nombreSeccion")) // Alias para la sección
-            );
-            criteria.addOrder(Order.desc("evaluacionId"));
-            lista = criteria.list();
-        } catch (Exception e) {
-            System.out.println("Error: " + e);
-        } finally {
-            session.getTransaction().commit();
-        }
-        return lista;
+public static List<Evaluaciones> universo() {
+    Session session = HibernateUtil.HibernateUtil.getSessionFactory().getCurrentSession();
+    List<Evaluaciones> lista = null;
+    try {
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(Evaluaciones.class);
+        criteria.createAlias("bimestres", "b");
+        criteria.createAlias("cursos", "c");
+        criteria.createAlias("grados", "g");
+        criteria.createAlias("secciones", "s");
+        criteria.addOrder(Order.desc("evaluacionId"));
+        lista = criteria.list();  // Devolver la lista de objetos Evaluaciones completos
+    } catch (Exception e) {
+        System.out.println("Error: " + e);
+    } finally {
+        session.getTransaction().commit();
     }
+    return lista;
+}
+
 
     // Método para crear una nueva evaluación sin verificar las relaciones
     public static boolean crearEvaluacion(Integer bimestreId, Integer cursoId, int gradoId, int seccionId, String nombreEvaluacion, String tipo, BigDecimal ponderacion) {

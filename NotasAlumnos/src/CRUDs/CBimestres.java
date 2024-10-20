@@ -112,4 +112,21 @@ public static List<Bimestres> listarBimestres() {
     }
     return bimestre;
 }
+        public static Bimestres obtenerBimestrePorNombre(String nombreBimestre) {
+    Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
+    Bimestres bimestre = null;
+    try {
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(Bimestres.class);
+        criteria.add(Restrictions.eq("nombreBimestre", nombreBimestre)); // Filtrar por nombre del bimestre
+        bimestre = (Bimestres) criteria.uniqueResult();
+    } catch (Exception e) {
+        e.printStackTrace();
+    } finally {
+        session.getTransaction().commit();
+        session.close();
+    }
+    return bimestre;
+}
+
 }

@@ -1,17 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Controlador;
 
 import POJOs.Bimestres;
 import CRUDs.CBimestres;
 import CRUDs.CCurso;
+import CRUDs.CEvaluaciones;
 import POJOs.Cursos;
+import POJOs.Evaluaciones;
+import java.math.BigDecimal;
 import java.net.URL;
+import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -22,13 +22,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
-/**
- * FXML Controller class
- *
- * @author wissegt
- */
 public class MenuEvaluacionController implements Initializable {
 
     @FXML
@@ -46,77 +42,131 @@ public class MenuEvaluacionController implements Initializable {
     @FXML
     private TextField txtPonderacion;
     @FXML
-    private TableView<?> tblPersona;
+    private TableView<Evaluaciones> tblPersona;
     @FXML
-    private TableColumn<?, ?> EvaluacionId;
+    private TableColumn<Evaluaciones, Integer> tblEvaluacionId;
     @FXML
-    private TableColumn<?, ?> nombreActividad;
+    private TableColumn<Evaluaciones, String> tblCurso;
     @FXML
-    private TableColumn<?, ?> tipoActividad;
+    private TableColumn<Evaluaciones, String> tblNombreActividad;
     @FXML
-    private TableColumn<?, ?> ponderacionActividad;
+    private TableColumn<Evaluaciones, BigDecimal> tblPonderacionActividad;
+    @FXML
+    private TableColumn<Evaluaciones, String> tblTipoActividad;
+
     private Integer gradoId;
     private Integer seccionId;
-            
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
         cargarBimestre();
         cargarTipo();
         cargaCurso();
+        configurarTabla();
+        listarTodasLasEvaluaciones(); 
     }
-    // este codigo tambien, tiene una parte que va en nuestro menu docente, si no
-    //no lo trae
-    public  void setDatosGradoSeccion (String grado, String seccion, Integer gradoId, Integer seccionId){
-           this.gradoId = gradoId;       // Almacenar el ID del grado
-        this.seccionId = seccionId;   // Almacenar el ID de la sección
-        rGrado.setText(grado);      // Mostrar el nombre del grado
-        rSeccion.setText(seccion);  // Mostrar el nombre de la sección
-        
+
+    public void setDatosGradoSeccion(String grado, String seccion, Integer gradoId, Integer seccionId) {
+        this.gradoId = gradoId;
+        this.seccionId = seccionId;
+        rGrado.setText(grado);
+        rSeccion.setText(seccion);
+        cargaCurso();
     }
-    // tipo de evaluacion conbobox
-    public  void cargarTipo() {
-    ObservableList<String> tipo = FXCollections.observableArrayList("Evaluacion","Actividad");
-    conTipo.setItems(tipo);
+
+    public void cargarTipo() {
+        ObservableList<String> tipo = FXCollections.observableArrayList("Evaluacion", "Actividad");
+        conTipo.setItems(tipo);
     }
-    //aqui cargamos bimestres faker
-    public void cargarBimestre(){
+
+    public void cargarBimestre() {
         List<Bimestres> listtaBimestres = CBimestres.listarBimestres();
         ObservableList<String> bimestres = FXCollections.observableArrayList();
-        for(Bimestres bimestre:listtaBimestres){
-        bimestres.add(bimestre.getNombreBimestre());
-        }
+        listtaBimestres.forEach(bimestre -> bimestres.add(bimestre.getNombreBimestre()));
         conBimestre.setItems(bimestres);
     }
-    
-    public void cargaCurso(){
-        List<Cursos> listtaCursos = CCurso.listarCursos(); 
-        ObservableList<String> cursos = FXCollections.observableArrayList();
-        for(Cursos curso:listtaCursos){
-        cursos.add(curso.getNombreCurso());
+
+    public void cargaCurso() {
+        if (gradoId != null) {
+            List<Cursos> listtaCursos = CCurso.listarCursosPorGrado(gradoId);
+            ObservableList<String> cursos = FXCollections.observableArrayList();
+            listtaCursos.forEach(curso -> cursos.add(curso.getNombreCurso()));
+            conCurso.setItems(cursos);
         }
-        conCurso.setItems(cursos);
     }
-    
+
+    private void configurarTabla() {
+        // Configurando las columnas para que muestren los datos correctos
+        tblEvaluacionId.setCellValueFactory(new PropertyValueFactory<>("evaluacionId"));
+        tblNombreActividad.setCellValueFactory(new PropertyValueFactory<>("nombreEvaluacion"));
+        tblPonderacionActividad.setCellValueFactory(new PropertyValueFactory<>("ponderacion"));
+        tblTipoActividad.setCellValueFactory(new PropertyValueFactory<>("tipo"));
+
+        // Para la columna de Cursos, usamos un SimpleStringProperty para obtener el nombre del curso
+        tblCurso.setCellValueFactory(cellData -> {
+            Cursos curso = cellData.getValue().getCursos();
+            if (curso != null) {
+                return new SimpleStringProperty(curso.getNombreCurso());
+            } else {
+                return new SimpleStringProperty("Sin curso");
+            }
+        });
+    }
+
+    private void listarTodasLasEvaluaciones() {
+        // Listar todas las evaluaciones
+        List<Evaluaciones> evaluaciones = CEvaluaciones.universo();
+        
+        // Ordenar las evaluaciones por el nombre del curso
+        evaluaciones.sort(Comparator.comparing(evaluacion -> {
+            Cursos curso = evaluacion.getCursos();
+            return (curso != null) ? curso.getNombreCurso() : "";
+        }));
+
+        // Convertir la lista ordenada en un ObservableList y asignarla a la tabla
+        ObservableList<Evaluaciones> listaEvaluaciones = FXCollections.observableArrayList(evaluaciones);
+        tblPersona.setItems(listaEvaluaciones);
+    }
 
     @FXML
     private void btnGuardar(ActionEvent event) {
+        try {
+            BigDecimal ponderacion = new BigDecimal(txtPonderacion.getText());
+            Cursos cursoSeleccionado = CCurso.obtenerCursoPorNombreYGrado(conCurso.getValue(), gradoId);
+            Bimestres bimestreSeleccionado = CBimestres.obtenerBimestrePorNombre(conBimestre.getValue());
+
+            boolean resultado = CEvaluaciones.crearEvaluacion(
+                    bimestreSeleccionado.getBimestreId(),
+                    cursoSeleccionado.getCursoId(),
+                    gradoId,
+                    seccionId,
+                    txtNombre.getText(),
+                    conTipo.getValue(),
+                    ponderacion
+            );
+
+            System.out.println(resultado ? "Evaluación creada correctamente." : "Error al crear la evaluación.");
+            listarTodasLasEvaluaciones(); 
+        } catch (NumberFormatException e) {
+            System.out.println("Ponderación inválida: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     @FXML
     private void btnActualizar(ActionEvent event) {
+   
     }
 
     @FXML
     private void btnListar(MouseEvent event) {
+ 
     }
 
     @FXML
     private void seleccionaModificar(MouseEvent event) {
+
     }
-    
 }

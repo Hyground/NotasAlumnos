@@ -4,6 +4,7 @@ import POJOs.Cursos;
 import POJOs.Grados;
 import java.util.List;
 import org.hibernate.Criteria;
+import org.hibernate.NonUniqueResultException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
@@ -169,4 +170,43 @@ public static boolean crearCursos() {
         }
         return curso;
     }
+    public static List<Cursos> listarCursosPorGrado(int gradoId) {
+    Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
+    List<Cursos> lista = null;
+    try {
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(Cursos.class);
+        criteria.createAlias("grados", "g"); // Hacer un alias para la relación con Grados
+        criteria.add(Restrictions.eq("g.gradoId", gradoId)); // Filtrar por gradoId
+        lista = criteria.list();
+    } catch (Exception e) {
+        System.out.println("Error: " + e);
+    } finally {
+        session.getTransaction().commit();
+        session.close();
+    }
+    return lista;
+}
+public static Cursos obtenerCursoPorNombreYGrado(String nombreCurso, Integer gradoId) {
+    Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
+    Cursos curso = null;
+    try {
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(Cursos.class);
+        criteria.add(Restrictions.eq("nombreCurso", nombreCurso));
+        criteria.createAlias("grados", "g");
+        criteria.add(Restrictions.eq("g.gradoId", gradoId)); // Filtrar también por el gradoId
+        curso = (Cursos) criteria.uniqueResult(); // Esto ahora debería devolver solo un resultado
+    } catch (NonUniqueResultException e) {
+        System.out.println("Más de un curso encontrado con el mismo nombre y grado.");
+    } catch (Exception e) {
+        e.printStackTrace();
+    } finally {
+        session.getTransaction().commit();
+        session.close();
+    }
+    return curso;
+}
+
+
 }
