@@ -16,26 +16,40 @@ import org.hibernate.criterion.Restrictions;
 
 public class CEvaluaciones {
 
-    // Método para listar todas las evaluaciones
-public static List<Evaluaciones> universo() {
-    Session session = HibernateUtil.HibernateUtil.getSessionFactory().getCurrentSession();
-    List<Evaluaciones> lista = null;
-    try {
-        session.beginTransaction();
-        Criteria criteria = session.createCriteria(Evaluaciones.class);
-        criteria.createAlias("bimestres", "b");
-        criteria.createAlias("cursos", "c");
-        criteria.createAlias("grados", "g");
-        criteria.createAlias("secciones", "s");
-        criteria.addOrder(Order.desc("evaluacionId"));
-        lista = criteria.list();  // Devolver la lista de objetos Evaluaciones completos
-    } catch (Exception e) {
-        System.out.println("Error: " + e);
-    } finally {
-        session.getTransaction().commit();
+    // Método para listar todas las evaluaciones filtradas por grado y sección
+    public static List<Evaluaciones> universo(Integer gradoId, Integer seccionId) {
+        Session session = HibernateUtil.HibernateUtil.getSessionFactory().getCurrentSession();
+        List<Evaluaciones> lista = null;
+        try {
+            session.beginTransaction();
+            Criteria criteria = session.createCriteria(Evaluaciones.class);
+
+            // Filtrar por Grado y Sección
+            if (gradoId != null) {
+                criteria.createAlias("grados", "g");
+                criteria.add(Restrictions.eq("g.gradoId", gradoId));
+            }
+            if (seccionId != null) {
+                criteria.createAlias("secciones", "s");
+                criteria.add(Restrictions.eq("s.seccionId", seccionId));
+            }
+
+            // Agregar alias para las relaciones adicionales
+            criteria.createAlias("bimestres", "b");
+            criteria.createAlias("cursos", "c");
+
+            // Ordenar por ID de evaluación
+            criteria.addOrder(Order.desc("evaluacionId"));
+            lista = criteria.list();
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        } finally {
+            session.getTransaction().commit();
+        }
+        return lista;
     }
-    return lista;
-}
+
+
 
 
     // Método para crear una nueva evaluación sin verificar las relaciones

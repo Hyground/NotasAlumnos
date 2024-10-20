@@ -101,7 +101,7 @@ public class MenuNotasController implements Initializable {
             chCurso.setItems(curso);
 }
                 public void cargarActividades(){
-            List<Evaluaciones> listtaEvaluaciones = CEvaluaciones.universo();
+            List<Evaluaciones> listtaEvaluaciones = CEvaluaciones.universo(gradoId, seccionId);
             ObservableList<String> evaluacion = FXCollections.observableArrayList();
             for (Evaluaciones Evaluaciones: listtaEvaluaciones) {
                 evaluacion.add(Evaluaciones.getNombreEvaluacion());

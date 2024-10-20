@@ -56,6 +56,7 @@ public class MenuEvaluacionController implements Initializable {
 
     private Integer gradoId;
     private Integer seccionId;
+    private Integer evaluacionIdSeleccionada;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -63,7 +64,7 @@ public class MenuEvaluacionController implements Initializable {
         cargarTipo();
         cargaCurso();
         configurarTabla();
-        listarTodasLasEvaluaciones(); 
+        listarEvaluacionesFiltradas(); // Cambié esto para que muestre las evaluaciones filtradas
     }
 
     public void setDatosGradoSeccion(String grado, String seccion, Integer gradoId, Integer seccionId) {
@@ -72,60 +73,119 @@ public class MenuEvaluacionController implements Initializable {
         rGrado.setText(grado);
         rSeccion.setText(seccion);
         cargaCurso();
+        listarEvaluacionesFiltradas(); // Mostrar las evaluaciones filtradas cuando se establezcan los datos
     }
 
     public void cargarTipo() {
-        ObservableList<String> tipo = FXCollections.observableArrayList("Evaluacion", "Actividad");
+        ObservableList<String> tipo = FXCollections.observableArrayList("Tipo", "Evaluacion", "Actividad");
         conTipo.setItems(tipo);
+        conTipo.setValue("Tipo");
     }
 
     public void cargarBimestre() {
-        List<Bimestres> listtaBimestres = CBimestres.listarBimestres();
-        ObservableList<String> bimestres = FXCollections.observableArrayList();
-        listtaBimestres.forEach(bimestre -> bimestres.add(bimestre.getNombreBimestre()));
+        List<Bimestres> listaBimestres = CBimestres.listarBimestres();
+        ObservableList<String> bimestres = FXCollections.observableArrayList("Bimestre");
+        listaBimestres.forEach(bimestre -> bimestres.add(bimestre.getNombreBimestre()));
         conBimestre.setItems(bimestres);
+        conBimestre.setValue("Bimestre");
     }
 
     public void cargaCurso() {
         if (gradoId != null) {
-            List<Cursos> listtaCursos = CCurso.listarCursosPorGrado(gradoId);
-            ObservableList<String> cursos = FXCollections.observableArrayList();
-            listtaCursos.forEach(curso -> cursos.add(curso.getNombreCurso()));
+            List<Cursos> listaCursos = CCurso.listarCursosPorGrado(gradoId);
+            ObservableList<String> cursos = FXCollections.observableArrayList("Curso");
+            listaCursos.forEach(curso -> cursos.add(curso.getNombreCurso()));
             conCurso.setItems(cursos);
+            conCurso.setValue("Curso");
         }
     }
 
     private void configurarTabla() {
-        // Configurando las columnas para que muestren los datos correctos
         tblEvaluacionId.setCellValueFactory(new PropertyValueFactory<>("evaluacionId"));
         tblNombreActividad.setCellValueFactory(new PropertyValueFactory<>("nombreEvaluacion"));
         tblPonderacionActividad.setCellValueFactory(new PropertyValueFactory<>("ponderacion"));
         tblTipoActividad.setCellValueFactory(new PropertyValueFactory<>("tipo"));
 
-        // Para la columna de Cursos, usamos un SimpleStringProperty para obtener el nombre del curso
         tblCurso.setCellValueFactory(cellData -> {
             Cursos curso = cellData.getValue().getCursos();
-            if (curso != null) {
-                return new SimpleStringProperty(curso.getNombreCurso());
-            } else {
-                return new SimpleStringProperty("Sin curso");
-            }
+            return curso != null ? new SimpleStringProperty(curso.getNombreCurso()) : new SimpleStringProperty("Sin curso");
         });
     }
 
-    private void listarTodasLasEvaluaciones() {
-        // Listar todas las evaluaciones
-        List<Evaluaciones> evaluaciones = CEvaluaciones.universo();
-        
-        // Ordenar las evaluaciones por el nombre del curso
-        evaluaciones.sort(Comparator.comparing(evaluacion -> {
-            Cursos curso = evaluacion.getCursos();
-            return (curso != null) ? curso.getNombreCurso() : "";
-        }));
+    private void listarEvaluacionesFiltradas() {
+        if (gradoId != null && seccionId != null) {
+            List<Evaluaciones> evaluaciones = CEvaluaciones.universo(gradoId, seccionId);
+            evaluaciones.sort(Comparator.comparing(evaluacion -> {
+                Cursos curso = evaluacion.getCursos();
+                return (curso != null) ? curso.getNombreCurso() : "";
+            }));
+            ObservableList<Evaluaciones> listaEvaluaciones = FXCollections.observableArrayList(evaluaciones);
+            tblPersona.setItems(listaEvaluaciones);
+        } else {
+            tblPersona.setItems(FXCollections.observableArrayList());  // Limpiar si no hay filtro
+        }
+    }
 
-        // Convertir la lista ordenada en un ObservableList y asignarla a la tabla
-        ObservableList<Evaluaciones> listaEvaluaciones = FXCollections.observableArrayList(evaluaciones);
-        tblPersona.setItems(listaEvaluaciones);
+    // Método para restablecer los campos a su estado predeterminado
+    private void resetearCampos() {
+        txtNombre.clear();  // Limpiar el campo de nombre
+        txtPonderacion.clear();  // Limpiar el campo de ponderación
+        conCurso.setValue("Curso");  // Restablecer ChoiceBox curso
+        conBimestre.setValue("Bimestre");  // Restablecer ChoiceBox bimestre
+        conTipo.setValue("Tipo");  // Restablecer ChoiceBox tipo
+        evaluacionIdSeleccionada = null;  // Limpiar la evaluación seleccionada
+    }
+
+    // Método que selecciona una evaluación y muestra los datos en los campos
+    @FXML
+    private void seleccionaModificar(MouseEvent event) {
+        Evaluaciones evaluacionSeleccionada = tblPersona.getSelectionModel().getSelectedItem();
+        if (evaluacionSeleccionada != null) {
+            evaluacionIdSeleccionada = evaluacionSeleccionada.getEvaluacionId();
+            txtNombre.setText(evaluacionSeleccionada.getNombreEvaluacion());
+            txtPonderacion.setText(evaluacionSeleccionada.getPonderacion().toString());
+            conTipo.setValue(evaluacionSeleccionada.getTipo());
+
+            if (evaluacionSeleccionada.getCursos() != null) {
+                conCurso.setValue(evaluacionSeleccionada.getCursos().getNombreCurso());
+            }
+            if (evaluacionSeleccionada.getBimestres() != null) {
+                conBimestre.setValue(evaluacionSeleccionada.getBimestres().getNombreBimestre());
+            }
+        }
+    }
+
+    @FXML
+    private void btnActualizar(ActionEvent event) {
+        if (evaluacionIdSeleccionada != null) {
+            try {
+                BigDecimal ponderacion = new BigDecimal(txtPonderacion.getText());
+                Cursos cursoSeleccionado = CCurso.obtenerCursoPorNombreYGrado(conCurso.getValue(), gradoId);
+                Bimestres bimestreSeleccionado = CBimestres.obtenerBimestrePorNombre(conBimestre.getValue());
+
+                boolean resultado = CEvaluaciones.actualizarEvaluacion(
+                        evaluacionIdSeleccionada,
+                        bimestreSeleccionado.getBimestreId(),
+                        cursoSeleccionado.getCursoId(),
+                        gradoId,
+                        seccionId,
+                        txtNombre.getText(),
+                        conTipo.getValue(),
+                        ponderacion
+                );
+
+                System.out.println(resultado ? "Evaluación actualizada correctamente." : "Error al actualizar la evaluación.");
+                listarEvaluacionesFiltradas();
+                resetearCampos(); // Restablecer campos después de actualizar
+            } catch (NumberFormatException e) {
+                System.out.println("Ponderación inválida: " + e.getMessage());
+            } catch (Exception e) {
+                System.out.println("Error: " + e.getMessage());
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("No se ha seleccionado ninguna evaluación para actualizar.");
+        }
     }
 
     @FXML
@@ -146,7 +206,8 @@ public class MenuEvaluacionController implements Initializable {
             );
 
             System.out.println(resultado ? "Evaluación creada correctamente." : "Error al crear la evaluación.");
-            listarTodasLasEvaluaciones(); 
+            listarEvaluacionesFiltradas();
+            resetearCampos(); // Restablecer campos después de guardar
         } catch (NumberFormatException e) {
             System.out.println("Ponderación inválida: " + e.getMessage());
         } catch (Exception e) {
@@ -156,17 +217,7 @@ public class MenuEvaluacionController implements Initializable {
     }
 
     @FXML
-    private void btnActualizar(ActionEvent event) {
-   
-    }
-
-    @FXML
     private void btnListar(MouseEvent event) {
- 
-    }
-
-    @FXML
-    private void seleccionaModificar(MouseEvent event) {
-
+        listarEvaluacionesFiltradas();
     }
 }
