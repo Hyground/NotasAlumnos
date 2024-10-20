@@ -29,8 +29,7 @@
       <ChoiceBox fx:id="conTipo" layoutX="150.0" layoutY="126.0" prefWidth="150.0" />
       <TextField fx:id="txtNombre" layoutX="152.0" layoutY="167.0" />
       <TextField fx:id="txtPonderacion" layoutX="405.0" layoutY="126.0" />
-      <Label layoutX="60.0" layoutY="246.0" text="Listar Actividades " />
-      <ChoiceBox layoutX="187.0" layoutY="241.0" onDragDetected="#btnListar" prefWidth="150.0" />
+      <Label layoutX="24.0" layoutY="246.0" text="Listar Actividades " />
       <TableView fx:id="tblPersona" layoutX="8.0" layoutY="273.0" onMouseClicked="#seleccionaModificar" prefHeight="216.0" prefWidth="586.0">
          <columns>
             <TableColumn fx:id="tblEvaluacionId" text="id Actividad" />
@@ -40,5 +39,7 @@
             <TableColumn fx:id="tblTipoActividad" prefWidth="85.0" text="Tipo" />
          </columns>
       </TableView>
+      <ChoiceBox fx:id="conPorUnidad" layoutX="129.0" layoutY="242.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="conPorCurso" layoutX="300.0" layoutY="242.0" prefWidth="150.0" />
    </children>
 </AnchorPane>

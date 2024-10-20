@@ -57,6 +57,10 @@ public class MenuEvaluacionController implements Initializable {
     private Integer gradoId;
     private Integer seccionId;
     private Integer evaluacionIdSeleccionada;
+    @FXML
+    private ChoiceBox<String> conPorUnidad;
+    @FXML
+    private ChoiceBox<String> conPorCurso;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -65,6 +69,14 @@ public class MenuEvaluacionController implements Initializable {
         cargaCurso();
         configurarTabla();
         listarEvaluacionesFiltradas(); // Cambié esto para que muestre las evaluaciones filtradas
+        seleccionChoiceFiltrar();
+
+    }
+
+    // aqui cuando selecionamos alguna opcion entonces acutara el filtro, si no no 
+    public void seleccionChoiceFiltrar() {
+        conPorUnidad.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> listarEvaluacionesFiltradas());
+        conPorCurso.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> listarEvaluacionesFiltradas());
     }
 
     public void setDatosGradoSeccion(String grado, String seccion, Integer gradoId, Integer seccionId) {
@@ -88,7 +100,10 @@ public class MenuEvaluacionController implements Initializable {
         listaBimestres.forEach(bimestre -> bimestres.add(bimestre.getNombreBimestre()));
         conBimestre.setItems(bimestres);
         conBimestre.setValue("Bimestre");
+        conPorUnidad.setItems(bimestres);
+        conPorUnidad.setValue("Bimestre");
     }
+// cargamos nuestros choisebox
 
     public void cargaCurso() {
         if (gradoId != null) {
@@ -97,6 +112,8 @@ public class MenuEvaluacionController implements Initializable {
             listaCursos.forEach(curso -> cursos.add(curso.getNombreCurso()));
             conCurso.setItems(cursos);
             conCurso.setValue("Curso");
+            conPorCurso.setItems(cursos);
+            conPorCurso.setValue("Curso");
         }
     }
 
@@ -115,6 +132,20 @@ public class MenuEvaluacionController implements Initializable {
     private void listarEvaluacionesFiltradas() {
         if (gradoId != null && seccionId != null) {
             List<Evaluaciones> evaluaciones = CEvaluaciones.universo(gradoId, seccionId);
+
+            // Filtro adicional por Unidad (Bimestre)
+            String unidadSeleccionada = conPorUnidad.getValue();
+            if (unidadSeleccionada != null && !unidadSeleccionada.equals("Bimestre")) {
+                evaluaciones.removeIf(evaluacion -> !evaluacion.getBimestres().getNombreBimestre().equals(unidadSeleccionada));
+            }
+
+            // Filtro adicional por Curso
+            String cursoSeleccionado = conPorCurso.getValue();
+            if (cursoSeleccionado != null && !cursoSeleccionado.equals("Curso")) {
+                evaluaciones.removeIf(evaluacion -> !evaluacion.getCursos().getNombreCurso().equals(cursoSeleccionado));
+            }
+
+            // Ordenar y mostrar en la tabla
             evaluaciones.sort(Comparator.comparing(evaluacion -> {
                 Cursos curso = evaluacion.getCursos();
                 return (curso != null) ? curso.getNombreCurso() : "";
@@ -216,8 +247,4 @@ public class MenuEvaluacionController implements Initializable {
         }
     }
 
-    @FXML
-    private void btnListar(MouseEvent event) {
-        listarEvaluacionesFiltradas();
-    }
 }
