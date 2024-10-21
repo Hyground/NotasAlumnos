@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.animation.TranslateTransition;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -216,6 +217,26 @@ public class LoginController implements Initializable {
             move.play();
 
             animacionEjecutada2 = true;
+        }
+    }
+
+    @FXML
+    private void recuperar(ActionEvent event) {
+                try {
+            // Cargar la vista de cambio de contraseña
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/RecuperarPorCorreo.fxml"));
+            Parent root = loader.load();
+
+            // Crear una nueva ventana (Stage) para cambiar contraseña
+            Stage stage = new Stage();
+            stage.setTitle("Cambiar Contraseña");
+            stage.setScene(new Scene(root));
+
+            // Mostrar la ventana
+            stage.show();
+        } catch (IOException e) {
+            // Imprime errores si no se encuentra el FXML o hay problemas de carga
+            
         }
     }
 }
