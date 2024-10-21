@@ -2,13 +2,13 @@ package Controlador;
 
 import CRUDs.CEstudiantes;
 import CRUDs.CBimestres;
-import CRUDs.CCurso;
 import CRUDs.CEvaluaciones;
 import CRUDs.CNotas;
+import POJOs.Bimestres;
 import POJOs.Cursos;
 import POJOs.Evaluaciones;
 import POJOs.Estudiantes;
-import POJOs.Bimestres;
+import POJOs.Notas;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.util.List;
@@ -27,9 +27,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 
-/**
- * FXML Controller class
- */
 public class MenuNotasController implements Initializable {
 
     @FXML
@@ -52,15 +49,16 @@ public class MenuNotasController implements Initializable {
     private TableColumn<Estudiantes, String> tbApellido;
     @FXML
     private ChoiceBox<String> conBimestre;
-
-    // Almacenamos el gradoId y seccionId que vienen del MenuEvaluacionController
     private Integer gradoId;
     private Integer seccionId;
     private ObservableList<Estudiantes> listaEstudiantes;
+    private List<Notas> listaNotas;
+    private List<Evaluaciones> listaEvaluaciones;
+
     @FXML
-    private TableColumn<?, ?> tbActividad;
+    private TableColumn<Estudiantes, String> tbActividad;
     @FXML
-    private TableColumn<?, ?> tbPunto;
+    private TableColumn<Estudiantes, String> tbPunto;
     @FXML
     private Button btnModificar;
     @FXML
@@ -76,12 +74,15 @@ public class MenuNotasController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        listaEstudiantes = FXCollections.observableArrayList(CEstudiantes.ListarEstudiante());
+        listaNotas = CNotas.listarNotas();  // Cargar todas las notas de una vez
+        listaEvaluaciones = CEvaluaciones.universo(gradoId, seccionId);  // Cargar todas las evaluaciones de una vez
+
         cargarBimestres();  // Primero cargamos las opciones de unidad/bimestre
         configurarTabla();  // Configurar las columnas de la tabla
         configurarFiltros();  // Configuramos los listeners para aplicar los filtros
     }
 
-    // Método para recibir los datos del grado y la sección desde el controlador anterior
     public void setDatosGradoSeccion(String grado, String seccion, Integer gradoId, Integer seccionId) {
         this.gradoId = gradoId;
         this.seccionId = seccionId;
@@ -90,7 +91,6 @@ public class MenuNotasController implements Initializable {
         cargarEstudiantes();
     }
 
-    // Cargar bimestres disponibles
     private void cargarBimestres() {
         List<Bimestres> listaBimestres = CBimestres.listarBimestres();
         ObservableList<String> bimestres = FXCollections.observableArrayList();
@@ -99,135 +99,173 @@ public class MenuNotasController implements Initializable {
         conBimestre.setValue("Selecciona un bimestre");
     }
 
-    // Configuración de las columnas de la tabla
-private void configurarTabla() {
-    tbNombre.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
-    tbApellido.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getApellido()));
-    tblCui.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCui()));
-    tblCodPer.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCodigoPersonal()));
-    
-    tblNotas.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-        if (newValue != null) {
-            txtNombre.setText(newValue.getNombre());
-            txtApelldio.setText(newValue.getApellido());
-            txtCui.setText(newValue.getCui());
+    private void configurarTabla() {
+        tbNombre.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
+        tbApellido.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getApellido()));
+        tblCui.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCui()));
+        tblCodPer.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCodigoPersonal()));
+
+        tbActividad.setCellValueFactory(cellData -> new SimpleStringProperty(obtenerNombreActividad(cellData.getValue())));
+        tbPunto.setCellValueFactory(cellData -> new SimpleStringProperty(obtenerNotaEstudiante(cellData.getValue())));
+
+        tblNotas.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                cargarDatosEstudiante(newValue);
+            }
+        });
+    }
+
+    private void cargarDatosEstudiante(Estudiantes estudiante) {
+        txtNombre.setText(estudiante.getNombre());
+        txtApelldio.setText(estudiante.getApellido());
+        txtCui.setText(estudiante.getCui());
+
+        Integer evaluacionId = (Integer) txtNota.getUserData();  // ID de la actividad
+        if (evaluacionId != null) {
+            Notas nota = listaNotas.stream()
+                    .filter(n -> n.getEstudiantes().getCui().equals(estudiante.getCui()) &&
+                            n.getEvaluaciones().getEvaluacionId().equals(evaluacionId))
+                    .findFirst().orElse(null);
+            txtNota.setText(nota != null ? nota.getNota().toString() : "0.00");
+        } else {
+            txtNota.setText("0.00");  // Si no hay actividad seleccionada
         }
-    });
-}
+    }
 
+    private String obtenerNombreActividad(Estudiantes estudiante) {
+        Integer evaluacionId = (Integer) txtNota.getUserData();
+        return (evaluacionId != null) ? listaEvaluaciones.stream()
+                .filter(ev -> ev.getEvaluacionId().equals(evaluacionId))
+                .map(Evaluaciones::getNombreEvaluacion)
+                .findFirst().orElse("Sin actividad") : "Sin actividad";
+    }
 
-    // Configuramos los filtros para que se apliquen encadenadamente
+    private String obtenerNotaEstudiante(Estudiantes estudiante) {
+        Integer evaluacionId = (Integer) txtNota.getUserData();
+        return (evaluacionId != null) ? listaNotas.stream()
+                .filter(n -> n.getEstudiantes().getCui().equals(estudiante.getCui()) &&
+                        n.getEvaluaciones().getEvaluacionId().equals(evaluacionId))
+                .map(n -> n.getNota().toString())
+                .findFirst().orElse("0.00") : "0.00";
+    }
+
     private void configurarFiltros() {
-        // Cuando cambie el bimestre/unidad seleccionado
         conBimestre.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null && !newValue.equals("Selecciona un bimestre")) {
-                filtrarCursosPorUnidad(newValue);  // Filtramos cursos según la unidad seleccionada
+                filtrarCursosPorUnidad(newValue);
             }
         });
 
-        // Cuando cambie el curso seleccionado
         chCurso.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null && !newValue.equals("Selecciona un curso")) {
-                filtrarActividadesPorCursoYUnidad(newValue, conBimestre.getValue());  // Filtramos actividades
+                filtrarActividadesPorCursoYUnidad(newValue, conBimestre.getValue());
             }
         });
     }
 
-    // Filtrar cursos por unidad (bimestre)
-private void filtrarCursosPorUnidad(String unidadSeleccionada) {
-    if (gradoId != null && seccionId != null) {
-        List<Evaluaciones> listaEvaluaciones = CEvaluaciones.universo(gradoId, seccionId);
-        // Filtrar los cursos que tienen actividades en la unidad seleccionada
-        List<Cursos> cursosFiltrados = listaEvaluaciones.stream()
-                .filter(evaluacion -> evaluacion.getBimestres().getNombreBimestre().equals(unidadSeleccionada))
-                .map(Evaluaciones::getCursos)  // Obtener los cursos
-                .distinct()  // Remover duplicados
-                .collect(Collectors.toList());
+    private void filtrarCursosPorUnidad(String unidadSeleccionada) {
+        if (gradoId != null && seccionId != null) {
+            List<Cursos> cursosFiltrados = listaEvaluaciones.stream()
+                    .filter(evaluacion -> evaluacion.getBimestres().getNombreBimestre().equals(unidadSeleccionada))
+                    .map(Evaluaciones::getCursos)
+                    .distinct()
+                    .collect(Collectors.toList());
 
-        // Actualizamos los cursos en el ChoiceBox
-        ObservableList<String> cursos = FXCollections.observableArrayList();
-        cursosFiltrados.forEach(curso -> cursos.add(curso.getNombreCurso()));
-        chCurso.setItems(cursos);
-        chCurso.setValue("Selecciona un curso");
+            ObservableList<String> cursos = FXCollections.observableArrayList();
+            cursosFiltrados.forEach(curso -> cursos.add(curso.getNombreCurso()));
+            chCurso.setItems(cursos);
+            chCurso.setValue("Selecciona un curso");
 
-        // Reiniciamos el ChoiceBox de actividades cuando cambie la unidad
-        chActividad.setItems(FXCollections.observableArrayList());  // Limpiar actividades
-        chActividad.setValue("Selecciona una actividad");  // Valor por defecto
+            chActividad.setItems(FXCollections.observableArrayList());
+            chActividad.setValue("Selecciona una actividad");
+        }
     }
-}
 
-    // Filtrar actividades por curso y unidad (bimestre)
-private void filtrarActividadesPorCursoYUnidad(String cursoSeleccionado, String unidadSeleccionada) {
-    if (gradoId != null && seccionId != null) {
-        List<Evaluaciones> listaEvaluaciones = CEvaluaciones.universo(gradoId, seccionId);
-        // Filtrar actividades por curso y unidad
-        List<Evaluaciones> actividadesFiltradas = listaEvaluaciones.stream()
-                .filter(evaluacion -> evaluacion.getCursos().getNombreCurso().equals(cursoSeleccionado))
-                .filter(evaluacion -> evaluacion.getBimestres().getNombreBimestre().equals(unidadSeleccionada))
-                .collect(Collectors.toList());
+    private void filtrarActividadesPorCursoYUnidad(String cursoSeleccionado, String unidadSeleccionada) {
+        if (gradoId != null && seccionId != null) {
+            List<Evaluaciones> actividadesFiltradas = listaEvaluaciones.stream()
+                    .filter(evaluacion -> evaluacion.getCursos().getNombreCurso().equals(cursoSeleccionado))
+                    .filter(evaluacion -> evaluacion.getBimestres().getNombreBimestre().equals(unidadSeleccionada))
+                    .collect(Collectors.toList());
 
-        // Almacenar tanto el nombre de la actividad como el ID de la evaluación
-        ObservableList<String> actividades = FXCollections.observableArrayList();
-        actividadesFiltradas.forEach(actividad -> {
-            actividades.add(actividad.getNombreEvaluacion());
-        });
-        
-        chActividad.setItems(actividades);
-        chActividad.setValue("Selecciona una actividad");
+            ObservableList<String> actividades = FXCollections.observableArrayList();
+            actividadesFiltradas.forEach(actividad -> actividades.add(actividad.getNombreEvaluacion()));
+            chActividad.setItems(actividades);
+            chActividad.setValue("Selecciona una actividad");
 
-        // Guardar el ID de la evaluación seleccionada en un campo aparte
-        chActividad.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null && newValue.intValue() >= 0) {
-                Integer evaluacionId = actividadesFiltradas.get(newValue.intValue()).getEvaluacionId();
-                // Guardar el evaluacionId para usarlo luego al guardar la nota
-                txtNota.setUserData(evaluacionId);  // Usamos txtNota para almacenar el ID
-            }
-        });
+            chActividad.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
+                if (newValue != null && newValue.intValue() >= 0) {
+                    Integer evaluacionId = actividadesFiltradas.get(newValue.intValue()).getEvaluacionId();
+                    txtNota.setUserData(evaluacionId);
+                    cargarNotasPorActividad(evaluacionId);
+                }
+            });
+        }
     }
-}
 
+    private void cargarNotasPorActividad(Integer evaluacionId) {
+        tblNotas.getItems().clear();
+        cargarEstudiantes();
+        tblNotas.refresh();
+    }
 
-    // Cargar estudiantes por grado y sección
     private void cargarEstudiantes() {
         if (gradoId != null && seccionId != null) {
-            List<Estudiantes> estudiantes = CEstudiantes.ListarEstudiante();
-            // Filtrar estudiantes según el grado y la sección seleccionados
-            List<Estudiantes> estudiantesFiltrados = estudiantes.stream()
+            List<Estudiantes> estudiantesFiltrados = listaEstudiantes.stream()
                     .filter(est -> est.getGrados().getGradoId().equals(gradoId) && est.getSecciones().getSeccionId().equals(seccionId))
                     .collect(Collectors.toList());
 
-            listaEstudiantes = FXCollections.observableArrayList(estudiantesFiltrados);
-            tblNotas.setItems(listaEstudiantes);
+            ObservableList<Estudiantes> estudiantesObservable = FXCollections.observableArrayList(estudiantesFiltrados);
+            tblNotas.setItems(estudiantesObservable);
         }
     }
 
     @FXML
     private void modificar(ActionEvent event) {
-        // Código para modificar
+        gestionarNota(true);
     }
 
+    @FXML
+    private void guardar(ActionEvent event) {
+        gestionarNota(false);
+    }
 
-@FXML
-private void guardar(ActionEvent event) {
-    try {
-        String cui = txtCui.getText();  // Obtener el CUI del estudiante seleccionado
-        BigDecimal nota = new BigDecimal(txtNota.getText());  // Obtener la nota ingresada
-        Integer evaluacionId = (Integer) txtNota.getUserData();  // Obtener el ID de la evaluación almacenado
+    private void gestionarNota(boolean esModificacion) {
+        try {
+            String cui = txtCui.getText();
+            BigDecimal nuevaNota = new BigDecimal(txtNota.getText());
+            Integer evaluacionId = (Integer) txtNota.getUserData();
 
-        if (cui != null && evaluacionId != null && nota != null) {
-            boolean resultado = CNotas.crearNota(cui, evaluacionId, nota);
-            if (resultado) {
-                System.out.println("Nota guardada correctamente.");
+            if (cui != null && evaluacionId != null && nuevaNota != null) {
+                Notas nota = listaNotas.stream()
+                        .filter(n -> n.getEstudiantes().getCui().equals(cui) &&
+                                n.getEvaluaciones().getEvaluacionId().equals(evaluacionId))
+                        .findFirst().orElse(null);
+
+                boolean resultado = (esModificacion && nota != null) ?
+                        CNotas.actualizarNota(nota.getNotaId(), nuevaNota) : CNotas.crearNota(cui, evaluacionId, nuevaNota);
+
+                if (resultado) {
+                    System.out.println(esModificacion ? "Nota actualizada correctamente." : "Nota guardada correctamente.");
+                    listaNotas = CNotas.listarNotas();
+                    cargarNotasPorActividad(evaluacionId);
+                    limpiarCampos();
+                } else {
+                    System.out.println("Error al " + (esModificacion ? "modificar" : "guardar") + " la nota.");
+                }
             } else {
-                System.out.println("Error al guardar la nota. Verifique si ya existe una nota para esta evaluación.");
+                System.out.println("Datos incompletos: CUI, Evaluación o Nota faltante.");
             }
-        } else {
-            System.out.println("Datos incompletos: CUI, Evaluación o Nota faltante.");
+        } catch (Exception e) {
+            System.out.println("Error al " + (esModificacion ? "modificar" : "guardar") + " la nota: " + e.getMessage());
+            e.printStackTrace();
         }
-    } catch (Exception e) {
-        System.out.println("Error al guardar la nota: " + e.getMessage());
-        e.printStackTrace();
     }
-}
 
+    private void limpiarCampos() {
+        txtCui.setText("");
+        txtNombre.setText("");
+        txtApelldio.setText("");
+        txtNota.setText("");
+    }
 }
