@@ -34,7 +34,7 @@ public class RecuperarPorCorreoController {
         try {
             String nuevaContrasenia = RecupararContraPorCorreo.recuperarContrasenia(cui, nombreUsuario, nombreCompleto);
 
-            // Asegúrate de que nuevaContrasenia no sea null antes de proceder
+          
             if (nuevaContrasenia != null) {
                 EmailService.enviarCorreo(correo, nuevaContrasenia, nombreCompleto, cui, nombreUsuario);
                 mostrarAlerta("Éxito", "Se ha generado una nueva contraseña y se ha enviado a su correo.");

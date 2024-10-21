@@ -33,7 +33,7 @@ public static List<Bimestres> listarBimestres() {
    public static boolean crearBimestres() {
     boolean flag = false;
     Transaction transaction = null;
-    Session session = null; // Declaración de la sesión fuera del try
+    Session session = null; 
 
     // Definir los nombres de los bimestres
     String[] bimestresNombres = {"I UNIDAD", "II UNIDAD", "III UNIDAD", "IV UNIDAD"};
@@ -69,12 +69,12 @@ public static List<Bimestres> listarBimestres() {
         transaction.commit();
     } catch (Exception e) {
         if (transaction != null) {
-            transaction.rollback(); // Rollback si hay un error
+            transaction.rollback(); 
         }
         e.printStackTrace();
     } finally {
         if (session != null && session.isOpen()) {
-            session.close(); // Cerrar la sesión de manera segura
+            session.close(); 
         }
     }
 

@@ -11,7 +11,6 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 public class CEvaluaciones {
@@ -52,7 +51,6 @@ public class CEvaluaciones {
 
 
 
-    // Método para crear una nueva evaluación sin verificar las relaciones
     public static boolean crearEvaluacion(Integer bimestreId, Integer cursoId, int gradoId, int seccionId, String nombreEvaluacion, String tipo, BigDecimal ponderacion) {
         boolean flag = false;
         Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
@@ -66,19 +64,19 @@ public class CEvaluaciones {
             
             Bimestres bimestres = new Bimestres();
             bimestres.setBimestreId(bimestreId);
-            insert.setBimestres(bimestres); // Asignación directa
+            insert.setBimestres(bimestres); // Tructo del Profe :V 
             
             Cursos cursos = new Cursos();
             cursos.setCursoId(cursoId);
-            insert.setCursos(cursos); // Asignación directa
+            insert.setCursos(cursos); // Tructo del Profe :V 
             
             Grados grados = new Grados();
             grados.setGradoId(gradoId);
-            insert.setGrados(grados); // Asignación directa
+            insert.setGrados(grados); // Tructo del Profe :V 
             
             Secciones secciones = new Secciones();
             secciones.setSeccionId(seccionId);
-            insert.setSecciones(secciones); // Asignación directa
+            insert.setSecciones(secciones); // Tructo del Profe :V 
             
             insert.setNombreEvaluacion(nombreEvaluacion);
             insert.setTipo(tipo);
@@ -100,7 +98,6 @@ public class CEvaluaciones {
         return flag;
     }
 
-    // Método para actualizar una evaluación existente sin verificar las relaciones
     public static boolean actualizarEvaluacion(Integer evaluacionId, Integer bimestreId, Integer cursoId, Integer gradoId, Integer seccionId, String nombreEvaluacion, String tipo, BigDecimal ponderacion) {
         boolean flag = false;
         Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();

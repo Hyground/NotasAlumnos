@@ -1,6 +1,5 @@
 package CRUDs;
 
-
 import POJOs.Docentes; 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -14,6 +13,7 @@ public class RecupararContraPorCorreo {
     private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     private static final int PASSWORD_LENGTH = 8;
 
+    // Método para generar una nueva contraseña a nuestro ususaroios
     public static String generatePassword() {
         SecureRandom random = new SecureRandom();
         StringBuilder password = new StringBuilder(PASSWORD_LENGTH);
@@ -23,6 +23,7 @@ public class RecupararContraPorCorreo {
         return password.toString();
     }
 
+    // Método para recuperar la contraseña y asignar una nueva
     public static String recuperarContrasenia(String cui, String nombreUsuario, String nombreCompleto) {
         Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = null;
@@ -30,9 +31,6 @@ public class RecupararContraPorCorreo {
 
         try {
             transaction = session.beginTransaction();
-
-            // Agregar mensajes para ver los valores que estás buscando
-            System.out.println("Buscando docente con CUI: " + cui + ", Usuario: " + nombreUsuario + ", Nombre Completo: " + nombreCompleto);
 
             // Obtener el docente mediante CUI, nombre de usuario y nombre completo
             Criteria criteria = session.createCriteria(Docentes.class);
@@ -42,14 +40,9 @@ public class RecupararContraPorCorreo {
 
             List<Docentes> listaDocentes = criteria.list();
 
-            if (listaDocentes.isEmpty()) {
-                System.out.println("No se encontró ningún docente con esos datos");
-                return null;
-            }
-
-            if (listaDocentes.size() > 1) {
-                System.out.println("Se encontraron múltiples docentes con los mismos datos");
-                return null;
+            // Validamos de búsqueda de docentes
+            if (listaDocentes.isEmpty() || listaDocentes.size() > 1) {
+                return null; // Si no se encuentra o si hay más de un resultado, retornamos null
             }
 
             // Generar la nueva contraseña
@@ -61,7 +54,6 @@ public class RecupararContraPorCorreo {
             session.update(docente);
             transaction.commit();
 
-       
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
@@ -72,7 +64,6 @@ public class RecupararContraPorCorreo {
             session.close();
         }
 
-        System.out.println("Contraseña generada con éxito para el docente: " + nuevaContrasenia);
         return nuevaContrasenia;
     }
 }

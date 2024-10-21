@@ -37,7 +37,7 @@ public class EmailService {
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destinatario)); // Correo del destinatario
             message.setSubject("Recuperación de contraseña");
 
-            // Construir el cuerpo del correo con todos los datos
+            // Construimos el cuerpo del correo con todos los datos
             String mensajeCorreo = "Hola " + nombreCompleto + ",\n\n" +
                     "Se ha solicitado una recuperación de contraseña para su cuenta.\n\n" +
                     "A continuación se encuentran los detalles de su cuenta:\n" +
@@ -51,8 +51,6 @@ public class EmailService {
 
             // Enviar el correo
             Transport.send(message);
-
-            System.out.println("Correo enviado con éxito a: " + destinatario);
 
         } catch (Exception e) {
             e.printStackTrace();
