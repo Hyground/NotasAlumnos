@@ -14,11 +14,14 @@ import java.util.stream.Collectors;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -41,7 +44,7 @@ public class AnuladosEstudiantesController implements Initializable {
     private TableColumn<Estudiantes, String> grado;
     @FXML
     private TableColumn<Estudiantes, String> seccion;
-
+    private Stage menuDocenteStage;
     private ObservableList<Estudiantes> listaEstudiantes;
 
     private MenuEstudianteController menuEstudianteController; // Referencia al controlador de MenuEstudiante
@@ -88,6 +91,14 @@ public class AnuladosEstudiantesController implements Initializable {
                 menuEstudianteController.setEstudianteSeleccionado(newValue); // Llamar al método que configura el estudiante
             }
         });
+    }
+
+    @FXML
+    private void btnAtras(ActionEvent event) {
+        menuDocenteStage.show();
+
+        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        currentStage.close();
     }
 }
 

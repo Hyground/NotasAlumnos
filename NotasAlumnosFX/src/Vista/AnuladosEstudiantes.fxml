@@ -7,20 +7,21 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="591.0" prefWidth="633.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="Controlador.AnuladosEstudiantesController">
+<AnchorPane id="AnchorPane" prefHeight="640.0" prefWidth="1060.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.AnuladosEstudiantesController">
     <stylesheets>
         <URL value="@anuladosestudiantes.css" />
     </stylesheets>
    <children>
-      <TableView fx:id="tblEstudiante" layoutX="7.0" layoutY="7.0" prefHeight="570.0" prefWidth="615.0">
+      <TableView fx:id="tblEstudiante" layoutX="32.0" layoutY="28.0" prefHeight="529.0" prefWidth="960.0">
          <columns>
-            <TableColumn fx:id="cui" prefWidth="106.0" text="Cui" />
-            <TableColumn fx:id="codigopersonal" prefWidth="142.0" text="Codigo Personal" />
-            <TableColumn fx:id="nombre" prefWidth="117.0" text="Nombre" />
-            <TableColumn fx:id="apellido" prefWidth="90.0" text="Apellido" />
-            <TableColumn fx:id="grado" prefWidth="77.0" text="Grado" />
-            <TableColumn fx:id="seccion" minWidth="0.0" prefWidth="81.0" text="Sección" />
+            <TableColumn fx:id="cui" prefWidth="137.0" text="Cui" />
+            <TableColumn fx:id="codigopersonal" prefWidth="214.0" text="Codigo Personal" />
+            <TableColumn fx:id="nombre" prefWidth="196.0" text="Nombre" />
+            <TableColumn fx:id="apellido" prefWidth="179.0" text="Apellido" />
+            <TableColumn fx:id="grado" prefWidth="101.0" text="Grado" />
+            <TableColumn fx:id="seccion" minWidth="0.0" prefWidth="132.0" text="Sección" />
          </columns>
       </TableView>
+      <Button layoutX="446.0" layoutY="568.0" mnemonicParsing="false" onAction="#btnAtras" text="Atras" />
    </children>
 </AnchorPane>

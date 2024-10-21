@@ -16,42 +16,21 @@
         <URL value="@menucontrasenia.css" />
     </stylesheets>
    <children>
-      <ImageView fitHeight="400.0" fitWidth="600.0">
+      <ImageView fitHeight="600.0" fitWidth="1024.0" styleClass="mainFxmlClass">
          <image>
             <Image url="@../Imagenes/FondoRealGrande.png" />
          </image>
       </ImageView>
-      <Label cacheHint="SPEED" depthTest="ENABLE" layoutX="72.0" layoutY="39.0" prefHeight="36.0" prefWidth="189.0" scaleShape="false" styleClass="mainFxmlClass" text="INGRESA CONTRASEÑA ANTERIOR">
-         <opaqueInsets>
-            <Insets top="20.0" />
-         </opaqueInsets>
-         <effect>
-            <Blend mode="EXCLUSION" opacity="0.64">
-               <topInput>
-                  <Glow level="0.8" />
-               </topInput>
-            </Blend>
-         </effect>
-      </Label>
-      <TextField layoutX="54.0" layoutY="75.0" prefHeight="28.0" prefWidth="225.0" />
-      <Label cacheHint="SPEED" depthTest="ENABLE" layoutX="72.0" layoutY="127.0" prefHeight="36.0" prefWidth="189.0" scaleShape="false" styleClass="mainFxmlClass" text="INGRESA NUEVA CONTRASEÑA">
-         <effect>
-            <Blend mode="EXCLUSION" opacity="0.64">
-               <topInput>
-                  <Glow level="0.8" />
-               </topInput>
-            </Blend>
-         </effect>
-         <opaqueInsets>
-            <Insets top="20.0" />
-         </opaqueInsets>
-      </Label>
-      <TextField layoutX="55.0" layoutY="163.0" prefHeight="28.0" prefWidth="225.0" />
-      <Button layoutX="108.0" layoutY="237.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="118.0" text="ACEPTAR" />
-      <ImageView fitHeight="219.0" fitWidth="215.0" layoutX="353.0" layoutY="128.0">
+      <TextField layoutX="158.0" layoutY="118.0" prefHeight="28.0" prefWidth="225.0" />
+      <TextField layoutX="158.0" layoutY="282.0" prefHeight="28.0" prefWidth="225.0" />
+      <Button layoutX="82.0" layoutY="436.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="118.0" text="Aceptar" />
+      <ImageView fitHeight="219.0" fitWidth="215.0" layoutX="680.0" layoutY="245.0" styleClass="menucontrasenia.css">
          <image>
             <Image url="@../Imagenes/llave.png" />
          </image>
       </ImageView>
+      <Label layoutX="105.0" layoutY="75.0" text="INGRESA CONTRASEÑA ANTERIOR" />
+      <Label layoutX="122.0" layoutY="223.0" text="INGRESA NUEVA CONTRASEÑA" />
+      <Button layoutX="324.0" layoutY="436.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="118.0" text="Limpiar" />
    </children>
 </AnchorPane>
