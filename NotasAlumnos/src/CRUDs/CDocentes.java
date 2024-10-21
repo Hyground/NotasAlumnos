@@ -234,4 +234,50 @@ public static boolean actualizarDocente(int usuarioId, String cui, String nuevoN
         }
         return docente;
     }
+    // Método para actualizar la contraseña mediante CUI y validando la contraseña antigua
+public static boolean actualizarContrasenia(String cui, String contraseniaAntigua, String nuevaContrasenia) {
+    boolean flag = false;
+    Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
+    Transaction transaction = null;
+
+    try {
+        transaction = session.beginTransaction();
+
+        Criteria criteria = session.createCriteria(Docentes.class);
+        criteria.add(Restrictions.eq("cui", cui));
+        List<Docentes> listaDocentes = criteria.list();
+
+        if (listaDocentes.isEmpty()) {
+            throw new RuntimeException("No existe un docente con el CUI: " + cui);
+        }
+
+        Docentes docenteCorrecto = null;
+        for (Docentes docente : listaDocentes) {
+            if (docente.getContrasenia().equals(contraseniaAntigua)) {
+                docenteCorrecto = docente;
+                break; 
+            }
+        }
+
+        if (docenteCorrecto == null) {
+            throw new RuntimeException("La contraseña antigua no coincide.");
+        }
+
+        docenteCorrecto.setContrasenia(nuevaContrasenia);
+        session.update(docenteCorrecto);
+        flag = true;
+
+        transaction.commit();
+    } catch (Exception e) {
+        if (transaction != null) {
+            transaction.rollback();
+        }
+        e.printStackTrace();
+    } finally {
+        session.close();
+    }
+    return flag;
+}
+
+
 }

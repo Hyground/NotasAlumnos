@@ -21,16 +21,19 @@
             <Image url="@../Imagenes/FondoRealGrande.png" />
          </image>
       </ImageView>
-      <TextField layoutX="158.0" layoutY="118.0" prefHeight="28.0" prefWidth="225.0" />
-      <TextField layoutX="158.0" layoutY="282.0" prefHeight="28.0" prefWidth="225.0" />
-      <Button layoutX="82.0" layoutY="436.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="118.0" text="Aceptar" />
+      <TextField fx:id="txtContr" layoutX="159.0" layoutY="174.0" prefHeight="28.0" prefWidth="225.0" />
+      <TextField fx:id="txtNuevaContra" layoutX="158.0" layoutY="263.0" prefHeight="28.0" prefWidth="225.0" />
+      <Button layoutX="210.0" layoutY="424.0" mnemonicParsing="false" onAction="#actualizar" prefHeight="47.0" prefWidth="118.0" text="Actualizar" />
       <ImageView fitHeight="219.0" fitWidth="215.0" layoutX="680.0" layoutY="245.0" styleClass="menucontrasenia.css">
          <image>
             <Image url="@../Imagenes/llave.png" />
          </image>
       </ImageView>
-      <Label layoutX="105.0" layoutY="75.0" text="INGRESA CONTRASEÑA ANTERIOR" />
-      <Label layoutX="122.0" layoutY="223.0" text="INGRESA NUEVA CONTRASEÑA" />
-      <Button layoutX="324.0" layoutY="436.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="118.0" text="Limpiar" />
+      <Label layoutX="153.0" layoutY="137.0" text="CONTRASEÑA ANTERIOR" />
+      <Label layoutX="168.0" layoutY="223.0" text="NUEVA CONTRASEÑA" />
+      <Label layoutX="143.0" layoutY="318.0" text="CONFIRMAR CONTRASEÑA" />
+      <TextField fx:id="txtConfirmarContra" layoutX="158.0" layoutY="355.0" prefHeight="28.0" prefWidth="225.0" />
+      <Label layoutX="210.0" layoutY="53.0" text="Numero CUI" />
+      <TextField fx:id="txtCui" layoutX="159.0" layoutY="82.0" prefHeight="28.0" prefWidth="225.0" />
    </children>
 </AnchorPane>
