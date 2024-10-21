@@ -23,14 +23,8 @@ public class CNotas {
             Criteria criteria = session.createCriteria(Notas.class);
             criteria.createAlias("estudiantes", "e"); // Relacionar con Estudiantes
             criteria.createAlias("evaluaciones", "ev"); // Relacionar con Evaluaciones
-            criteria.setProjection(Projections.projectionList()
-                    .add(Projections.property("notaId"))
-                    .add(Projections.property("nota"))
-                    .add(Projections.property("e.nombre")) // Alias para el nombre del estudiante
-                    .add(Projections.property("ev.nombreEvaluacion")) // Alias para el nombre de la evaluación
-            );
-            criteria.addOrder(Order.desc("notaId"));
-            lista = criteria.list();
+            criteria.addOrder(Order.desc("notaId")); // Ordenar por notaId descendente
+            lista = criteria.list(); // Aquí obtenemos toda la lista de notas con las entidades completas
         } catch (Exception e) {
             System.out.println("Error: " + e);
         } finally {
@@ -65,12 +59,12 @@ public class CNotas {
             // Crear la nueva nota si no existe
             Notas nuevaNota = new Notas();
 
-            Estudiantes estudiante = new Estudiantes();
-            estudiante.setCui(cui);  // Asignación directa del CUI
+            Estudiantes estudiante = (Estudiantes) session.createCriteria(Estudiantes.class)
+                    .add(Restrictions.eq("cui", cui)).uniqueResult();  // Obtener el estudiante por CUI
             nuevaNota.setEstudiantes(estudiante);
 
-            Evaluaciones evaluacion = new Evaluaciones();
-            evaluacion.setEvaluacionId(evaluacionId);  // Asignación directa del evaluacionId
+            Evaluaciones evaluacion = (Evaluaciones) session.createCriteria(Evaluaciones.class)
+                    .add(Restrictions.eq("evaluacionId", evaluacionId)).uniqueResult();  // Obtener la evaluación por ID
             nuevaNota.setEvaluaciones(evaluacion);
 
             nuevaNota.setNota(nota);
@@ -131,3 +125,4 @@ public class CNotas {
         return nota;
     }
 }
+
