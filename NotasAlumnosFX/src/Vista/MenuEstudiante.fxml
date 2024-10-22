@@ -15,10 +15,9 @@
    <children>
       <Pane layoutX="-20.0" layoutY="-7.0" prefHeight="600.0" prefWidth="1024.0">
          <children>
-            <Button layoutX="33.0" layoutY="388.0" mnemonicParsing="false" onAction="#btnAgregar" text="Agregar" />
-            <Button layoutX="272.0" layoutY="387.0" mnemonicParsing="false" onAction="#btnAnular" text="Anular" />
+            <Button layoutX="33.0" layoutY="388.0" mnemonicParsing="false" onAction="#btnAgregar" text="Inscribir" />
+            <Button layoutX="272.0" layoutY="387.0" mnemonicParsing="false" onAction="#btnAnular" text="Retirar" />
             <Button layoutX="153.0" layoutY="387.0" mnemonicParsing="false" onAction="#btnActualizar" text="Actualizar" />
-            <Button layoutX="31.0" layoutY="438.0" mnemonicParsing="false" onAction="#btnReactivar" text="Reactivar" />
             <Label layoutX="121.0" layoutY="103.0" text="Cui" />
             <Label layoutX="55.0" layoutY="183.0" text="Codigo Personal" />
             <Label layoutX="99.0" layoutY="260.0" text="Nombre" />
@@ -57,9 +56,9 @@
             </Label>
             <Separator layoutX="42.0" layoutY="64.0" prefHeight="10.0" prefWidth="324.0" />
             <Button layoutX="153.0" layoutY="437.0" mnemonicParsing="false" onAction="#btnLimpiar" text="Limpiar" />
-            <Button layoutX="77.0" layoutY="486.0" mnemonicParsing="false" onAction="#btnAtras" text="Atras" />
+            <Button layoutX="153.0" layoutY="488.0" mnemonicParsing="false" onAction="#btnAtras" text="Atras" />
             <Button layoutX="272.0" layoutY="437.0" mnemonicParsing="false" onAction="#btnPdf" text="Cargar Datos" />
-            <Button layoutX="208.0" layoutY="486.0" mnemonicParsing="false" onAction="#btnMostrarAnulados" text="Anulados" />
+            <Button layoutX="31.0" layoutY="437.0" mnemonicParsing="false" onAction="#btnMostrarAnulados" text="Anulados" />
          </children>
       </Pane>
    </children>

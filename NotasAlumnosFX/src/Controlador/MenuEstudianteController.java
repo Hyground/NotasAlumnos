@@ -17,6 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -127,19 +128,31 @@ public class MenuEstudianteController implements Initializable {
 }
     
     ////////////////////////////////////// Métodos importantes, no se tocan ///////////////////////////
-    @FXML
-    private void btnAgregar(ActionEvent event) {
-        String cui = txtCui.getText();
-        String codigoPersonal = txtCodigoPersonal.getText();
-        String nombre = txtNombre.getText();
-        String apellido = txtApellido.getText();
+@FXML
+private void btnAgregar(ActionEvent event) {
+    String cui = txtCui.getText();
+    String codigoPersonal = txtCodigoPersonal.getText();
+    String nombre = txtNombre.getText();
+    String apellido = txtApellido.getText();
 
-        // Utilizar el gradoId y seccionId almacenados
-        if (CEstudiantes.crearEstudiante(cui, codigoPersonal, nombre, apellido, gradoId, seccionId)) {
-            cargarEstudiantes();  // Recargar la tabla después de agregar un nuevo estudiante
-            limpiarCampos();
-        }
+    // Validar que todos los campos estén llenos
+    if (cui.isEmpty() || codigoPersonal.isEmpty() || nombre.isEmpty() || apellido.isEmpty()) {
+        // Mostrar una alerta si hay campos vacíos
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Campos vacíos");
+        alert.setHeaderText(null);
+        alert.setContentText("Por favor, llene todos los campos antes de agregar el estudiante.");
+        alert.showAndWait();
+        return;  // Salir del método si hay campos vacíos
     }
+
+    // Utilizar el gradoId y seccionId almacenados
+    if (CEstudiantes.crearEstudiante(cui, codigoPersonal, nombre, apellido, gradoId, seccionId)) {
+        cargarEstudiantes();  // Recargar la tabla después de agregar un nuevo estudiante
+        limpiarCampos();  // Limpiar los campos después de agregar el estudiante
+    }
+}
+
 
     @FXML
     private void btnAnular(ActionEvent event) {
@@ -163,7 +176,6 @@ public class MenuEstudianteController implements Initializable {
         }
     }
 
-    @FXML
     private void btnReactivar(ActionEvent event) {
         String cui = txtCui.getText();
         if (CEstudiantes.reactivarEstudiante(cui)) {
