@@ -22,6 +22,10 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 
 /**
  * FXML Controller class
@@ -58,6 +62,26 @@ public class AnuladosEstudiantesController implements Initializable {
     public void setMenuEstudianteController(MenuEstudianteController controller) {
         this.menuEstudianteController = controller;
     }
+    
+    public static List<Estudiantes> ListarEstudianteAnulados() {
+        Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
+        List<Estudiantes> lista = null;
+        try {
+            session.beginTransaction();
+            Criteria criteria = session.createCriteria(Estudiantes.class);
+            criteria.createAlias("grados", "g"); // Relacionar con Grados
+            criteria.createAlias("secciones", "s"); // Relacionar con Secciones
+            criteria.add(Restrictions.eq("borradoLogico", false));  // Listar solo los estudiantes anulados (borradoLogico = false)
+            criteria.addOrder(Order.asc("nombre"));  // Ordenar por nombre
+            lista = criteria.list(); // Retornar la lista completa de Estudiantes
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.getTransaction().commit();
+            session.close();
+        }
+        return lista;
+    }
 
     private void mostrar() {
         // Configurar las columnas de la tabla
@@ -73,16 +97,16 @@ public class AnuladosEstudiantesController implements Initializable {
     }
 
     private void cargarEstudiantesAnulados() {
-        List<Estudiantes> estudiantes = CEstudiantes.ListarEstudiante();
+        List<Estudiantes> estudiantes = ListarEstudianteAnulados();
         // Filtrar estudiantes que están anulados
         List<Estudiantes> estudiantesAnulados = estudiantes.stream()
-                .filter(est -> est.isBorradoLogico()) // Filtra los estudiantes cuyo borradoLogico es verdadero
+                .filter(est -> !est.isBorradoLogico()) // Filtra los estudiantes cuyo borradoLogico es falso (anulados)
                 .collect(Collectors.toList());
 
         listaEstudiantes = FXCollections.observableArrayList(estudiantesAnulados);
         tblEstudiante.setItems(listaEstudiantes);
     }
-
+    
     private void seleccionarEstudiante() {
         // Escuchar cambios de selección en la tabla
         tblEstudiante.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -101,5 +125,3 @@ public class AnuladosEstudiantesController implements Initializable {
         currentStage.close();
     }
 }
-
-
