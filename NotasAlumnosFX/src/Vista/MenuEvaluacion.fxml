@@ -19,7 +19,7 @@
       <Label layoutX="24.0" layoutY="53.0" text="Grado:" />
       <Label layoutX="216.0" layoutY="53.0" text="Sección:" />
       <Label layoutX="90.0" layoutY="131.0" text="Tipo:" />
-      <Label layoutX="19.0" layoutY="336.0" text="Ponderación:" />
+      <Label layoutX="25.0" layoutY="254.0" text="Ponderación:" />
       <Button layoutX="37.0" layoutY="421.0" mnemonicParsing="false" onAction="#btnGuardar" text="Guardar" />
       <Button layoutX="212.0" layoutY="421.0" mnemonicParsing="false" onAction="#btnActualizar" text="Actualizar" />
       <ChoiceBox fx:id="conCurso" layoutX="150.0" layoutY="166.0" prefWidth="150.0" />
@@ -28,19 +28,19 @@
       <Label fx:id="rSeccion" layoutX="300.0" layoutY="54.0" text="A" />
       <ChoiceBox fx:id="conTipo" layoutX="150.0" layoutY="125.0" prefWidth="150.0" />
       <TextField fx:id="txtNombre" layoutX="140.0" layoutY="210.0" />
-      <TextField fx:id="txtPonderacion" layoutX="136.0" layoutY="333.0" />
-      <Label layoutX="121.0" layoutY="257.0" text="Listar Actividades " />
+      <TextField fx:id="txtPonderacion" layoutX="142.0" layoutY="251.0" />
+      <Label layoutX="129.0" layoutY="295.0" text="Listar Actividades " />
       <TableView fx:id="tblPersona" layoutX="390.0" layoutY="20.0" onMouseClicked="#seleccionaModificar" prefHeight="216.0" prefWidth="586.0">
          <columns>
-            <TableColumn fx:id="tblEvaluacionId" prefWidth="67.0" text="id Actividad" />
-            <TableColumn fx:id="tblCurso" prefWidth="153.0" text="Curso" />
-            <TableColumn fx:id="tblNombreActividad" prefWidth="192.0" text="Nombre Actividad" />
-            <TableColumn fx:id="tblPonderacionActividad" prefWidth="127.0" text="Ponderación" />
-            <TableColumn fx:id="tblTipoActividad" prefWidth="74.0" text="Tipo" />
+            <TableColumn fx:id="tblEvaluacionId" minWidth="0.0" prefWidth="0.0" text="id Actividad" />
+            <TableColumn fx:id="tblCurso" prefWidth="190.0" text="Curso" />
+            <TableColumn fx:id="tblNombreActividad" prefWidth="222.0" text="Nombre Actividad" />
+            <TableColumn fx:id="tblPonderacionActividad" prefWidth="119.0" text="Ponderación" />
+            <TableColumn fx:id="tblTipoActividad" prefWidth="82.0" text="Tipo" />
          </columns>
       </TableView>
-      <ChoiceBox fx:id="conPorUnidad" layoutX="37.0" layoutY="285.0" prefWidth="150.0" />
-      <ChoiceBox fx:id="conPorCurso" layoutX="202.0" layoutY="285.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="conPorUnidad" layoutX="45.0" layoutY="323.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="conPorCurso" layoutX="210.0" layoutY="323.0" prefWidth="150.0" />
       <Button layoutX="127.0" layoutY="486.0" mnemonicParsing="false" onAction="#btnAtras" text="Atrás" />
    </children>
 </AnchorPane>
