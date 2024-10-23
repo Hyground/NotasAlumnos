@@ -13,10 +13,10 @@
         <URL value="@login.css" />
     </stylesheets>
    <children>
-      <Button fx:id="btnIngreso" layoutX="147.0" layoutY="447.0" mnemonicParsing="false" onAction="#iniciar" prefHeight="37.0" prefWidth="96.0" text="Ingresar" />
+      <Button fx:id="btnIngreso" layoutX="160.0" layoutY="458.0" mnemonicParsing="false" onAction="#iniciar" prefHeight="37.0" prefWidth="96.0" text="Ingresar" />
       <CheckBox fx:id="docenteOn" layoutX="229.0" layoutY="169.0" mnemonicParsing="false" onAction="#cambio" text="Docente" />
       <Label fx:id="label1" layoutX="160.0" layoutY="37.0" prefHeight="25.0" prefWidth="251.0" text="¡Bienvenido!" />
-      <Button fx:id="btnLimpiar" layoutX="310.0" layoutY="447.0" mnemonicParsing="false" onAction="#limpiar" text="Limpiar" />
+      <Button fx:id="btnLimpiar" layoutX="321.0" layoutY="458.0" mnemonicParsing="false" onAction="#limpiar" text="Limpiar" />
       <Label fx:id="label2" layoutX="101.0" layoutY="75.0" prefHeight="25.0" prefWidth="378.0" text="Para continuar, por favor indica si eres">
          <font>
             <Font name="Bell MT" size="12.0" />
@@ -32,6 +32,6 @@
       <Label fx:id="errorUsPas" layoutX="135.0" layoutY="413.0" text="Usuario o Contraseña Incorrecta " textAlignment="CENTER" textFill="#ff0101" />
       <PasswordField fx:id="txtContra" layoutX="160.0" layoutY="359.0" onMouseClicked="#mover2" />
       <Label fx:id="lblContra" layoutX="237.0" layoutY="365.0" text="Contraseña" />
-      <Button layoutX="235.0" layoutY="519.0" mnemonicParsing="false" onAction="#recuperar" prefWidth="287.0" text="Recuperar contraseña por Correo" />
+      <Button fx:id="recucontra" layoutX="115.0" layoutY="517.0" mnemonicParsing="false" onAction="#recuperar" prefWidth="287.0" text="Recuperar contraseña por Correo" />
    </children>
 </AnchorPane>

@@ -7,24 +7,25 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.CargarDatosController">
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1024.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.CargarDatosController">
     <stylesheets>
         <URL value="@cargardatos.css" />
     </stylesheets>
    <children>
-      <Button fx:id="cCargar" layoutX="205.0" layoutY="36.0" mnemonicParsing="false" text="Cargar Datos" />
-      <TableView fx:id="tablaAlumnos" layoutX="42.0" layoutY="120.0" prefHeight="201.0" prefWidth="529.0">
+      <Button fx:id="cCargar" layoutX="109.0" layoutY="216.0" mnemonicParsing="false" text="Cargar Datos" />
+      <TableView fx:id="tablaAlumnos" layoutX="404.0" layoutY="19.0" prefHeight="201.0" prefWidth="529.0">
         <columns>
           <TableColumn fx:id="cCui" prefWidth="75.0" text="Cui" />
-          <TableColumn fx:id="cCOdigo" prefWidth="118.0" text="Codigo Personal" />
-          <TableColumn fx:id="cNombre" prefWidth="75.0" text="Nombre" />
-          <TableColumn fx:id="cApelldio" prefWidth="75.0" text="Apellido" />
+          <TableColumn fx:id="cCOdigo" prefWidth="185.0" text="Codigo Personal" />
+          <TableColumn fx:id="cNombre" prefWidth="161.0" text="Nombre" />
+          <TableColumn fx:id="cApelldio" prefWidth="168.0" text="Apellido" />
         </columns>
       </TableView>
-      <Label layoutX="62.0" layoutY="76.0" text="Grado" />
-      <Label layoutX="215.0" layoutY="76.0" text="Seccion" />
-      <Label fx:id="labGrado" layoutX="116.0" layoutY="76.0" text="Primero" />
-      <Label fx:id="labSeccion" layoutX="300.0" layoutY="76.0" text="A" />
-      <Button layoutX="205.0" layoutY="336.0" mnemonicParsing="false" onAction="#btnInscribir" text="Inscribir" />
+      <Label layoutX="89.0" layoutY="54.0" text="Grado" />
+      <Label layoutX="244.0" layoutY="54.0" text="Seccion" />
+      <Label fx:id="labGrado" layoutX="82.0" layoutY="108.0" text="Primero" />
+      <Label fx:id="labSeccion" layoutX="272.0" layoutY="108.0" text="A" />
+      <Button layoutX="41.0" layoutY="420.0" mnemonicParsing="false" onAction="#btnInscribir" text="Inscribir" />
+      <Button layoutX="209.0" layoutY="420.0" mnemonicParsing="false" onAction="#btnAtras" text="Atras" />
    </children>
 </AnchorPane>

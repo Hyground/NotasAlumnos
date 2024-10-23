@@ -7,12 +7,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1063.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.MenuNotasController">
-    <stylesheets>
-        <URL value="@menunotas.css" />
-    </stylesheets>
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1063.0" styleClass="mainFxmlClass" stylesheets="@menunotas.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.MenuNotasController">
    <children>
-      <TableView fx:id="tblNotas" layoutX="404.0" layoutY="20.0" prefHeight="214.0" prefWidth="713.0">
+      <TableView fx:id="tblNotas" layoutX="429.0" layoutY="18.0" prefHeight="214.0" prefWidth="713.0">
          <columns>
             <TableColumn fx:id="tblCui" prefWidth="97.0" text="CUI" />
             <TableColumn fx:id="tblCodPer" prefWidth="104.0" text="Codigo Personal" />
@@ -22,8 +19,7 @@
             <TableColumn fx:id="tbPunto" prefWidth="92.0" text="Nota" />
          </columns>
       </TableView>
-      <Button fx:id="btnModificar" layoutX="213.0" layoutY="402.0" mnemonicParsing="false" onAction="#modificar" text="Modificar" />
-      <Button fx:id="btnGuardar" layoutX="38.0" layoutY="402.0" mnemonicParsing="false" onAction="#guardar" text="Guardar" />
+      <Button fx:id="btnModificar" layoutX="223.0" layoutY="433.0" mnemonicParsing="false" onAction="#modificar" text="Calificar" />
       <Label layoutX="34.0" layoutY="166.0" text="Apellido:" />
       <Label layoutX="32.0" layoutY="130.0" text="Nombre:" />
       <Label layoutX="68.0" layoutY="239.0" text="Curso:" />
@@ -43,5 +39,6 @@
       <Label layoutX="32.0" layoutY="99.0" text="CUI:" />
       <Label layoutX="46.0" layoutY="201.0" text="Bimestre:" />
       <ChoiceBox fx:id="conBimestre" layoutX="141.0" layoutY="197.0" prefHeight="31.0" prefWidth="187.0" />
+      <Button fx:id="btnModificar1" layoutX="47.0" layoutY="433.0" mnemonicParsing="false" onAction="#btnAtras" text="Atras" />
    </children>
 </AnchorPane>

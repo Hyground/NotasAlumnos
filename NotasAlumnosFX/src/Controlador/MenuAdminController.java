@@ -7,6 +7,7 @@ import CRUDs.CSecciones;
 import POJOs.Docentes;
 import POJOs.Grados;
 import POJOs.Secciones;
+import java.io.IOException;
 import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
@@ -16,7 +17,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -26,6 +31,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 public class MenuAdminController implements Initializable {
 
@@ -78,6 +84,8 @@ public class MenuAdminController implements Initializable {
     private ComboBox<String> conROl;
     @FXML
     private TableView<MenuDocente> tablaView;
+    @FXML
+    private Button btnBorrar1;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -150,7 +158,6 @@ public class MenuAdminController implements Initializable {
         }
     }
 
-    @FXML
     public void mostrar() {
         // Mostrar docentes en la tabla
         try {
@@ -271,5 +278,24 @@ private void modificar(ActionEvent event) {
         alerta.setHeaderText(null);
         alerta.setContentText(mensaje);
         alerta.showAndWait();
+    }
+
+    @FXML
+    private void btnAtras(ActionEvent event) {
+        // Cerrar la ventana actual
+    Stage stageActual = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    stageActual.close();
+
+    // Abrir una nueva ventana (por ejemplo, la ventana principal o la que desees)
+    try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/login.fxml"));
+        Parent root = loader.load();
+        
+        Stage stageNueva = new Stage();
+        stageNueva.setScene(new Scene(root));
+        stageNueva.show();
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
     }
 }

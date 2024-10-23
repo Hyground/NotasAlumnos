@@ -6,6 +6,7 @@ import CRUDs.CCurso;
 import CRUDs.CEvaluaciones;
 import POJOs.Cursos;
 import POJOs.Evaluaciones;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.util.Comparator;
@@ -19,6 +20,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -253,11 +256,21 @@ public class MenuEvaluacionController implements Initializable {
 
     @FXML
     private void btnAtras(ActionEvent event) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/MenuDocente.fxml"));
-        menuDocenteStage.show();
+        // Cerrar la ventana actual
+    Stage stageActual = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    stageActual.close();
 
-        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        currentStage.close();
+    // Abrir una nueva ventana (por ejemplo, la ventana principal o la que desees)
+    try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/MenuDocente.fxml"));
+        Parent root = loader.load();
+        
+        Stage stageNueva = new Stage();
+        stageNueva.setScene(new Scene(root));
+        stageNueva.show();
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
     }
 
 }

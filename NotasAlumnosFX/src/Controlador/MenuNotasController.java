@@ -71,6 +71,8 @@ public class MenuNotasController implements Initializable {
     private TableColumn<Estudiantes, String> tblCodPer;
     @FXML
     private Label txtCui;
+    @FXML
+    private Button btnModificar1;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -225,11 +227,6 @@ public class MenuNotasController implements Initializable {
         gestionarNota(true);
     }
 
-    @FXML
-    private void guardar(ActionEvent event) {
-        gestionarNota(false);
-    }
-
     private void gestionarNota(boolean esModificacion) {
         try {
             String cui = txtCui.getText();
@@ -267,5 +264,9 @@ public class MenuNotasController implements Initializable {
         txtNombre.setText("");
         txtApelldio.setText("");
         txtNota.setText("");
+    }
+
+    @FXML
+    private void btnAtras(ActionEvent event) {
     }
 }

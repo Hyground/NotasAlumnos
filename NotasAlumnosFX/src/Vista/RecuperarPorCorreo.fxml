@@ -7,20 +7,21 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.RecuperarPorCorreoController">
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1075.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.RecuperarPorCorreoController">
     <stylesheets>
         <URL value="@recuperarporcorreo.css" />
     </stylesheets>
    <children>
       <Label layoutX="209.0" layoutY="37.0" text="Recuperar Contraseña" />
-      <Label layoutX="58.0" layoutY="68.0" text="Numero CUI:" />
-      <Label layoutX="58.0" layoutY="97.0" text="Nombre Completo:" />
-      <Label layoutX="55.0" layoutY="134.0" text="Nombre Usuario:" />
-      <Label layoutX="55.0" layoutY="173.0" text="Correo Electronico" />
-      <Button layoutX="190.0" layoutY="231.0" mnemonicParsing="false" onAction="#btnRecuperar" text="Recuperar" />
-      <TextField fx:id="txtCui" layoutX="171.0" layoutY="64.0" />
-      <TextField fx:id="txtNombre" layoutX="171.0" layoutY="93.0" />
-      <TextField fx:id="txtUsuario" layoutX="171.0" layoutY="130.0" />
-      <TextField fx:id="txtCorreo" layoutX="171.0" layoutY="169.0" />
+      <Label layoutX="90.0" layoutY="134.0" text="Numero CUI:" />
+      <Label layoutX="47.0" layoutY="198.0" text="Nombre Completo:" />
+      <Label layoutX="67.0" layoutY="263.0" text="Nombre Usuario:" />
+      <Label layoutX="48.0" layoutY="326.0" text="Correo Electronico" />
+      <Button layoutX="335.0" layoutY="430.0" mnemonicParsing="false" onAction="#btnRecuperar" text="Recuperar" />
+      <TextField fx:id="txtCui" layoutX="248.0" layoutY="128.0" />
+      <TextField fx:id="txtNombre" layoutX="248.0" layoutY="192.0" />
+      <TextField fx:id="txtUsuario" layoutX="248.0" layoutY="257.0" />
+      <TextField fx:id="txtCorreo" layoutX="248.0" layoutY="320.0" />
+      <Button layoutX="97.0" layoutY="436.0" mnemonicParsing="false" onAction="#btnAtras" text="Atras" />
    </children>
 </AnchorPane>

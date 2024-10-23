@@ -23,7 +23,7 @@
       </ImageView>
       <TextField fx:id="txtContr" layoutX="159.0" layoutY="174.0" prefHeight="28.0" prefWidth="225.0" />
       <TextField fx:id="txtNuevaContra" layoutX="158.0" layoutY="263.0" prefHeight="28.0" prefWidth="225.0" />
-      <Button layoutX="210.0" layoutY="424.0" mnemonicParsing="false" onAction="#actualizar" prefHeight="47.0" prefWidth="118.0" text="Actualizar" />
+      <Button layoutX="78.0" layoutY="424.0" mnemonicParsing="false" onAction="#actualizar" prefHeight="47.0" prefWidth="118.0" text="Actualizar" />
       <ImageView fitHeight="219.0" fitWidth="215.0" layoutX="680.0" layoutY="245.0" styleClass="menucontrasenia.css">
          <image>
             <Image url="@../Imagenes/llave.png" />
@@ -35,5 +35,6 @@
       <TextField fx:id="txtConfirmarContra" layoutX="158.0" layoutY="355.0" prefHeight="28.0" prefWidth="225.0" />
       <Label layoutX="210.0" layoutY="53.0" text="Numero CUI" />
       <TextField fx:id="txtCui" layoutX="159.0" layoutY="82.0" prefHeight="28.0" prefWidth="225.0" />
+      <Button layoutX="292.0" layoutY="424.0" mnemonicParsing="false" onAction="#btnAtras" prefHeight="47.0" prefWidth="118.0" text="Cancelar" />
    </children>
 </AnchorPane>

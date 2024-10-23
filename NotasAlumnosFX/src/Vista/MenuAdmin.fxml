@@ -32,15 +32,16 @@
             <TableColumn fx:id="SeccionID" prefWidth="69.0" text="Seccion" />
         </columns>
       </TableView>
-      <Button fx:id="btnCrear" layoutX="64.0" layoutY="427.0" mnemonicParsing="false" onAction="#crear" text="Crear Usuario" />
-      <Button fx:id="btnBorrar" layoutX="64.0" layoutY="482.0" mnemonicParsing="false" onAction="#eliminar" text="Eliminar" />
-      <Button fx:id="btnModificar" layoutX="232.0" layoutY="427.0" mnemonicParsing="false" onAction="#modificar" text="Modificar" />
-      <Button fx:id="BtnLimpiar" layoutX="232.0" layoutY="482.0" mnemonicParsing="false" onAction="#limpiar" text="Limpiar" />
+      <Button fx:id="btnCrear" layoutX="64.0" layoutY="387.0" mnemonicParsing="false" onAction="#crear" text="Crear Usuario" />
+      <Button fx:id="btnBorrar" layoutX="64.0" layoutY="442.0" mnemonicParsing="false" onAction="#eliminar" text="Eliminar" />
+      <Button fx:id="btnModificar" layoutX="232.0" layoutY="387.0" mnemonicParsing="false" onAction="#modificar" text="Modificar" />
+      <Button fx:id="BtnLimpiar" layoutX="235.0" layoutY="442.0" mnemonicParsing="false" onAction="#limpiar" text="Limpiar" />
       <Label layoutX="193.0" layoutY="307.0" text="Rol" />
       <Label layoutX="172.0" layoutY="94.0" text="Nombre" />
       <TextField fx:id="txtNombre" layoutX="113.0" layoutY="111.0" />
       <ComboBox fx:id="conSeccion" layoutX="115.0" layoutY="282.0" prefHeight="25.0" prefWidth="177.0" />
       <ComboBox fx:id="conGrado" layoutX="115.0" layoutY="240.0" prefHeight="25.0" prefWidth="177.0" />
       <ComboBox fx:id="conROl" layoutX="115.0" layoutY="324.0" prefHeight="25.0" prefWidth="177.0" />
+      <Button fx:id="btnBorrar1" layoutX="237.0" layoutY="504.0" mnemonicParsing="false" onAction="#btnAtras" text="Cerrar sesión" />
    </children>
 </AnchorPane>

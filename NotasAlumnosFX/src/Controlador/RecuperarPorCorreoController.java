@@ -1,12 +1,19 @@
 package Controlador;
 
 import CRUDs.RecupararContraPorCorreo;
+import java.io.IOException;
 import util.EmailService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+
 
 public class RecuperarPorCorreoController {
 
@@ -19,6 +26,7 @@ public class RecuperarPorCorreoController {
     @FXML
     private TextField txtUsuario; 
 
+    private Stage loginStage;
     @FXML
     private void btnRecuperar(ActionEvent event) {
         String cui = txtCui.getText();
@@ -52,5 +60,24 @@ public class RecuperarPorCorreoController {
         alerta.setHeaderText(null);
         alerta.setContentText(mensaje);
         alerta.showAndWait();
+    }
+
+    @FXML
+    private void btnAtras(ActionEvent event) {
+        // Cerrar la ventana actual
+        Stage stageActual = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stageActual.close();
+
+        // Abrir una nueva ventana (por ejemplo, la ventana principal o la que desees)
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/login.fxml"));
+            Parent root = loader.load();
+
+            Stage stageNueva = new Stage();
+            stageNueva.setScene(new Scene(root));
+            stageNueva.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

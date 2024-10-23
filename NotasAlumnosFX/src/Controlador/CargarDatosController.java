@@ -17,8 +17,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.collections.FXCollections;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 
@@ -151,6 +156,26 @@ private void mostrarAlerta(Alert.AlertType tipo, String titulo, String mensaje) 
     alerta.setContentText(mensaje);
     alerta.showAndWait();
 }
+
+    @FXML
+    private void btnAtras(ActionEvent event) {
+        // Cerrar la ventana actual
+    Stage stageActual = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    stageActual.close();
+
+    // Abrir una nueva ventana (por ejemplo, la ventana principal o la que desees)
+    try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/MenuEstudiante.fxml"));
+        Parent root = loader.load();
+        
+        Stage stageNueva = new Stage();
+        stageNueva.setScene(new Scene(root));
+        stageNueva.show();
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+
+    }
 
 
 }
