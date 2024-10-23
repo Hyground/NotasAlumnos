@@ -48,11 +48,18 @@ public class LoginController implements Initializable {
     private Label errorUsPas; // Label para mostrar el error
 
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        errorUsPas.setVisible(false); // Ocultar el label de error al inicio
-        mover();
-        mover2();
-    }
+public void initialize(URL url, ResourceBundle rb) {
+    errorUsPas.setVisible(false); // Ocultar el label de error al inicio
+    mover();
+    mover2();
+
+    txtContra.setOnKeyPressed(event -> {
+        if (event.getCode().toString().equals("ENTER")) {
+            iniciar(null); 
+        }
+    });
+}
+
 
     @FXML
     private void cambio(javafx.event.ActionEvent event) {
@@ -79,42 +86,58 @@ public class LoginController implements Initializable {
     }
 
     @FXML
-    private void iniciar(javafx.event.ActionEvent event) {
-        String nombreUsuario = txtUser.getText();
-        String contrasenia = txtContra.getText();
+private void iniciar(javafx.event.ActionEvent event) {
+    String nombreUsuario = txtUser.getText();
+    String contrasenia = txtContra.getText();
 
-        if (!docenteOn.isSelected() && !adminOn.isSelected()) {
-            System.out.println("Por favor, selecciona un rol.");
-            return;
-        }
-
-        if (docenteOn.isSelected() && (nombreUsuario.equalsIgnoreCase("admin") || nombreUsuario.trim().isEmpty())) {
-            errorUsPas.setVisible(true); 
-            return;
-        }
-
-        if (adminOn.isSelected() && !nombreUsuario.equalsIgnoreCase("admin")) {
-            errorUsPas.setVisible(true); 
-            return;
-        }
-
-        boolean isAuthenticated = CLogin.CLogin(nombreUsuario, contrasenia);
-
-        if (isAuthenticated) {
-            if (docenteOn.isSelected()) {
-                // Obtener el docente con sus datos
-                Docentes docente = CLogin.obtenerDocentePorNombreUsuario(nombreUsuario);
-                
-                // Cargar la vista de MenuDocente y pasar los datos
-                cargarFXMLConDatos("/Vista/MenuDocente.fxml", docente);
-            } else if (adminOn.isSelected()) {
-                cargarFXML("/Vista/MenuAdmin.fxml");
-            }
-            errorUsPas.setVisible(false); 
-        } else {
-            errorUsPas.setVisible(true); 
-        }
+    // Verificamos si el rol no está seleccionado
+    if (!docenteOn.isSelected() && !adminOn.isSelected()) {
+        errorUsPas.setText("Por favor, selecciona un rol.");
+        errorUsPas.setVisible(true);
+        return;
     }
+
+    // Verificamos si el nombre de usuario o la contraseña están vacíos
+    if (nombreUsuario.trim().isEmpty() || contrasenia.trim().isEmpty()) {
+        errorUsPas.setText("Por favor, completa todos los campos.");
+        errorUsPas.setVisible(true);
+        return;
+    }
+
+    // Verificacmos específicas de rol
+    if (docenteOn.isSelected() && (nombreUsuario.equalsIgnoreCase("admin") || nombreUsuario.trim().isEmpty())) {
+        errorUsPas.setText("Usuario docente inválido.");
+        errorUsPas.setVisible(true);
+        return;
+    }
+
+    if (adminOn.isSelected() && !nombreUsuario.equalsIgnoreCase("admin")) {
+        errorUsPas.setText("Usuario administrador inválido.");
+        errorUsPas.setVisible(true);
+        return;
+    }
+
+    // Intentamos autenticación
+    boolean isAuthenticated = CLogin.CLogin(nombreUsuario, contrasenia);
+
+    if (isAuthenticated) {
+        errorUsPas.setVisible(false); // Ocultar el error si todo está correcto
+
+        if (docenteOn.isSelected()) {
+            // Obtener el docente con sus datos
+            Docentes docente = CLogin.obtenerDocentePorNombreUsuario(nombreUsuario);
+
+            // Cargar la vista de MenuDocente y pasar los datos
+            cargarFXMLConDatos("/Vista/MenuDocente.fxml", docente);
+        } else if (adminOn.isSelected()) {
+            cargarFXML("/Vista/MenuAdmin.fxml");
+        }
+    } else {
+        errorUsPas.setText("Usuario o contraseña incorrectos.");
+        errorUsPas.setVisible(true);
+    }
+}
+
 
     // Método para cargar el FXML y pasar los datos
  private void cargarFXMLConDatos(String fxml, Docentes docente) {
