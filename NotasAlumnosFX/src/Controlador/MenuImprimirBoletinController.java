@@ -50,6 +50,9 @@ public class MenuImprimirBoletinController implements Initializable {
     private Label lbSeccion;
     @FXML
     private Label lbGrado;
+    
+    private Integer gradoId;    // Variable para almacenar el ID del grado
+    private Integer seccionId;  // Variable para almacenar el ID de la sección
 
     /**
      * Initializes the controller class.
@@ -58,6 +61,12 @@ public class MenuImprimirBoletinController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
+        public void setDatosGradoSeccion(String grado, String seccion, Integer gradoId, Integer seccionId) {
+        this.gradoId = gradoId;
+        this.seccionId = seccionId;
+        lbGrado.setText(grado);
+        lbSeccion.setText(seccion);
+    }
 
     @FXML
     private void btnImprimir(ActionEvent event) {

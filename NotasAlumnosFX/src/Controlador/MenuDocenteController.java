@@ -134,6 +134,10 @@ private void btnImprimirBoletines(ActionEvent event) {
         // Cargar la vista de la tabla de boletines
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/MenuImprimirBoletin.fxml"));
         Parent root = loader.load();
+                    // Obtener el controlador de la vista cargada
+            MenuImprimirBoletinController controller = loader.getController();
+            // Pasar los datos de grado, sección y sus IDs al controlador de estudiantes
+            controller.setDatosGradoSeccion(labelGrado.getText(), labelSeccion.getText(), gradoId, seccionId);
 
         // Crear una nueva ventana (Stage) para la vista de la tabla de boletines
         Stage stage = new Stage();
