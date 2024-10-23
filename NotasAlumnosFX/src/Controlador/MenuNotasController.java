@@ -20,6 +20,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -227,37 +228,81 @@ public class MenuNotasController implements Initializable {
         gestionarNota(true);
     }
 
-    private void gestionarNota(boolean esModificacion) {
-        try {
-            String cui = txtCui.getText();
-            BigDecimal nuevaNota = new BigDecimal(txtNota.getText());
-            Integer evaluacionId = (Integer) txtNota.getUserData();
+  private void gestionarNota(boolean esModificacion) {
+    try {
+        String cui = txtCui.getText();
+        BigDecimal nuevaNota = new BigDecimal(txtNota.getText());
+        Integer evaluacionId = (Integer) txtNota.getUserData();
 
-            if (cui != null && evaluacionId != null && nuevaNota != null) {
-                Notas nota = listaNotas.stream()
-                        .filter(n -> n.getEstudiantes().getCui().equals(cui)
-                        && n.getEvaluaciones().getEvaluacionId().equals(evaluacionId))
-                        .findFirst().orElse(null);
+        if (cui != null && evaluacionId != null && nuevaNota != null) {
+            // Buscar la evaluación asociada para obtener la ponderación máxima
+            Evaluaciones evaluacion = listaEvaluaciones.stream()
+                    .filter(e -> e.getEvaluacionId().equals(evaluacionId))
+                    .findFirst()
+                    .orElse(null);
 
-                boolean resultado = (esModificacion && nota != null)
-                        ? CNotas.actualizarNota(nota.getNotaId(), nuevaNota) : CNotas.crearNota(cui, evaluacionId, nuevaNota);
-
-                if (resultado) {
-                    System.out.println(esModificacion ? "Nota actualizada correctamente." : "Nota guardada correctamente.");
-                    listaNotas = CNotas.listarNotas();
-                    cargarNotasPorActividad(evaluacionId);
-                    limpiarCampos();
-                } else {
-                    System.out.println("Error al " + (esModificacion ? "modificar" : "guardar") + " la nota.");
+            if (evaluacion != null) {
+                // Validar que la nota no exceda la ponderación
+                BigDecimal ponderacionMaxima = evaluacion.getPonderacion();
+                if (nuevaNota.compareTo(ponderacionMaxima) > 0) {
+                    // Mostrar alerta gráfica si la nota excede la ponderación
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Error de Ponderación");
+                    alert.setHeaderText("Nota Excede la Ponderación Máxima");
+                    alert.setContentText("La nota ingresada (" + nuevaNota + ") excede la ponderación máxima permitida (" + ponderacionMaxima + ").");
+                    alert.showAndWait();
+                    return;  // Detener el proceso si la nota excede la ponderación
                 }
-            } else {
-                System.out.println("Datos incompletos: CUI, Evaluación o Nota faltante.");
             }
-        } catch (Exception e) {
-            System.out.println("Error al " + (esModificacion ? "modificar" : "guardar") + " la nota: " + e.getMessage());
-            e.printStackTrace();
+
+            // Proceder con la creación o actualización de la nota
+            Notas nota = listaNotas.stream()
+                    .filter(n -> n.getEstudiantes().getCui().equals(cui)
+                    && n.getEvaluaciones().getEvaluacionId().equals(evaluacionId))
+                    .findFirst().orElse(null);
+
+            boolean resultado = (esModificacion && nota != null)
+                    ? CNotas.actualizarNota(nota.getNotaId(), nuevaNota) 
+                    : CNotas.crearNota(cui, evaluacionId, nuevaNota);
+
+            if (resultado) {
+                // Mostrar una alerta de éxito si la nota se guarda correctamente
+                Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+                successAlert.setTitle("Éxito");
+                successAlert.setHeaderText(null);
+                successAlert.setContentText(esModificacion ? "Califacion Realizada." : "Califacion Realizada");
+                successAlert.showAndWait();
+
+                listaNotas = CNotas.listarNotas();  // Actualizamos la lista de notas
+                cargarNotasPorActividad(evaluacionId);  // Recargamos las notas para actualizar la tabla
+                limpiarCampos();
+            } else {
+                // Mostrar alerta si ocurre un error al guardar la nota
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                errorAlert.setTitle("Error");
+                errorAlert.setHeaderText("Error al guardar la nota");
+                errorAlert.setContentText("Ocurrió un error al intentar " + (esModificacion ? "modificar" : "guardar") + " la nota.");
+                errorAlert.showAndWait();
+            }
+        } else {
+            // Mostrar alerta si faltan datos
+            Alert missingDataAlert = new Alert(Alert.AlertType.WARNING);
+            missingDataAlert.setTitle("Datos incompletos");
+            missingDataAlert.setHeaderText(null);
+            missingDataAlert.setContentText("Por favor, asegúrate de que el CUI, Evaluación y Nota estén completos.");
+            missingDataAlert.showAndWait();
         }
+    } catch (Exception e) {
+        // Mostrar alerta si ocurre una excepción
+        Alert exceptionAlert = new Alert(Alert.AlertType.ERROR);
+        exceptionAlert.setTitle("Error");
+        exceptionAlert.setHeaderText("Excepción");
+        exceptionAlert.setContentText("Ocurrió un error: " + e.getMessage());
+        exceptionAlert.showAndWait();
+        e.printStackTrace();
     }
+}
+
 
     private void limpiarCampos() {
         txtCui.setText("");

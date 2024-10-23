@@ -9,7 +9,6 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 public class CNotas {
@@ -56,17 +55,22 @@ public class CNotas {
                 return flag;
             }
 
-            // Crear la nueva nota si no existe
-            Notas nuevaNota = new Notas();
+            // Obtener la evaluación para verificar la ponderación
+            Evaluaciones evaluacion = (Evaluaciones) session.createCriteria(Evaluaciones.class)
+                    .add(Restrictions.eq("evaluacionId", evaluacionId)).uniqueResult();
 
+            // Validar que la nota ingresada no exceda la ponderación
+            if (nota.compareTo(evaluacion.getPonderacion()) > 0) {
+                System.out.println("La nota ingresada excede la ponderación máxima permitida (" + evaluacion.getPonderacion() + ").");
+                return flag;  // No guardar la nota si excede la ponderación
+            }
+
+            // Crear la nueva nota si no existe y si está dentro del límite
+            Notas nuevaNota = new Notas();
             Estudiantes estudiante = (Estudiantes) session.createCriteria(Estudiantes.class)
                     .add(Restrictions.eq("cui", cui)).uniqueResult();  // Obtener el estudiante por CUI
             nuevaNota.setEstudiantes(estudiante);
-
-            Evaluaciones evaluacion = (Evaluaciones) session.createCriteria(Evaluaciones.class)
-                    .add(Restrictions.eq("evaluacionId", evaluacionId)).uniqueResult();  // Obtener la evaluación por ID
             nuevaNota.setEvaluaciones(evaluacion);
-
             nuevaNota.setNota(nota);
 
             session.save(nuevaNota);
@@ -93,7 +97,19 @@ public class CNotas {
         try {
             transaction = session.beginTransaction();
             Notas nota = (Notas) session.get(Notas.class, notaId);
+
             if (nota != null) {
+                // Obtener la evaluación de la nota para verificar la ponderación
+                Evaluaciones evaluacion = nota.getEvaluaciones();
+                BigDecimal ponderacionMaxima = evaluacion.getPonderacion();
+
+                // Validar si la nueva nota excede la ponderación
+                if (nuevaNota.compareTo(ponderacionMaxima) > 0) {
+                    System.out.println("La nueva nota excede la ponderación máxima permitida (" + ponderacionMaxima + ").");
+                    return flag;  // No actualizar si excede la ponderación
+                }
+
+                // Actualizar la nota si está dentro del límite permitido
                 nota.setNota(nuevaNota);
                 session.update(nota);
                 flag = true;
@@ -110,6 +126,7 @@ public class CNotas {
         return flag;
     }
 
+    // Método para obtener una nota por su ID
     public static Notas obtenerNotaPorId(Integer notaId) {
         Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
         Notas nota = null;
@@ -125,4 +142,3 @@ public class CNotas {
         return nota;
     }
 }
-
