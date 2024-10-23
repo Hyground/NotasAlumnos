@@ -144,7 +144,7 @@ private void btnImprimirBoletines(ActionEvent event) {
         stage.show();
     } catch (IOException e) {
         // Registrar el error si ocurre
-        Logger.getLogger(MenuDocenteController.class.getName()).log(Level.SEVERE, null, e);
+        Logger.getLogger(MenuImprimirBoletinController.class.getName()).log(Level.SEVERE, null, e);
     }
 }
 
