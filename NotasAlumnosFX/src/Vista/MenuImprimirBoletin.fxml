@@ -9,8 +9,8 @@
 <AnchorPane id="AnchorPane" prefHeight="508.0" prefWidth="644.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.MenuImprimirBoletinController">
    <children>
       <Button defaultButton="true" layoutX="283.0" layoutY="447.0" mnemonicParsing="false" onAction="#btnImprimir" text="Imprimir boletín en PDF" />
-      <Label layoutX="152.0" layoutY="26.0" text="INGRESE CUI" />
-      <TextField fx:id="txtCui" layoutX="250.0" layoutY="21.0" prefHeight="31.0" prefWidth="110.0" />
+      <Label layoutX="50.0" layoutY="26.0" text="INGRESE CUI" />
+      <TextField fx:id="txtCui" layoutX="128.0" layoutY="19.0" prefHeight="31.0" prefWidth="110.0" />
       <TableView fx:id="tblBoletin" layoutX="30.0" layoutY="142.0" prefHeight="293.0" prefWidth="585.0">
         <columns>
           <TableColumn fx:id="tabCurso" prefWidth="75.0" text="Curso" />
@@ -22,7 +22,7 @@
             <TableColumn fx:id="tbAprob" prefWidth="79.0" text="A/NO A" />
         </columns>
       </TableView>
-      <Button layoutX="368.0" layoutY="21.0" mnemonicParsing="false" onAction="#btnBuscarBoletin" text="Buscar" />
+      <Button layoutX="251.0" layoutY="22.0" mnemonicParsing="false" onAction="#btnBuscarBoletin" text="Buscar" />
       <Button fx:id="btnRegresar" layoutX="96.0" layoutY="447.0" mnemonicParsing="false" onAction="#btnRegresarAlMenuDocente" text="Regresar" />
       <Label layoutX="35.0" layoutY="62.0" text="Nombre" />
       <Label layoutX="30.0" layoutY="97.0" text="Apellido" />
@@ -32,5 +32,7 @@
       <Label layoutX="276.0" layoutY="99.0" text="Seccion" />
       <Label fx:id="lbSeccion" layoutX="331.0" layoutY="99.0" text="A" />
       <Label fx:id="lbGrado" layoutX="326.0" layoutY="71.0" text="Primero" />
+      <ChoiceBox fx:id="chAlumnos" layoutX="420.0" layoutY="22.0" prefWidth="150.0" />
+      <Label layoutX="334.0" layoutY="26.0" text="Seleccionar" />
    </children>
 </AnchorPane>

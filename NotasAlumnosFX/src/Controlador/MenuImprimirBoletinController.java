@@ -18,6 +18,7 @@ import java.math.BigDecimal;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.scene.control.ChoiceBox;
 
 public class MenuImprimirBoletinController implements Initializable {
 
@@ -51,6 +52,8 @@ public class MenuImprimirBoletinController implements Initializable {
     private TableView<Boletin> tblBoletin;
 
     private ObservableList<Boletin> boletinList = FXCollections.observableArrayList();
+    @FXML
+    private ChoiceBox<?> chAlumnos;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
