@@ -1,14 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Modelo;
 
-/**
- *
- * @author wissegt
- */
 public class Boletin {
 
     private String curso;
@@ -29,7 +20,6 @@ public class Boletin {
         this.aprobado = aprobado;
     }
 
-    // Getters y Setters
     public String getCurso() {
         return curso;
     }
@@ -86,4 +76,3 @@ public class Boletin {
         this.aprobado = aprobado;
     }
 }
-

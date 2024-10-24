@@ -14,52 +14,46 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.math.BigDecimal; // Importación para BigDecimal
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-/**
- * FXML Controller class
- */
 public class MenuImprimirBoletinController implements Initializable {
 
     @FXML
-    private TextField txtCui;
+    private TextField txtCui;  // Campo para ingresar el CUI del estudiante
     @FXML
-    private TableColumn<Boletin, String> tabCurso;
+    private TableColumn<Boletin, String> tabCurso;  // Columna para el curso
     @FXML
-    private TableColumn<Boletin, Double> tbUniI;
+    private TableColumn<Boletin, Double> tbUniI;  // Columna para Unidad I
     @FXML
-    private TableColumn<Boletin, Double> tbUniII;
+    private TableColumn<Boletin, Double> tbUniII;  // Columna para Unidad II
     @FXML
-    private TableColumn<Boletin, Double> tbUniIII;
+    private TableColumn<Boletin, Double> tbUniIII;  // Columna para Unidad III
     @FXML
-    private TableColumn<Boletin, Double> tbUniIV;
+    private TableColumn<Boletin, Double> tbUniIV;  // Columna para Unidad IV
     @FXML
-    private TableColumn<Boletin, Double> tbProm;
+    private TableColumn<Boletin, Double> tbProm;  // Columna para el promedio
     @FXML
-    private TableColumn<Boletin, String> tbAprob;
+    private TableColumn<Boletin, String> tbAprob;  // Columna para Aprobado/No Aprobado
     @FXML
-    private Button btnRegresar;
+    private Button btnRegresar;  // Botón para regresar al menú docente
     @FXML
-    private Label lbApelldio;
+    private Label lbApelldio;  // Label para mostrar el apellido del estudiante
     @FXML
-    private Label lbNombre;
+    private Label lbNombre;  // Label para mostrar el nombre del estudiante
     @FXML
-    private Label lbSeccion;
+    private Label lbSeccion;  // Label para mostrar la sección (no cambiar)
     @FXML
-    private Label lbGrado;
-    
-    private Integer gradoId;    // Variable para almacenar el ID del grado
-    private Integer seccionId;  // Variable para almacenar el ID de la sección
+    private Label lbGrado;  // Label para mostrar el grado (no cambiar)
     @FXML
-    private TableView<Boletin> tblBoletin;  // Tipo cambiado a Boletin
+    private TableView<Boletin> tblBoletin;  // Tabla para mostrar el boletín
 
     private ObservableList<Boletin> boletinList = FXCollections.observableArrayList();  // Lista observable para la tabla
+    private Integer gradoId;  // Variable para almacenar el ID del grado
+    private Integer seccionId;  // Variable para almacenar el ID de la sección
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // Configurar las columnas de la tabla
@@ -74,55 +68,58 @@ public class MenuImprimirBoletinController implements Initializable {
         // Asignar la lista observable a la tabla
         tblBoletin.setItems(boletinList);
     }
+
+    // Método para recibir los datos de Grado, Sección y la referencia de la ventana de MenuDocente
+    public void setDatosGradoSeccion(String grado, String seccion, Integer gradoId, Integer seccionId) {
+        this.gradoId = gradoId;
+        this.seccionId = seccionId;
+        lbGrado.setText(grado);  // Mantener el grado asignado por el docente
+        lbSeccion.setText(seccion);  // Mantener la sección asignada por el docente
+    }
+
     @FXML
     private void btnBuscarBoletin(ActionEvent event) {
-    System.out.println("Buscando boletín...");
-    // Obtener el CUI del campo de texto
-    String cui = txtCui.getText();
-    
-    // Limpiar la lista actual de la tabla
-    boletinList.clear();
+        // Obtener el CUI del campo de texto
+        String cui = txtCui.getText();
 
-    // Llamar al método obtenerBoletinEstudiante para obtener los datos
-    List<Object[]> resultados = Boletines.obtenerBoletinEstudiante(cui);
+        // Limpiar la lista actual de la tabla
+        boletinList.clear();
 
-    if (resultados != null && !resultados.isEmpty()) {
-        System.out.println("Resultados encontrados: " + resultados.size());
-        for (Object[] fila : resultados) {
-            // Procesar cada fila
-            String nombre = (String) fila[1];
-            String apellido = (String) fila[2];
-            String grado = (String) fila[3];
-            String seccion = (String) fila[4];
-            String curso = (String) fila[5];
-            Double unidad1 = obtenerNotaPorUnidad(fila, 1);
-            Double unidad2 = obtenerNotaPorUnidad(fila, 2);
-            Double unidad3 = obtenerNotaPorUnidad(fila, 3);
-            Double unidad4 = obtenerNotaPorUnidad(fila, 4);
-            Double promedio = calcularPromedio(unidad1, unidad2, unidad3, unidad4);
-            String aprobado = promedio >= 60 ? "Aprobado" : "No Aprobado";
+        // Llamar al método obtenerBoletinEstudiante para obtener los datos
+        List<Object[]> resultados = Boletines.obtenerBoletinEstudiante(cui);
 
-            // Llenar las etiquetas con los datos del estudiante
-            lbNombre.setText(nombre);
-            lbApelldio.setText(apellido);
-            lbGrado.setText(grado);
-            lbSeccion.setText(seccion);
+        if (resultados != null && !resultados.isEmpty()) {
+            for (Object[] fila : resultados) {
+                String nombre = (String) fila[1];
+                String apellido = (String) fila[2];
+                String curso = (String) fila[5];
 
-            // Agregar los datos a la lista observable
-            boletinList.add(new Boletin(curso, unidad1, unidad2, unidad3, unidad4, promedio, aprobado));
+                // Realizamos la conversión de BigDecimal a Double
+                Double unidad1 = convertirBigDecimalADouble(fila[6]);  // Suma de actividades de la Unidad I
+                Double unidad2 = convertirBigDecimalADouble(fila[7]);  // Suma de actividades de la Unidad II
+                Double unidad3 = convertirBigDecimalADouble(fila[8]);  // Suma de actividades de la Unidad III
+                Double unidad4 = convertirBigDecimalADouble(fila[9]);  // Suma de actividades de la Unidad IV
+
+                Double promedio = calcularPromedio(unidad1, unidad2, unidad3, unidad4);
+                String aprobado = promedio >= 60 ? "Aprobado" : "No Aprobado";
+
+                // Llenar las etiquetas con los datos del estudiante (excepto Grado y Sección)
+                lbNombre.setText(nombre);
+                lbApelldio.setText(apellido);
+
+                // Agregar los datos a la lista observable
+                boletinList.add(new Boletin(curso, unidad1, unidad2, unidad3, unidad4, promedio, aprobado));
+            }
+        } else {
+            System.out.println("No se encontraron resultados.");
         }
-    } else {
-        System.out.println("No se encontraron resultados.");
     }
-}
 
-
-    private Double obtenerNotaPorUnidad(Object[] fila, int unidad) {
-        // Aquí obtienes las notas por unidad según sea necesario, ajusta según la estructura de datos
-        // Suponiendo que la unidad empieza desde el índice 6 en adelante:
-        try {
-            return (Double) fila[unidad + 5];  // Ajusta el índice según los datos
-        } catch (Exception e) {
+    // Método para convertir BigDecimal a Double
+    private Double convertirBigDecimalADouble(Object valor) {
+        if (valor != null && valor instanceof BigDecimal) {
+            return ((BigDecimal) valor).doubleValue();
+        } else {
             return 0.0;
         }
     }
@@ -148,6 +145,4 @@ public class MenuImprimirBoletinController implements Initializable {
     private void btnRegresarAlMenuDocente(ActionEvent event) {
         // Implementa la lógica para regresar al menú docente
     }
-
- 
 }
