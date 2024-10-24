@@ -72,24 +72,30 @@ public class MenuDocenteController implements Initializable {
         }
     }
 
-    @FXML
-    private void btnRegistoActividades(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/MenuEvaluacion.fxml"));
-            Parent root = loader.load();
-            // Obtener el controlador de la vista cargada
-            MenuEvaluacionController controller = loader.getController();
-            // Pasar los datos de grado, sección y sus IDs al controlador de estudiantes
-            controller.setDatosGradoSeccion(labelGrado.getText(), labelSeccion.getText(), gradoId, seccionId);
-            Stage stage = new Stage();
-            stage.setTitle("Evaluación");
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException ex) {
-            Logger.getLogger(MenuEvaluacionController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+@FXML
+private void btnRegistoActividades(ActionEvent event) {
+    try {
+        docenteStage = (Stage) labelNomDocente.getScene().getWindow();  // Guardar la ventana actual
+        docenteStage.hide();  // Ocultar la ventana actual
+        
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/MenuEvaluacion.fxml"));
+        Parent root = loader.load();
+        
+        // Obtener el controlador de la vista cargada
+        MenuEvaluacionController controller = loader.getController();
+        // Pasar los datos de grado, sección, IDs y la referencia de la ventana al controlador de MenuEvaluacion
+        controller.setDatosGradoSeccion(labelGrado.getText(), labelSeccion.getText(), gradoId, seccionId, docenteStage);
+        
+        Stage stage = new Stage();
+        stage.setTitle("Evaluación");
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    } catch (IOException ex) {
+        Logger.getLogger(MenuEvaluacionController.class.getName()).log(Level.SEVERE, null, ex);
     }
+}
+
 
     @FXML
     private void btnRegistrarNotas(ActionEvent event) {
