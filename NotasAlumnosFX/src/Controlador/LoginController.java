@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -46,6 +47,8 @@ public class LoginController implements Initializable {
     private Label label21;
     @FXML
     private Label errorUsPas; // Label para mostrar el error
+    @FXML
+    private Button recucontra;
 
     @Override
 public void initialize(URL url, ResourceBundle rb) {
@@ -243,23 +246,27 @@ private void iniciar(javafx.event.ActionEvent event) {
         }
     }
 
-    @FXML
-    private void recuperar(ActionEvent event) {
-                try {
-            // Cargar la vista de cambio de contraseña
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/RecuperarPorCorreo.fxml"));
-            Parent root = loader.load();
 
-            // Crear una nueva ventana (Stage) para cambiar contraseña
-            Stage stage = new Stage();
-            stage.setTitle("Cambiar Contraseña");
-            stage.setScene(new Scene(root));
+@FXML
+private void recuperar(ActionEvent event) {
+    try {
+        // Cargar la vista de recuperación de contraseña
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/RecuperarPorCorreo.fxml"));
+        Parent root = loader.load();
 
-            // Mostrar la ventana
-            stage.show();
-        } catch (IOException e) {
-            // Imprime errores si no se encuentra el FXML o hay problemas de carga
-            
-        }
+        Stage stage = new Stage();
+        stage.setTitle("Recuperar Contraseña");
+        stage.setScene(new Scene(root));
+
+        stage.show();
+
+        Stage loginStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        loginStage.close();
+
+    } catch (IOException e) {
+        e.printStackTrace();
     }
+}
+
+
 }

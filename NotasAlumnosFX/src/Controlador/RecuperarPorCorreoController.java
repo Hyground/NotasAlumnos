@@ -62,22 +62,26 @@ public class RecuperarPorCorreoController {
         alerta.showAndWait();
     }
 
-    @FXML
-    private void btnAtras(ActionEvent event) {
-        // Cerrar la ventana actual
-        Stage stageActual = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stageActual.close();
+@FXML
+private void btnAtras(ActionEvent event) {
+    Stage stageActual = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    stageActual.close();
 
-        // Abrir una nueva ventana (por ejemplo, la ventana principal o la que desees)
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/login.fxml"));
-            Parent root = loader.load();
+    abrirLogin();
+}
 
-            Stage stageNueva = new Stage();
-            stageNueva.setScene(new Scene(root));
-            stageNueva.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+private void abrirLogin() {
+    try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/login.fxml"));
+        Parent root = loader.load();
+
+        Stage stageNueva = new Stage();
+        stageNueva.setScene(new Scene(root));
+        stageNueva.show();
+    } catch (IOException e) {
+        e.printStackTrace();
     }
+}
+
+
 }
