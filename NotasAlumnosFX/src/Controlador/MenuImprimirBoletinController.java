@@ -1,13 +1,16 @@
 package Controlador;
 
 import CRUDs.Boletines;
+import CRUDs.CEstudiantes;  // Para obtener la lista de estudiantes
 import Modelo.Boletin;
+import POJOs.Estudiantes;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -18,26 +21,26 @@ import java.math.BigDecimal;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-import javafx.scene.control.ChoiceBox;
+import java.util.stream.Collectors;
 
 public class MenuImprimirBoletinController implements Initializable {
 
     @FXML
-    private TextField txtCui;  
+    private TextField txtCui;  // Para mostrar el CUI del estudiante seleccionado
     @FXML
-    private TableColumn<Boletin, String> tabCurso;  
+    private TableColumn<Boletin, String> tabCurso;
     @FXML
-    private TableColumn<Boletin, Double> tbUniI;  
+    private TableColumn<Boletin, Double> tbUniI;
     @FXML
-    private TableColumn<Boletin, Double> tbUniII;  
+    private TableColumn<Boletin, Double> tbUniII;
     @FXML
-    private TableColumn<Boletin, Double> tbUniIII;  
+    private TableColumn<Boletin, Double> tbUniIII;
     @FXML
-    private TableColumn<Boletin, Double> tbUniIV;  
+    private TableColumn<Boletin, Double> tbUniIV;
     @FXML
-    private TableColumn<Boletin, Double> tbProm;  
+    private TableColumn<Boletin, Double> tbProm;
     @FXML
-    private TableColumn<Boletin, String> tbAprob; 
+    private TableColumn<Boletin, String> tbAprob;
     @FXML
     private Button btnRegresar;
     @FXML
@@ -50,10 +53,13 @@ public class MenuImprimirBoletinController implements Initializable {
     private Label lbGrado;
     @FXML
     private TableView<Boletin> tblBoletin;
+    @FXML
+    private ChoiceBox<String> chAlumnos;  // ChoiceBox para mostrar los estudiantes
 
     private ObservableList<Boletin> boletinList = FXCollections.observableArrayList();
-    @FXML
-    private ChoiceBox<?> chAlumnos;
+    private List<Estudiantes> listaEstudiantes;  // Lista de estudiantes filtrada por grado y sección
+    private Integer gradoId;
+    private Integer seccionId;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -66,22 +72,48 @@ public class MenuImprimirBoletinController implements Initializable {
         tbProm.setCellValueFactory(new PropertyValueFactory<>("promedio"));
         tbAprob.setCellValueFactory(new PropertyValueFactory<>("aprobado"));
 
-        // Asignar la lista observable a la tabla
         tblBoletin.setItems(boletinList);
+
+        chAlumnos.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                String cui = newValue.split(" - ")[0];  
+                txtCui.setText(cui);  
+                btnBuscarBoletin(null); 
+            }
+        });
     }
 
-    // Método para recibir los datos de Grado y Sección (no se modifican)
     public void setDatosGradoSeccion(String grado, String seccion, Integer gradoId, Integer seccionId) {
         lbGrado.setText(grado);
         lbSeccion.setText(seccion);
+        this.gradoId = gradoId;
+        this.seccionId = seccionId;
+
+        cargarEstudiantes();
+    }
+
+    private void cargarEstudiantes() {
+        listaEstudiantes = CEstudiantes.ListarEstudiante();
+
+        List<Estudiantes> estudiantesFiltrados = listaEstudiantes.stream()
+            .filter(est -> est.getGrados().getGradoId().equals(gradoId) && est.getSecciones().getSeccionId().equals(seccionId))
+            .collect(Collectors.toList());
+
+        ObservableList<String> estudiantesList = FXCollections.observableArrayList(
+            estudiantesFiltrados.stream()
+                .map(est -> est.getCui() + " - " + est.getNombre() + " " + est.getApellido()) 
+                .collect(Collectors.toList())
+        );
+
+        chAlumnos.setItems(estudiantesList);
+        chAlumnos.setValue("Selecciona un estudiante"); 
     }
 
     @FXML
     private void btnBuscarBoletin(ActionEvent event) {
-        String cui = txtCui.getText();
+        String cui = txtCui.getText();  
         boletinList.clear();
 
-        // Obtener los datos del boletín
         List<Object[]> resultados = Boletines.obtenerBoletinEstudiante(cui);
 
         if (resultados != null && !resultados.isEmpty()) {
@@ -106,7 +138,6 @@ public class MenuImprimirBoletinController implements Initializable {
         }
     }
 
-    // Método para convertir BigDecimal a Double
     private Double convertirBigDecimalADouble(Object valor) {
         if (valor instanceof BigDecimal) {
             return ((BigDecimal) valor).doubleValue();
@@ -128,11 +159,9 @@ public class MenuImprimirBoletinController implements Initializable {
 
     @FXML
     private void btnImprimir(ActionEvent event) {
-        // Funcionalidad para imprimir en PDF
     }
 
     @FXML
     private void btnRegresarAlMenuDocente(ActionEvent event) {
-        // Lógica para regresar al menú docente
     }
 }
