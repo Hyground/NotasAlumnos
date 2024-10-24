@@ -14,7 +14,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import java.math.BigDecimal; // Importación para BigDecimal
+import java.math.BigDecimal;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -22,37 +22,35 @@ import java.util.ResourceBundle;
 public class MenuImprimirBoletinController implements Initializable {
 
     @FXML
-    private TextField txtCui;  // Campo para ingresar el CUI del estudiante
+    private TextField txtCui;  
     @FXML
-    private TableColumn<Boletin, String> tabCurso;  // Columna para el curso
+    private TableColumn<Boletin, String> tabCurso;  
     @FXML
-    private TableColumn<Boletin, Double> tbUniI;  // Columna para Unidad I
+    private TableColumn<Boletin, Double> tbUniI;  
     @FXML
-    private TableColumn<Boletin, Double> tbUniII;  // Columna para Unidad II
+    private TableColumn<Boletin, Double> tbUniII;  
     @FXML
-    private TableColumn<Boletin, Double> tbUniIII;  // Columna para Unidad III
+    private TableColumn<Boletin, Double> tbUniIII;  
     @FXML
-    private TableColumn<Boletin, Double> tbUniIV;  // Columna para Unidad IV
+    private TableColumn<Boletin, Double> tbUniIV;  
     @FXML
-    private TableColumn<Boletin, Double> tbProm;  // Columna para el promedio
+    private TableColumn<Boletin, Double> tbProm;  
     @FXML
-    private TableColumn<Boletin, String> tbAprob;  // Columna para Aprobado/No Aprobado
+    private TableColumn<Boletin, String> tbAprob; 
     @FXML
-    private Button btnRegresar;  // Botón para regresar al menú docente
+    private Button btnRegresar;
     @FXML
-    private Label lbApelldio;  // Label para mostrar el apellido del estudiante
+    private Label lbApelldio;
     @FXML
-    private Label lbNombre;  // Label para mostrar el nombre del estudiante
+    private Label lbNombre;
     @FXML
-    private Label lbSeccion;  // Label para mostrar la sección (no cambiar)
+    private Label lbSeccion;
     @FXML
-    private Label lbGrado;  // Label para mostrar el grado (no cambiar)
+    private Label lbGrado;
     @FXML
-    private TableView<Boletin> tblBoletin;  // Tabla para mostrar el boletín
+    private TableView<Boletin> tblBoletin;
 
-    private ObservableList<Boletin> boletinList = FXCollections.observableArrayList();  // Lista observable para la tabla
-    private Integer gradoId;  // Variable para almacenar el ID del grado
-    private Integer seccionId;  // Variable para almacenar el ID de la sección
+    private ObservableList<Boletin> boletinList = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -69,23 +67,18 @@ public class MenuImprimirBoletinController implements Initializable {
         tblBoletin.setItems(boletinList);
     }
 
-    // Método para recibir los datos de Grado, Sección y la referencia de la ventana de MenuDocente
+    // Método para recibir los datos de Grado y Sección (no se modifican)
     public void setDatosGradoSeccion(String grado, String seccion, Integer gradoId, Integer seccionId) {
-        this.gradoId = gradoId;
-        this.seccionId = seccionId;
-        lbGrado.setText(grado);  // Mantener el grado asignado por el docente
-        lbSeccion.setText(seccion);  // Mantener la sección asignada por el docente
+        lbGrado.setText(grado);
+        lbSeccion.setText(seccion);
     }
 
     @FXML
     private void btnBuscarBoletin(ActionEvent event) {
-        // Obtener el CUI del campo de texto
         String cui = txtCui.getText();
-
-        // Limpiar la lista actual de la tabla
         boletinList.clear();
 
-        // Llamar al método obtenerBoletinEstudiante para obtener los datos
+        // Obtener los datos del boletín
         List<Object[]> resultados = Boletines.obtenerBoletinEstudiante(cui);
 
         if (resultados != null && !resultados.isEmpty()) {
@@ -93,21 +86,16 @@ public class MenuImprimirBoletinController implements Initializable {
                 String nombre = (String) fila[1];
                 String apellido = (String) fila[2];
                 String curso = (String) fila[5];
-
-                // Realizamos la conversión de BigDecimal a Double
-                Double unidad1 = convertirBigDecimalADouble(fila[6]);  // Suma de actividades de la Unidad I
-                Double unidad2 = convertirBigDecimalADouble(fila[7]);  // Suma de actividades de la Unidad II
-                Double unidad3 = convertirBigDecimalADouble(fila[8]);  // Suma de actividades de la Unidad III
-                Double unidad4 = convertirBigDecimalADouble(fila[9]);  // Suma de actividades de la Unidad IV
-
+                Double unidad1 = convertirBigDecimalADouble(fila[6]);
+                Double unidad2 = convertirBigDecimalADouble(fila[7]);
+                Double unidad3 = convertirBigDecimalADouble(fila[8]);
+                Double unidad4 = convertirBigDecimalADouble(fila[9]);
                 Double promedio = calcularPromedio(unidad1, unidad2, unidad3, unidad4);
                 String aprobado = promedio >= 60 ? "Aprobado" : "No Aprobado";
 
-                // Llenar las etiquetas con los datos del estudiante (excepto Grado y Sección)
                 lbNombre.setText(nombre);
                 lbApelldio.setText(apellido);
 
-                // Agregar los datos a la lista observable
                 boletinList.add(new Boletin(curso, unidad1, unidad2, unidad3, unidad4, promedio, aprobado));
             }
         } else {
@@ -117,11 +105,10 @@ public class MenuImprimirBoletinController implements Initializable {
 
     // Método para convertir BigDecimal a Double
     private Double convertirBigDecimalADouble(Object valor) {
-        if (valor != null && valor instanceof BigDecimal) {
+        if (valor instanceof BigDecimal) {
             return ((BigDecimal) valor).doubleValue();
-        } else {
-            return 0.0;
         }
+        return 0.0;
     }
 
     private Double calcularPromedio(Double... notas) {
@@ -138,11 +125,11 @@ public class MenuImprimirBoletinController implements Initializable {
 
     @FXML
     private void btnImprimir(ActionEvent event) {
-        // Aquí iría la funcionalidad para imprimir el boletín en PDF
+        // Funcionalidad para imprimir en PDF
     }
 
     @FXML
     private void btnRegresarAlMenuDocente(ActionEvent event) {
-        // Implementa la lógica para regresar al menú docente
+        // Lógica para regresar al menú docente
     }
 }
