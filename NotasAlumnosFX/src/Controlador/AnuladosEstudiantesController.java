@@ -32,6 +32,7 @@ import org.hibernate.criterion.Restrictions;
  *
  * @author Alonzo Morales
  */
+
 public class AnuladosEstudiantesController implements Initializable {
 
     @FXML
@@ -71,7 +72,7 @@ public class AnuladosEstudiantesController implements Initializable {
             Criteria criteria = session.createCriteria(Estudiantes.class);
             criteria.createAlias("grados", "g"); // Relacionar con Grados
             criteria.createAlias("secciones", "s"); // Relacionar con Secciones
-            criteria.add(Restrictions.eq("borradoLogico", false));  // Listar solo los estudiantes anulados (borradoLogico = false)
+            criteria.add(Restrictions.eq("borradoLogico", false));  // Listar solo los estudiantes anulados
             criteria.addOrder(Order.asc("nombre"));  // Ordenar por nombre
             lista = criteria.list(); // Retornar la lista completa de Estudiantes
         } catch (Exception e) {
@@ -100,7 +101,7 @@ public class AnuladosEstudiantesController implements Initializable {
         List<Estudiantes> estudiantes = ListarEstudianteAnulados();
         // Filtrar estudiantes que están anulados
         List<Estudiantes> estudiantesAnulados = estudiantes.stream()
-                .filter(est -> !est.isBorradoLogico()) // Filtra los estudiantes cuyo borradoLogico es falso (anulados)
+                .filter(est -> !est.isBorradoLogico()) // Filtra los estudiantes anulados
                 .collect(Collectors.toList());
 
         listaEstudiantes = FXCollections.observableArrayList(estudiantesAnulados);

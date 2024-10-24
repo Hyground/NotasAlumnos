@@ -7,6 +7,11 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
+/**
+ *
+ * @author Alonzo Morales
+ */
+
 public class CSecciones {
 
     // Método para listar todas las secciones

@@ -8,10 +8,12 @@ import CRUDs.CBimestres;
 import CRUDs.CGrados;
 import CRUDs.CCurso;
 import CRUDs.CSecciones;
+
 /**
  *
- * @author wissegt
+ * @author Miguel
  */
+
 public class InicializadorDeDatos {
       public static void IniciarTodo() {
         // Crear bimestres automáticamente

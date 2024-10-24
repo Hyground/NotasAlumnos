@@ -30,6 +30,7 @@ import javafx.stage.Stage;
  *
  * @author Alonzo Morales
  */
+
 public class MenuEstudianteController implements Initializable {
 
     @FXML
@@ -68,6 +69,7 @@ public class MenuEstudianteController implements Initializable {
     /**
      * Initializes the controller class.
      */
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //Configurar las columnas de la tabla
@@ -83,7 +85,7 @@ public class MenuEstudianteController implements Initializable {
         nombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         apellido.setCellValueFactory(new PropertyValueFactory<>("apellido"));
 
-        // Utilizar SimpleStringProperty para acceder a los nombres de grado y sección
+        // Acceder a los nombres de grado y sección
         grado.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getGrados().getNombreGrado()));
         seccion.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getSecciones().getNombreSeccion()));
 

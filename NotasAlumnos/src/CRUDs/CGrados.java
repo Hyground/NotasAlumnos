@@ -7,6 +7,11 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
+/**
+ *
+ * @author Sindi
+ */
+
 public class CGrados {
 
     // Método para listar todos los grados

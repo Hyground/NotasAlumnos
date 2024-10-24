@@ -13,6 +13,11 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
+/**
+ *
+ * @author Ivan
+ */
+
 public class CEvaluaciones {
 
     // Método para listar todas las evaluaciones filtradas por grado y sección

@@ -11,6 +11,11 @@ import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ *
+ * @author Miguel
+ */
+
 public class CCurso {
     
 private static final Logger logger = LoggerFactory.getLogger(CCurso.class);

@@ -10,9 +10,14 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
+/**
+ *
+ * @author Carlos
+ */
+
 public class CDocentes {
 
-    // Método para listar todos los docentes activos (borradoLogico = true)
+    // Método para listar todos los docentes activos 
     public static List<Docentes> listarDocentes() {
         Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
         List<Docentes> lista = null;
@@ -161,7 +166,7 @@ public static boolean actualizarDocente(int usuarioId, String cui, String nuevoN
 }
 
 
-    // Método para eliminar (borrado lógico) un docente
+    // Método para eliminar un docente
     public static boolean eliminarDocente(int usuarioId) {
         boolean flag = false;
         Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
@@ -173,7 +178,7 @@ public static boolean actualizarDocente(int usuarioId, String cui, String nuevoN
             // Obtener el docente existente
             Docentes docente = (Docentes) session.get(Docentes.class, usuarioId);
             if (docente != null) {
-                docente.setBorradoLogico(false);  // Borrado lógico
+                docente.setBorradoLogico(false); 
                 session.update(docente);
                 flag = true;
             }
@@ -190,7 +195,7 @@ public static boolean actualizarDocente(int usuarioId, String cui, String nuevoN
         return flag;
     }
 
-    // Método para reactivar un docente (borrado lógico)
+    // Método para reactivar un docente 
     public static boolean reactivarDocente(int usuarioId) {
         boolean flag = false;
         Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
@@ -202,7 +207,7 @@ public static boolean actualizarDocente(int usuarioId, String cui, String nuevoN
             // Obtener el docente existente
             Docentes docente = (Docentes) session.get(Docentes.class, usuarioId);
             if (docente != null && !docente.isBorradoLogico()) {
-                docente.setBorradoLogico(true);  // Reactivar el docente
+                docente.setBorradoLogico(true);  
                 session.update(docente);
                 flag = true;
             }

@@ -8,6 +8,11 @@ import org.hibernate.criterion.Restrictions;
 import java.security.SecureRandom;
 import java.util.List;
 
+/**
+ *
+ * @author Carlos
+ */
+
 public class RecupararContraPorCorreo {
 
     private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";

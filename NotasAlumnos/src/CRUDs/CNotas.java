@@ -11,6 +11,11 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
+/**
+ *
+ * @author Frank
+ */
+
 public class CNotas {
 
     // Método para listar todas las notas

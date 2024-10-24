@@ -13,8 +13,9 @@ import org.hibernate.criterion.Restrictions;
 
 /**
  *
- * @author IngeMayk
+ * @author Frank
  */
+
 public class CLogin {
         // Método para verificar el login
     public static boolean CLogin(String nombreUsuario, String contrasenia) {

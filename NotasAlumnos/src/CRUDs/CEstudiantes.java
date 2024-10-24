@@ -10,9 +10,14 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
+/**
+ *
+ * @author Alonzo Morales
+ */
+
 public class CEstudiantes {
 
-    // Método para listar todos los estudiantes activos (borradoLogico = true)
+    // Método para listar todos los estudiantes activos 
     public static List<Estudiantes> ListarEstudiante() {
         Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
         List<Estudiantes> lista = null;
@@ -124,7 +129,7 @@ public class CEstudiantes {
         return flag;
     }
 
-    // Método para eliminar (borrado lógico) un estudiante
+    // Método para eliminar un estudiante
     public static boolean eliminarEstudiante(String cui) {
         boolean flag = false;
         Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
@@ -154,7 +159,7 @@ public class CEstudiantes {
         return flag;
     }
 
-    // Método para reactivar un estudiante (borrado lógico)
+    // Método para reactivar un estudiante
     public static boolean reactivarEstudiante(String cui) {
         boolean flag = false;
         Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();

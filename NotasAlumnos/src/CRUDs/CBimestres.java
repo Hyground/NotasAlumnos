@@ -9,6 +9,11 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
+/**
+ *
+ * @author Carlos
+ */
+
 public class CBimestres {
 
     // Método para listar todos los bimestres

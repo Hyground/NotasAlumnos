@@ -5,6 +5,11 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import java.util.List;
 
+/**
+ *
+ * @author MIguel
+ */
+
 public class Boletines {
 
     public static List<Object[]> obtenerBoletinEstudiante(String cui) {
