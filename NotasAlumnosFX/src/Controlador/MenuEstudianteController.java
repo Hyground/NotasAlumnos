@@ -220,9 +220,13 @@ private void btnAgregar(ActionEvent event) {
         currentStage.close();
     }
 
-    @FXML
-    private void btnPdf(ActionEvent event) {
-            try {
+@FXML
+private void btnPdf(ActionEvent event) {
+    try {
+        // Guardar la ventana actual
+        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        currentStage.hide();  // Ocultar la ventana actual
+
         // Cargar el archivo FXML de la nueva ventana
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/CargarDatos.fxml"));
         Parent root = loader.load();
@@ -230,21 +234,19 @@ private void btnAgregar(ActionEvent event) {
         // Obtener el controlador del nuevo FXML
         CargarDatosController cargarDatosController = loader.getController();
         
-        // Pasar los valores de txtGrado y txtSeccion
-        cargarDatosController.setGradoSeccion(txtGrado.getText(), txtSeccion.getText());
+        // Pasar los valores de txtGrado y txtSeccion y la referencia de la ventana actual
+        cargarDatosController.setGradoSeccion(txtGrado.getText(), txtSeccion.getText(), currentStage);
         
         // Crear una nueva ventana
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
         stage.show();
         
-        // Cerrar la ventana actual si es necesario
-        ((Stage) ((Node) event.getSource()).getScene().getWindow()).close();
-        
     } catch (IOException ex) {
         ex.printStackTrace();
-    }   
     }
+}
+
 
     @FXML
     private void btnMostrarAnulados(ActionEvent event) {

@@ -47,6 +47,7 @@ public class CargarDatosController {
     private Label labGrado;
     @FXML
     private Label labSeccion;
+    private Stage menuEstudianteStage;
 
     public void initialize() {
         // Configuración de las columnas de la tabla
@@ -99,10 +100,11 @@ public class CargarDatosController {
         }
     }
 
-    public void setGradoSeccion(String grado, String seccion) {
-        labGrado.setText(grado);     // Asignar el texto al Label de Grado
-        labSeccion.setText(seccion); // Asignar el texto al Label de Sección
-    }
+public void setGradoSeccion(String grado, String seccion, Stage menuEstudianteStage) {
+    labGrado.setText(grado);     // Asignar el texto al Label de Grado
+    labSeccion.setText(seccion); // Asignar el texto al Label de Sección
+    this.menuEstudianteStage = menuEstudianteStage;  // Guardar la referencia de la ventana de estudiantes
+}
 
     @FXML
 private void btnInscribir(ActionEvent event) {
@@ -157,25 +159,18 @@ private void mostrarAlerta(Alert.AlertType tipo, String titulo, String mensaje) 
     alerta.showAndWait();
 }
 
-    @FXML
-    private void btnAtras(ActionEvent event) {
-        // Cerrar la ventana actual
-    Stage stageActual = (Stage) ((Node) event.getSource()).getScene().getWindow();
-    stageActual.close();
-
-    // Abrir una nueva ventana (por ejemplo, la ventana principal o la que desees)
-    try {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/MenuEstudiante.fxml"));
-        Parent root = loader.load();
-        
-        Stage stageNueva = new Stage();
-        stageNueva.setScene(new Scene(root));
-        stageNueva.show();
-    } catch (IOException e) {
-        e.printStackTrace();
+@FXML
+private void btnAtras(ActionEvent event) {
+    // Mostrar la ventana anterior (menuEstudianteStage)
+    if (menuEstudianteStage != null) {
+        menuEstudianteStage.show();
     }
 
-    }
+    // Cerrar la ventana actual (CargarDatos)
+    Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    currentStage.close();
+}
+
 
 
 }
