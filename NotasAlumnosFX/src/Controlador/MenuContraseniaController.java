@@ -17,15 +17,16 @@ import javafx.stage.Stage;
 public class MenuContraseniaController {
 
     @FXML
-    private TextField txtContr; 
+    private TextField txtContr;
     @FXML
-    private TextField txtNuevaContra; 
+    private TextField txtNuevaContra;
     @FXML
-    private TextField txtConfirmarContra; 
+    private TextField txtConfirmarContra;
     @FXML
-    private TextField txtCui; 
+    private TextField txtCui;
 
     private Stage menuContra;
+
     @FXML
     private void actualizar(ActionEvent event) {
         String cui = txtCui.getText();
@@ -52,7 +53,10 @@ public class MenuContraseniaController {
         }
     }
 
-  
+    public void setMenuAnterior(Stage menuContra) {
+        this.menuContra = menuContra;  // Guardar la referencia de la ventana anterior
+    }
+
     private void limpiarCampos() {
         txtCui.setText("");
         txtContr.setText("");
@@ -70,9 +74,12 @@ public class MenuContraseniaController {
 
     @FXML
     private void btnAtras(ActionEvent event) {
-        menuContra.show();
+        if (menuContra != null) {
+            menuContra.show();
+        }
 
         Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         currentStage.close();
     }
+
 }

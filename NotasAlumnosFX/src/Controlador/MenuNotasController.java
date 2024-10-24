@@ -20,6 +20,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -27,6 +28,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 public class MenuNotasController implements Initializable {
 
@@ -74,6 +76,8 @@ public class MenuNotasController implements Initializable {
     private Label txtCui;
     @FXML
     private Button btnModificar1;
+    private Stage menuDocenteStage;
+
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -86,13 +90,15 @@ public class MenuNotasController implements Initializable {
         configurarFiltros();  // Configuramos los listeners para aplicar los filtros
     }
 
-    public void setDatosGradoSeccion(String grado, String seccion, Integer gradoId, Integer seccionId) {
-        this.gradoId = gradoId;
-        this.seccionId = seccionId;
-        rGrado.setText(grado);
-        rSeccion.setText(seccion);
-        cargarEstudiantes();
-    }
+public void setDatosGradoSeccion(String grado, String seccion, Integer gradoId, Integer seccionId, Stage docenteStage) {
+    this.gradoId = gradoId;
+    this.seccionId = seccionId;
+    this.menuDocenteStage = docenteStage; 
+    rGrado.setText(grado);
+    rSeccion.setText(seccion);
+    cargarEstudiantes();  
+}
+
 
     private void cargarBimestres() {
         List<Bimestres> listaBimestres = CBimestres.listarBimestres();
@@ -311,7 +317,14 @@ public class MenuNotasController implements Initializable {
         txtNota.setText("");
     }
 
-    @FXML
-    private void btnAtras(ActionEvent event) {
-    }
+@FXML
+private void btnAtras(ActionEvent event) {
+    // Mostrar la ventana anterior (MenuDocente)
+    menuDocenteStage.show();
+    
+    // Cerrar la ventana actual (MenuNotas)
+    Stage stageActual = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    stageActual.close();
+}
+
 }

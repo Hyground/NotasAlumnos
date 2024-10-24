@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -97,24 +98,30 @@ private void btnRegistoActividades(ActionEvent event) {
 }
 
 
-    @FXML
-    private void btnRegistrarNotas(ActionEvent event) {
-         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/MenuNotas.fxml"));
-            Parent root = loader.load();
-            // Obtener el controlador de la vista cargada
-            MenuNotasController controller = loader.getController();
-            // Pasar los datos de grado, sección y sus IDs al controlador de estudiantes
-            controller.setDatosGradoSeccion(labelGrado.getText(), labelSeccion.getText(), gradoId, seccionId);
-            Stage stage = new Stage();
-            stage.setTitle("Registro de Notas");
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException ex) {
-            Logger.getLogger(MenuNotasController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+@FXML
+private void btnRegistrarNotas(ActionEvent event) {
+    try {
+        docenteStage = (Stage) labelNomDocente.getScene().getWindow();  // Guardar la ventana actual
+        docenteStage.hide();  // Ocultar la ventana actual
+        
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/MenuNotas.fxml"));
+        Parent root = loader.load();
+        
+        // Obtener el controlador de la vista cargada
+        MenuNotasController controller = loader.getController();
+        // Pasar los datos de grado, sección, IDs y la referencia de la ventana al controlador de MenuNotas
+        controller.setDatosGradoSeccion(labelGrado.getText(), labelSeccion.getText(), gradoId, seccionId, docenteStage);
+        
+        Stage stage = new Stage();
+        stage.setTitle("Registro de Notas");
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    } catch (IOException ex) {
+        Logger.getLogger(MenuNotasController.class.getName()).log(Level.SEVERE, null, ex);
     }
+}
+
 
     @FXML
     private void btnCerrarSesion(ActionEvent event) {
@@ -134,47 +141,53 @@ private void btnRegistoActividades(ActionEvent event) {
             Logger.getLogger(MenuDocenteController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    @FXML
+  @FXML
 private void btnImprimirBoletines(ActionEvent event) {
     try {
-        // Cargar la vista de la tabla de boletines
+        Stage docenteStage = (Stage) labelGrado.getScene().getWindow();  // Guardar la ventana actual
+        docenteStage.hide();  // Ocultar la ventana actual
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/MenuImprimirBoletin.fxml"));
         Parent root = loader.load();
-                    // Obtener el controlador de la vista cargada
-            MenuImprimirBoletinController controller = loader.getController();
-            // Pasar los datos de grado, sección y sus IDs al controlador de estudiantes
-            controller.setDatosGradoSeccion(labelGrado.getText(), labelSeccion.getText(), gradoId, seccionId);
-
-        // Crear una nueva ventana (Stage) para la vista de la tabla de boletines
+        
+        // Obtener el controlador de la vista cargada
+        MenuImprimirBoletinController controller = loader.getController();
+        // Pasar los datos de grado, sección, IDs y la referencia de la ventana al controlador de MenuImprimirBoletin
+        controller.setDatosGradoSeccion(labelGrado.getText(), labelSeccion.getText(), gradoId, seccionId, docenteStage);
+        
         Stage stage = new Stage();
         stage.setTitle("Imprimir Boletín");
-        stage.setScene(new Scene(root));
-
-        // Mostrar la ventana
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
         stage.show();
     } catch (IOException e) {
-        // Registrar el error si ocurre
         Logger.getLogger(MenuImprimirBoletinController.class.getName()).log(Level.SEVERE, null, e);
     }
 }
 
-    @FXML
+@FXML
 public void btnCambiarContrasenia(ActionEvent event) {
-        try {
-            // Cargar la vista de cambio de contraseña
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/MenuContrasenia.fxml"));
-            Parent root = loader.load();
+    try {
+        Stage docenteStage = (Stage) ((Node) event.getSource()).getScene().getWindow();  // Guardar la ventana actual
+        docenteStage.hide();  // Ocultar la ventana actual
 
-            // Crear una nueva ventana (Stage) para cambiar contraseña
-            Stage stage = new Stage();
-            stage.setTitle("Cambiar Contraseña");
-            stage.setScene(new Scene(root));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/MenuContrasenia.fxml"));
+        Parent root = loader.load();
+        
+        // Obtener el controlador de la vista cargada
+        MenuContraseniaController controller = loader.getController();
+        // Pasar la referencia de la ventana anterior al controlador de cambio de contraseña
+        controller.setMenuAnterior(docenteStage);
 
-            // Mostrar la ventana
-            stage.show();
-        } catch (IOException e) {
-            // Imprime errores si no se encuentra el FXML o hay problemas de carga
-            
-        }
+        // Crear una nueva ventana (Stage) para cambiar contraseña
+        Stage stage = new Stage();
+        stage.setTitle("Cambiar Contraseña");
+        stage.setScene(new Scene(root));
+        stage.show();
+    } catch (IOException e) {
+        // Imprimir errores si ocurre un problema al cargar la vista
+        e.printStackTrace();
     }
+}
+
 }

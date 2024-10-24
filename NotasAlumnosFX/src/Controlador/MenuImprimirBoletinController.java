@@ -29,6 +29,8 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
+import javafx.scene.Node;
+import javafx.stage.Stage;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 
 public class MenuImprimirBoletinController implements Initializable {
@@ -68,6 +70,7 @@ public class MenuImprimirBoletinController implements Initializable {
     private List<Estudiantes> listaEstudiantes;
     private Integer gradoId;
     private Integer seccionId;
+    private Stage menuDocenteStage;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -91,12 +94,12 @@ public class MenuImprimirBoletinController implements Initializable {
         });
     }
 
-    public void setDatosGradoSeccion(String grado, String seccion, Integer gradoId, Integer seccionId) {
+    public void setDatosGradoSeccion(String grado, String seccion, Integer gradoId, Integer seccionId, Stage docenteStage) {
         lbGrado.setText(grado);
         lbSeccion.setText(seccion);
         this.gradoId = gradoId;
         this.seccionId = seccionId;
-
+        this.menuDocenteStage = docenteStage;
         cargarEstudiantes();
     }
 
@@ -104,13 +107,13 @@ public class MenuImprimirBoletinController implements Initializable {
         listaEstudiantes = CEstudiantes.ListarEstudiante();
 
         List<Estudiantes> estudiantesFiltrados = listaEstudiantes.stream()
-            .filter(est -> est.getGrados().getGradoId().equals(gradoId) && est.getSecciones().getSeccionId().equals(seccionId))
-            .collect(Collectors.toList());
+                .filter(est -> est.getGrados().getGradoId().equals(gradoId) && est.getSecciones().getSeccionId().equals(seccionId))
+                .collect(Collectors.toList());
 
         ObservableList<String> estudiantesList = FXCollections.observableArrayList(
-            estudiantesFiltrados.stream()
-                .map(est -> est.getCui() + " - " + est.getNombre() + " " + est.getApellido())
-                .collect(Collectors.toList())
+                estudiantesFiltrados.stream()
+                        .map(est -> est.getCui() + " - " + est.getNombre() + " " + est.getApellido())
+                        .collect(Collectors.toList())
         );
 
         chAlumnos.setItems(estudiantesList);
@@ -247,36 +250,40 @@ public class MenuImprimirBoletinController implements Initializable {
         }
     }
 
+    private void drawRow(PDPageContentStream contentStream, String[] data, float[] columnWidths, float y, float margin, float rowHeight, float cellMargin, boolean isHeader) throws IOException {
+        float x = margin;
 
-private void drawRow(PDPageContentStream contentStream, String[] data, float[] columnWidths, float y, float margin, float rowHeight, float cellMargin, boolean isHeader) throws IOException {
-    float x = margin;
+        for (int i = 0; i < data.length; i++) {
+            // Dibujar bordes
+            contentStream.addRect(x, y - rowHeight, columnWidths[i], rowHeight);
+            contentStream.stroke();
 
-    for (int i = 0; i < data.length; i++) {
-        // Dibujar bordes
-        contentStream.addRect(x, y - rowHeight, columnWidths[i], rowHeight);
-        contentStream.stroke();
+            PDType1Font font = isHeader ? PDType1Font.HELVETICA_BOLD : PDType1Font.HELVETICA;
+            contentStream.setFont(font, 10);
 
-        PDType1Font font = isHeader ? PDType1Font.HELVETICA_BOLD : PDType1Font.HELVETICA;
-        contentStream.setFont(font, 10);
+            // Medir la longitud del texto para centrarlo
+            float textWidth = font.getStringWidth(data[i]) / 1000 * 10; // Tamaño de fuente 10
+            float textXOffset = (columnWidths[i] - textWidth) / 2; // Centrado horizontal
+            float textYOffset = (rowHeight / 2) - 3; // Centrado vertical ajustado
 
-        // Medir la longitud del texto para centrarlo
-        float textWidth = font.getStringWidth(data[i]) / 1000 * 10; // Tamaño de fuente 10
-        float textXOffset = (columnWidths[i] - textWidth) / 2; // Centrado horizontal
-        float textYOffset = (rowHeight / 2) - 3; // Centrado vertical ajustado
+            // Escribir el texto con ajuste centrado
+            contentStream.beginText();
+            contentStream.newLineAtOffset(x + textXOffset, y - rowHeight + textYOffset + cellMargin);
+            contentStream.showText(data[i]);
+            contentStream.endText();
 
-        // Escribir el texto con ajuste centrado
-        contentStream.beginText();
-        contentStream.newLineAtOffset(x + textXOffset, y - rowHeight + textYOffset + cellMargin);
-        contentStream.showText(data[i]);
-        contentStream.endText();
-
-        x += columnWidths[i];
+            x += columnWidths[i];
+        }
     }
-}
-
 
     @FXML
-    private void btnRegresarAlMenuDocente(ActionEvent event) {
-        // Lógica para regresar al menú docente
+    private void btnRegresar(ActionEvent event) {
+        if (menuDocenteStage != null) {
+            menuDocenteStage.show();
+        }
+
+        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        currentStage.close();
     }
+
 }
