@@ -1,0 +1,12 @@
+.mainFxmlClass {
+    -fx-background-image: url("../Imagenes/FondoRealGrande.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover; 
+    -fx-background-position: center center;
+}/*
+ * Empty Stylesheet file.
+ */
+
+.mainFxmlClass {
+
+}

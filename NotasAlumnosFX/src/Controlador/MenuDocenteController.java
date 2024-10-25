@@ -147,12 +147,12 @@ private void btnImprimirBoletines(ActionEvent event) {
         Stage docenteStage = (Stage) labelGrado.getScene().getWindow();  // Guardar la ventana actual
         docenteStage.hide();  // Ocultar la ventana actual
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/MenuImprimirBoletin.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/MenuBoletin.fxml"));
         Parent root = loader.load();
         
         // Obtener el controlador de la vista cargada
-        MenuImprimirBoletinController controller = loader.getController();
-        // Pasar los datos de grado, sección, IDs y la referencia de la ventana al controlador de MenuImprimirBoletin
+        MenuBoletinController controller = loader.getController();
+        // Pasar los datos de grado, sección, IDs y la referencia de la ventana al controlador de MenuBoletin
         controller.setDatosGradoSeccion(labelGrado.getText(), labelSeccion.getText(), gradoId, seccionId, docenteStage);
         
         Stage stage = new Stage();
@@ -161,7 +161,7 @@ private void btnImprimirBoletines(ActionEvent event) {
         stage.setScene(scene);
         stage.show();
     } catch (IOException e) {
-        Logger.getLogger(MenuImprimirBoletinController.class.getName()).log(Level.SEVERE, null, e);
+        Logger.getLogger(MenuBoletinController.class.getName()).log(Level.SEVERE, null, e);
     }
 }
 

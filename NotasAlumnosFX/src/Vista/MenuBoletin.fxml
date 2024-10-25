@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="506.0" prefWidth="755.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="Controlador.MenuBoletinController">
+    <stylesheets>
+        <URL value="@menuboletin.css" />
+    </stylesheets>
+   <children>
+      <Label layoutX="344.0" layoutY="36.0" text="Seleccionar" />
+      <ChoiceBox fx:id="chAlumnos" layoutX="430.0" layoutY="32.0" prefWidth="150.0" />
+      <Label fx:id="lbGrado" layoutX="336.0" layoutY="81.0" text="Primero" />
+      <Label fx:id="lbSeccion" layoutX="341.0" layoutY="109.0" text="A" />
+      <Label layoutX="286.0" layoutY="109.0" text="Seccion" />
+      <Label layoutX="290.0" layoutY="81.0" text="Grado" />
+      <Label fx:id="lbNombre" layoutX="99.0" layoutY="72.0" text="Nombre" />
+      <Label fx:id="lbApelldio" layoutX="94.0" layoutY="107.0" text="Apellido" />
+      <Label layoutX="40.0" layoutY="107.0" text="Apellido" />
+      <Label layoutX="45.0" layoutY="72.0" text="Nombre" />
+      <Button fx:id="btnRegresar" layoutX="106.0" layoutY="457.0" mnemonicParsing="false" onAction="#btnRegresar" text="Regresar" />
+      <Button layoutX="261.0" layoutY="32.0" mnemonicParsing="false" onAction="#btnBuscarBoletin" text="Buscar" />
+      <TableView fx:id="tblBoletin" layoutX="40.0" layoutY="152.0" prefHeight="293.0" prefWidth="585.0">
+         <columns>
+            <TableColumn fx:id="tabCurso" prefWidth="75.0" text="Curso" />
+            <TableColumn fx:id="tbUniI" prefWidth="75.0" text="Unidad I" />
+            <TableColumn fx:id="tbUniII" prefWidth="75.0" text="Unidad II" />
+            <TableColumn fx:id="tbUniIII" prefWidth="77.0" text="Unidad III" />
+            <TableColumn fx:id="tbUniIV" prefWidth="79.0" text="Unidad IV" />
+            <TableColumn fx:id="tbProm" prefWidth="79.0" text="Promedio" />
+            <TableColumn fx:id="tbAprob" prefWidth="79.0" text="A/NO A" />
+         </columns>
+      </TableView>
+      <TextField fx:id="txtCui" layoutX="138.0" layoutY="29.0" prefHeight="31.0" prefWidth="110.0" />
+      <Label layoutX="60.0" layoutY="36.0" text="INGRESE CUI" />
+      <Button defaultButton="true" layoutX="293.0" layoutY="457.0" mnemonicParsing="false" onAction="#btnImprimir" text="Imprimir boletín en PDF" />
+   </children>
+</AnchorPane>
