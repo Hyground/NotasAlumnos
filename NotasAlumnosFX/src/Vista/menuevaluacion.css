@@ -1,5 +1,5 @@
 .mainFxmlClass {
-    -fx-background-image: url("../Imagenes/Fondorealxd.png");
+    -fx-background-image: url("../Imagenes/FondoMenuEvaluacion.png");
     -fx-background-repeat: no-repeat;
     -fx-background-size: cover; 
     -fx-background-position: center center;
@@ -57,8 +57,8 @@
     -fx-font-family: Arial;
     -fx-text-fill: black;
     -fx-background-color: rgba(265,256,256,1);
-    -fx-pref-width: 614px;
-    -fx-pref-height: 550px;
+    -fx-pref-width: 660px;
+    -fx-pref-height: 570px;
 }
 .table-column{
     -fx-background-color: rgba(265,256,256,1);

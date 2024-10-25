@@ -1,5 +1,5 @@
 .mainFxmlClass {
-    -fx-background-image: url("../Imagenes/FondoRealGrande.png");
+    -fx-background-image: url("../Imagenes/FondoLogin.png");
     -fx-background-repeat: no-repeat;
     -fx-background-size: cover; 
     -fx-background-position: center center;

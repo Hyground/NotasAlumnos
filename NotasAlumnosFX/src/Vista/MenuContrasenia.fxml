@@ -11,30 +11,20 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.MenuContraseniaController">
+<AnchorPane id="AnchorPane" prefHeight="640.0" prefWidth="1060.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.MenuContraseniaController">
     <stylesheets>
         <URL value="@menucontrasenia.css" />
     </stylesheets>
    <children>
-      <ImageView fitHeight="600.0" fitWidth="1024.0" styleClass="mainFxmlClass">
-         <image>
-            <Image url="@../Imagenes/FondoRealGrande.png" />
-         </image>
-      </ImageView>
-      <TextField fx:id="txtContr" layoutX="159.0" layoutY="174.0" prefHeight="28.0" prefWidth="225.0" />
-      <TextField fx:id="txtNuevaContra" layoutX="158.0" layoutY="263.0" prefHeight="28.0" prefWidth="225.0" />
-      <Button layoutX="78.0" layoutY="424.0" mnemonicParsing="false" onAction="#actualizar" prefHeight="47.0" prefWidth="118.0" text="Actualizar" />
-      <ImageView fitHeight="219.0" fitWidth="215.0" layoutX="680.0" layoutY="245.0" styleClass="menucontrasenia.css">
-         <image>
-            <Image url="@../Imagenes/llave.png" />
-         </image>
-      </ImageView>
-      <Label layoutX="153.0" layoutY="137.0" text="CONTRASEÑA ANTERIOR" />
-      <Label layoutX="168.0" layoutY="223.0" text="NUEVA CONTRASEÑA" />
-      <Label layoutX="143.0" layoutY="318.0" text="CONFIRMAR CONTRASEÑA" />
-      <TextField fx:id="txtConfirmarContra" layoutX="158.0" layoutY="355.0" prefHeight="28.0" prefWidth="225.0" />
-      <Label layoutX="210.0" layoutY="53.0" text="Numero CUI" />
-      <TextField fx:id="txtCui" layoutX="159.0" layoutY="82.0" prefHeight="28.0" prefWidth="225.0" />
-      <Button layoutX="292.0" layoutY="424.0" mnemonicParsing="false" onAction="#btnAtras" prefHeight="47.0" prefWidth="118.0" text="Cancelar" />
+      <TextField fx:id="txtContr" layoutX="185.0" layoutY="199.0" prefHeight="28.0" prefWidth="225.0" />
+      <TextField fx:id="txtNuevaContra" layoutX="177.0" layoutY="315.0" prefHeight="28.0" prefWidth="225.0" />
+      <Button layoutX="106.0" layoutY="504.0" mnemonicParsing="false" onAction="#actualizar" prefHeight="47.0" prefWidth="118.0" text="Actualizar" />
+      <Label layoutX="179.0" layoutY="162.0" text="CONTRASEÑA ANTERIOR" />
+      <Label layoutX="187.0" layoutY="275.0" text="NUEVA CONTRASEÑA" />
+      <Label layoutX="162.0" layoutY="382.0" text="CONFIRMAR CONTRASEÑA" />
+      <TextField fx:id="txtConfirmarContra" layoutX="177.0" layoutY="419.0" prefHeight="28.0" prefWidth="225.0" />
+      <Label layoutX="236.0" layoutY="70.0" text="Numero CUI" />
+      <TextField fx:id="txtCui" layoutX="185.0" layoutY="99.0" prefHeight="28.0" prefWidth="225.0" />
+      <Button layoutX="320.0" layoutY="504.0" mnemonicParsing="false" onAction="#btnAtras" prefHeight="47.0" prefWidth="118.0" text="Cancelar" />
    </children>
 </AnchorPane>

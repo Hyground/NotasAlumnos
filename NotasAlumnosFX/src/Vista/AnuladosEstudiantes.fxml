@@ -14,12 +14,12 @@
    <children>
       <TableView fx:id="tblEstudiante" layoutX="32.0" layoutY="28.0" prefHeight="529.0" prefWidth="960.0">
          <columns>
-            <TableColumn fx:id="cui" prefWidth="137.0" text="Cui" />
-            <TableColumn fx:id="codigopersonal" prefWidth="214.0" text="Codigo Personal" />
-            <TableColumn fx:id="nombre" prefWidth="196.0" text="Nombre" />
-            <TableColumn fx:id="apellido" prefWidth="179.0" text="Apellido" />
-            <TableColumn fx:id="grado" prefWidth="101.0" text="Grado" />
-            <TableColumn fx:id="seccion" minWidth="0.0" prefWidth="132.0" text="Sección" />
+            <TableColumn fx:id="cui" prefWidth="175.0" text="Cui" />
+            <TableColumn fx:id="codigopersonal" prefWidth="187.0" text="Codigo Personal" />
+            <TableColumn fx:id="nombre" prefWidth="208.0" text="Nombre" />
+            <TableColumn fx:id="apellido" prefWidth="200.0" text="Apellido" />
+            <TableColumn fx:id="grado" prefWidth="109.0" text="Grado" />
+            <TableColumn fx:id="seccion" minWidth="0.0" prefWidth="110.0" text="Sección" />
          </columns>
       </TableView>
       <Button layoutX="446.0" layoutY="568.0" mnemonicParsing="false" onAction="#btnAtras" text="Atras" />

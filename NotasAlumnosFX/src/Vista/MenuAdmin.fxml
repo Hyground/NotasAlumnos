@@ -7,41 +7,41 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1024.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.MenuAdminController">
+<AnchorPane id="AnchorPane" prefHeight="640.0" prefWidth="1060.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.MenuAdminController">
     <stylesheets>
         <URL value="@menuadmin.css" />
     </stylesheets>
    <children>
-      <Label fx:id="MENUADMIN" layoutX="93.0" layoutY="14.0" text="Menu Administrador" />
-      <Label layoutX="182.0" layoutY="46.0" text="CUI" />
-      <Label layoutX="134.0" layoutY="137.0" text="Nombre de usuario" />
-      <Label layoutX="160.0" layoutY="180.0" text="Contraseña" />
-      <TextField fx:id="txtCui" layoutX="109.0" layoutY="68.0" />
-      <TextField fx:id="txtUsuario" layoutX="113.0" layoutY="154.0" />
-      <TextField fx:id="txtContra" layoutX="113.0" layoutY="197.0" />
-      <Label layoutX="181.0" layoutY="223.0" text="Grado" />
-      <Label layoutX="172.0" layoutY="265.0" text="Seccion" />
-      <TableView fx:id="tablaView" layoutX="393.0" layoutY="19.0" onMouseClicked="#seleccionar" prefHeight="536.0" prefWidth="598.0">
+      <Label fx:id="MENUADMIN" layoutX="100.0" layoutY="32.0" text="Menu Administrador" />
+      <Label layoutX="189.0" layoutY="64.0" text="CUI" />
+      <Label layoutX="141.0" layoutY="155.0" text="Nombre de usuario" />
+      <Label layoutX="167.0" layoutY="198.0" text="Contraseña" />
+      <TextField fx:id="txtCui" layoutX="116.0" layoutY="86.0" />
+      <TextField fx:id="txtUsuario" layoutX="120.0" layoutY="172.0" />
+      <TextField fx:id="txtContra" layoutX="120.0" layoutY="215.0" />
+      <Label layoutX="188.0" layoutY="241.0" text="Grado" />
+      <Label layoutX="179.0" layoutY="283.0" text="Seccion" />
+      <TableView fx:id="tablaView" layoutX="410.0" layoutY="32.0" onMouseClicked="#seleccionar" prefHeight="536.0" prefWidth="598.0">
         <columns>
-          <TableColumn fx:id="UsuarioID" prefWidth="39.0" text="ID" />
-            <TableColumn fx:id="CUI" prefWidth="134.0" text="CUI" />
-            <TableColumn fx:id="nombreUsuario" prefWidth="129.0" text="Nombre" />
-            <TableColumn fx:id="Contrasenia" prefWidth="98.0" text="Contraseña" />
-            <TableColumn fx:id="Rol" prefWidth="87.0" text="Rol" />
-            <TableColumn fx:id="GradoID" prefWidth="57.0" text="Grado" />
-            <TableColumn fx:id="SeccionID" prefWidth="69.0" text="Seccion" />
+          <TableColumn fx:id="UsuarioID" prefWidth="51.0" text="ID" />
+            <TableColumn fx:id="CUI" prefWidth="129.0" text="CUI" />
+            <TableColumn fx:id="nombreUsuario" prefWidth="117.0" text="Nombre" />
+            <TableColumn fx:id="Contrasenia" prefWidth="119.0" text="Contraseña" />
+            <TableColumn fx:id="Rol" prefWidth="83.0" text="Rol" />
+            <TableColumn fx:id="GradoID" prefWidth="58.0" text="Grado" />
+            <TableColumn fx:id="SeccionID" prefWidth="72.0" text="Seccion" />
         </columns>
       </TableView>
-      <Button fx:id="btnCrear" layoutX="64.0" layoutY="387.0" mnemonicParsing="false" onAction="#crear" text="Crear Usuario" />
-      <Button fx:id="btnBorrar" layoutX="64.0" layoutY="442.0" mnemonicParsing="false" onAction="#eliminar" text="Eliminar" />
-      <Button fx:id="btnModificar" layoutX="232.0" layoutY="387.0" mnemonicParsing="false" onAction="#modificar" text="Modificar" />
-      <Button fx:id="BtnLimpiar" layoutX="235.0" layoutY="442.0" mnemonicParsing="false" onAction="#limpiar" text="Limpiar" />
-      <Label layoutX="193.0" layoutY="307.0" text="Rol" />
-      <Label layoutX="172.0" layoutY="94.0" text="Nombre" />
-      <TextField fx:id="txtNombre" layoutX="113.0" layoutY="111.0" />
-      <ComboBox fx:id="conSeccion" layoutX="115.0" layoutY="282.0" prefHeight="25.0" prefWidth="177.0" />
-      <ComboBox fx:id="conGrado" layoutX="115.0" layoutY="240.0" prefHeight="25.0" prefWidth="177.0" />
-      <ComboBox fx:id="conROl" layoutX="115.0" layoutY="324.0" prefHeight="25.0" prefWidth="177.0" />
-      <Button fx:id="btnBorrar1" layoutX="237.0" layoutY="504.0" mnemonicParsing="false" onAction="#btnAtras" text="Cerrar sesión" />
+      <Button fx:id="btnCrear" layoutX="31.0" layoutY="407.0" mnemonicParsing="false" onAction="#crear" text="Crear Usuario" />
+      <Button fx:id="btnBorrar" layoutX="270.0" layoutY="407.0" mnemonicParsing="false" onAction="#eliminar" text="Eliminar" />
+      <Button fx:id="btnModificar" layoutX="150.0" layoutY="407.0" mnemonicParsing="false" onAction="#modificar" text="Modificar" />
+      <Button fx:id="BtnLimpiar" layoutX="86.0" layoutY="464.0" mnemonicParsing="false" onAction="#limpiar" text="Limpiar" />
+      <Label layoutX="200.0" layoutY="325.0" text="Rol" />
+      <Label layoutX="179.0" layoutY="112.0" text="Nombre" />
+      <TextField fx:id="txtNombre" layoutX="120.0" layoutY="129.0" />
+      <ComboBox fx:id="conSeccion" layoutX="122.0" layoutY="300.0" prefHeight="25.0" prefWidth="177.0" />
+      <ComboBox fx:id="conGrado" layoutX="122.0" layoutY="258.0" prefHeight="25.0" prefWidth="177.0" />
+      <ComboBox fx:id="conROl" layoutX="122.0" layoutY="342.0" prefHeight="25.0" prefWidth="177.0" />
+      <Button fx:id="btnBorrar1" layoutX="215.0" layoutY="464.0" mnemonicParsing="false" onAction="#btnAtras" text="Cerrar sesión" />
    </children>
 </AnchorPane>

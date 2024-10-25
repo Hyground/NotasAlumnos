@@ -7,37 +7,37 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1024.0" styleClass="mainFxmlClass" stylesheets="@menuevaluacion.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.MenuEvaluacionController">
+<AnchorPane id="AnchorPane" prefHeight="640.0" prefWidth="1060.0" styleClass="mainFxmlClass" stylesheets="@menuevaluacion.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.MenuEvaluacionController">
    <children>
-      <Label layoutX="98.0" layoutY="21.0" text="Registo de Actividades" />
-      <Label layoutX="51.0" layoutY="216.0" text="Nombre: " />
-      <Label layoutX="83.0" layoutY="170.0" text="Curso:" />
-      <Label layoutX="57.0" layoutY="87.0" text="Bimestre:" />
-      <Label layoutX="24.0" layoutY="53.0" text="Grado:" />
-      <Label layoutX="216.0" layoutY="53.0" text="Sección:" />
-      <Label layoutX="90.0" layoutY="131.0" text="Tipo:" />
-      <Label layoutX="25.0" layoutY="254.0" text="Ponderación:" />
-      <Button layoutX="37.0" layoutY="421.0" mnemonicParsing="false" onAction="#btnGuardar" text="Guardar" />
-      <Button layoutX="212.0" layoutY="421.0" mnemonicParsing="false" onAction="#btnActualizar" text="Actualizar" />
-      <ChoiceBox fx:id="conCurso" layoutX="150.0" layoutY="166.0" prefWidth="150.0" />
-      <ChoiceBox fx:id="conBimestre" layoutX="150.0" layoutY="82.0" prefWidth="150.0" />
-      <Label fx:id="rGrado" layoutX="90.0" layoutY="55.0" text="Primero" />
-      <Label fx:id="rSeccion" layoutX="300.0" layoutY="54.0" text="A" />
-      <ChoiceBox fx:id="conTipo" layoutX="150.0" layoutY="125.0" prefWidth="150.0" />
-      <TextField fx:id="txtNombre" layoutX="140.0" layoutY="210.0" />
-      <TextField fx:id="txtPonderacion" layoutX="142.0" layoutY="251.0" />
-      <Label layoutX="129.0" layoutY="295.0" text="Listar Actividades " />
-      <TableView fx:id="tblPersona" layoutX="390.0" layoutY="20.0" onMouseClicked="#seleccionaModificar" prefHeight="216.0" prefWidth="586.0">
+      <Label layoutX="88.0" layoutY="31.0" text="Registo de Actividades" />
+      <Label layoutX="40.0" layoutY="280.0" text="Nombre: " />
+      <Label layoutX="70.0" layoutY="208.0" text="Curso:" />
+      <Label layoutX="44.0" layoutY="125.0" text="Bimestre:" />
+      <Label layoutX="21.0" layoutY="70.0" text="Grado:" />
+      <Label layoutX="213.0" layoutY="70.0" text="Sección:" />
+      <Label layoutX="77.0" layoutY="169.0" text="Tipo:" />
+      <Label layoutX="14.0" layoutY="318.0" text="Ponderación:" />
+      <Button layoutX="15.0" layoutY="461.0" mnemonicParsing="false" onAction="#btnGuardar" text="Guardar" />
+      <Button layoutX="190.0" layoutY="461.0" mnemonicParsing="false" onAction="#btnActualizar" text="Actualizar" />
+      <ChoiceBox fx:id="conCurso" layoutX="137.0" layoutY="204.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="conBimestre" layoutX="137.0" layoutY="120.0" prefWidth="150.0" />
+      <Label fx:id="rGrado" layoutX="87.0" layoutY="72.0" text="Primero" />
+      <Label fx:id="rSeccion" layoutX="297.0" layoutY="71.0" text="A" />
+      <ChoiceBox fx:id="conTipo" layoutX="137.0" layoutY="163.0" prefWidth="150.0" />
+      <TextField fx:id="txtNombre" layoutX="127.0" layoutY="274.0" />
+      <TextField fx:id="txtPonderacion" layoutX="127.0" layoutY="315.0" />
+      <Label layoutX="106.0" layoutY="368.0" text="Listar Actividades " />
+      <TableView fx:id="tblPersona" layoutX="376.0" layoutY="25.0" onMouseClicked="#seleccionaModificar" prefHeight="216.0" prefWidth="586.0">
          <columns>
             <TableColumn fx:id="tblEvaluacionId" minWidth="0.0" prefWidth="0.0" text="id Actividad" />
-            <TableColumn fx:id="tblCurso" prefWidth="190.0" text="Curso" />
-            <TableColumn fx:id="tblNombreActividad" prefWidth="222.0" text="Nombre Actividad" />
-            <TableColumn fx:id="tblPonderacionActividad" prefWidth="119.0" text="Ponderación" />
-            <TableColumn fx:id="tblTipoActividad" prefWidth="82.0" text="Tipo" />
+            <TableColumn fx:id="tblCurso" prefWidth="200.0" text="Curso" />
+            <TableColumn fx:id="tblNombreActividad" prefWidth="212.0" text="Nombre Actividad" />
+            <TableColumn fx:id="tblPonderacionActividad" prefWidth="145.0" text="Ponderación" />
+            <TableColumn fx:id="tblTipoActividad" prefWidth="102.0" text="Tipo" />
          </columns>
       </TableView>
-      <ChoiceBox fx:id="conPorUnidad" layoutX="45.0" layoutY="323.0" prefWidth="150.0" />
-      <ChoiceBox fx:id="conPorCurso" layoutX="210.0" layoutY="323.0" prefWidth="150.0" />
-      <Button layoutX="127.0" layoutY="486.0" mnemonicParsing="false" onAction="#btnAtras" text="Atrás" />
+      <ChoiceBox fx:id="conPorUnidad" layoutX="22.0" layoutY="396.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="conPorCurso" layoutX="187.0" layoutY="396.0" prefWidth="150.0" />
+      <Button layoutX="104.0" layoutY="513.0" mnemonicParsing="false" onAction="#btnAtras" text="Atrás" />
    </children>
 </AnchorPane>

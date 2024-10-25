@@ -1,5 +1,5 @@
 .mainFxmlClass {
-    -fx-background-image: url("../Imagenes/ParaAnulados.png");
+    -fx-background-image: url("../Imagenes/FondoBoletines.png");
     -fx-background-repeat: no-repeat;
     -fx-background-size: cover; 
     -fx-background-position: center center;
@@ -62,8 +62,8 @@
     -fx-font-family: Arial;
     -fx-text-fill: black;
     -fx-background-color: rgba(265,256,256,1);
-    -fx-pref-width: 970px;
-    -fx-pref-height: 450px;
+    -fx-pref-width: 655px;
+    -fx-pref-height: 580px;
 }
 .table-column{
     -fx-background-color: rgba(265,256,256,1);
@@ -72,4 +72,30 @@
 
 .column-header-background{
     -fx-background-color: rgba(5,256,256,1);
+}
+
+#txt{
+    -fx-font-size: 180%;
+}
+#txt2{
+    -fx-font-size: 180%;
+}
+#txt3{
+    -fx-font-size: 180%;
+}
+#txt4{
+    -fx-font-size: 180%;
+}
+#lbNombre{
+    -fx-font-size: 180%;
+}
+#lbApelldio{
+    -fx-font-size: 180%;
+}
+#lbGrado{
+    -fx-font-size: 180%;
+}
+#lbSeccion{
+    
+    -fx-font-size: 180%;
 }

@@ -7,38 +7,38 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1063.0" styleClass="mainFxmlClass" stylesheets="@menunotas.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.MenuNotasController">
+<AnchorPane id="AnchorPane" prefHeight="640.0" prefWidth="1060.0" styleClass="mainFxmlClass" stylesheets="@menunotas.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.MenuNotasController">
    <children>
-      <TableView fx:id="tblNotas" layoutX="429.0" layoutY="18.0" prefHeight="214.0" prefWidth="713.0">
+      <TableView fx:id="tblNotas" layoutX="377.0" layoutY="19.0" prefHeight="214.0" prefWidth="713.0">
          <columns>
-            <TableColumn fx:id="tblCui" prefWidth="97.0" text="CUI" />
-            <TableColumn fx:id="tblCodPer" prefWidth="104.0" text="Codigo Personal" />
-            <TableColumn fx:id="tbNombre" prefWidth="82.0" text="Nombre" />
-            <TableColumn fx:id="tbApellido" prefWidth="106.0" text="Apellido" />
-            <TableColumn fx:id="tbActividad" prefWidth="108.0" text="Actividad" />
-            <TableColumn fx:id="tbPunto" prefWidth="92.0" text="Nota" />
+            <TableColumn fx:id="tblCui" prefWidth="117.0" text="CUI" />
+            <TableColumn fx:id="tblCodPer" prefWidth="157.0" text="Codigo Personal" />
+            <TableColumn fx:id="tbNombre" prefWidth="114.0" text="Nombre" />
+            <TableColumn fx:id="tbApellido" prefWidth="99.0" text="Apellido" />
+            <TableColumn fx:id="tbActividad" prefWidth="103.0" text="Actividad" />
+            <TableColumn fx:id="tbPunto" prefWidth="69.0" text="Nota" />
          </columns>
       </TableView>
-      <Button fx:id="btnModificar" layoutX="223.0" layoutY="433.0" mnemonicParsing="false" onAction="#modificar" text="Calificar" />
-      <Label layoutX="34.0" layoutY="166.0" text="Apellido:" />
-      <Label layoutX="32.0" layoutY="130.0" text="Nombre:" />
-      <Label layoutX="68.0" layoutY="239.0" text="Curso:" />
-      <Label layoutX="251.0" layoutY="53.0" text="Seccion:" />
+      <Button fx:id="btnModificar" layoutX="190.0" layoutY="505.0" mnemonicParsing="false" onAction="#modificar" text="Calificar" />
+      <Label layoutX="39.0" layoutY="184.0" text="Apellido:" />
+      <Label layoutX="37.0" layoutY="148.0" text="Nombre:" />
+      <Label layoutX="56.0" layoutY="307.0" text="Curso:" />
+      <Label layoutX="223.0" layoutY="51.0" text="Seccion:" />
       <Label layoutX="38.0" layoutY="51.0" text="Grado: " />
       <Label layoutX="172.0" layoutY="26.0" text="Notas" />
-      <ChoiceBox fx:id="chCurso" layoutX="141.0" layoutY="234.0" prefHeight="31.0" prefWidth="187.0" />
-      <ChoiceBox fx:id="chActividad" layoutX="143.0" layoutY="277.0" prefHeight="31.0" prefWidth="187.0" />
-      <Label layoutX="38.0" layoutY="282.0" text="Actividad:" />
-      <Label layoutX="38.0" layoutY="338.0" text="Nota:" />
-      <TextField fx:id="txtNota" layoutX="98.0" layoutY="330.0" />
+      <ChoiceBox fx:id="chCurso" layoutX="129.0" layoutY="302.0" prefHeight="31.0" prefWidth="187.0" />
+      <ChoiceBox fx:id="chActividad" layoutX="131.0" layoutY="345.0" prefHeight="31.0" prefWidth="187.0" />
+      <Label layoutX="26.0" layoutY="350.0" text="Actividad:" />
+      <Label layoutX="22.0" layoutY="434.0" text="Nota:" />
+      <TextField fx:id="txtNota" layoutX="82.0" layoutY="426.0" />
       <Label fx:id="rGrado" layoutX="109.0" layoutY="52.0" text="Primero" />
-      <Label fx:id="rSeccion" layoutX="325.0" layoutY="55.0" prefHeight="7.0" prefWidth="44.0" text="A" />
-      <Label fx:id="txtNombre" layoutX="125.0" layoutY="130.0" text="Nombre" />
-      <Label fx:id="txtApelldio" layoutX="127.0" layoutY="166.0" text="Apellido" />
-      <Label fx:id="txtCui" layoutX="125.0" layoutY="99.0" text="cui" />
-      <Label layoutX="32.0" layoutY="99.0" text="CUI:" />
-      <Label layoutX="46.0" layoutY="201.0" text="Bimestre:" />
-      <ChoiceBox fx:id="conBimestre" layoutX="141.0" layoutY="197.0" prefHeight="31.0" prefWidth="187.0" />
-      <Button fx:id="btnModificar1" layoutX="47.0" layoutY="433.0" mnemonicParsing="false" onAction="#btnAtras" text="Atras" />
+      <Label fx:id="rSeccion" layoutX="297.0" layoutY="53.0" prefHeight="7.0" prefWidth="44.0" text="A" />
+      <Label fx:id="txtNombre" layoutX="198.0" layoutY="146.0" text="Nombre" />
+      <Label fx:id="txtApelldio" layoutX="200.0" layoutY="182.0" text="Apellido" />
+      <Label fx:id="txtCui" layoutX="198.0" layoutY="115.0" text="cui" />
+      <Label layoutX="37.0" layoutY="117.0" text="CUI:" />
+      <Label layoutX="34.0" layoutY="269.0" text="Bimestre:" />
+      <ChoiceBox fx:id="conBimestre" layoutX="129.0" layoutY="265.0" prefHeight="31.0" prefWidth="187.0" />
+      <Button fx:id="btnModificar1" layoutX="14.0" layoutY="505.0" mnemonicParsing="false" onAction="#btnAtras" text="Atras" />
    </children>
 </AnchorPane>
