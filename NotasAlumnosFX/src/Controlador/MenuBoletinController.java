@@ -4,6 +4,7 @@ import CRUDs.Boletines;
 import CRUDs.CEstudiantes;
 import Modelo.Boletin;
 import POJOs.Estudiantes;
+import java.io.ByteArrayOutputStream;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -21,9 +22,9 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
-
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.util.List;
@@ -32,6 +33,7 @@ import java.util.stream.Collectors;
 import javafx.scene.Node;
 import javafx.stage.Stage;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
+import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
 public class MenuBoletinController implements Initializable {
 
@@ -74,7 +76,6 @@ public class MenuBoletinController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // Configurar las columnas de la tabla
         tabCurso.setCellValueFactory(new PropertyValueFactory<>("curso"));
         tbUniI.setCellValueFactory(new PropertyValueFactory<>("unidad1"));
         tbUniII.setCellValueFactory(new PropertyValueFactory<>("unidad2"));
@@ -144,8 +145,6 @@ public class MenuBoletinController implements Initializable {
 
                 boletinList.add(new Boletin(curso, unidad1, unidad2, unidad3, unidad4, promedio, aprobado));
             }
-        } else {
-            System.out.println("No se encontraron resultados.");
         }
     }
 
@@ -176,42 +175,42 @@ public class MenuBoletinController implements Initializable {
         File file = fileChooser.showSaveDialog(null);
 
         if (file != null) {
-            try {
-                PDDocument document = new PDDocument();
-                PDPage page = new PDPage(PDRectangle.A4);  // Cambiar tamaño de la página
+            try (PDDocument document = new PDDocument()) {
+                PDPage page = new PDPage(PDRectangle.A4);
                 document.addPage(page);
 
                 PDPageContentStream contentStream = new PDPageContentStream(document, page);
+                PDRectangle mediaBox = page.getMediaBox();
+                float pageWidth = mediaBox.getWidth();
+                float pageHeight = mediaBox.getHeight();
 
-                // Establecer fuentes y tamaños de texto
-                contentStream.setFont(PDType1Font.HELVETICA_BOLD, 14);
-
-                // Escribir encabezado
-                contentStream.beginText();
-                contentStream.newLineAtOffset(100, 750);  // Ajuste de posición
-                contentStream.showText("Boletín de Notas");
-                contentStream.endText();
+                InputStream imageStream = getClass().getResourceAsStream("/Imagenes/Boletin.png");
+                if (imageStream != null) {
+                    byte[] imageBytes = toByteArray(imageStream);
+                    PDImageXObject pdImage = PDImageXObject.createFromByteArray(document, imageBytes, "Boletin");
+                    contentStream.drawImage(pdImage, 0, 0, pageWidth, pageHeight);
+                }
 
                 contentStream.setFont(PDType1Font.HELVETICA_BOLD, 12);
+                
+                // Nombre del estudiante
                 contentStream.beginText();
-                contentStream.newLineAtOffset(100, 720);
-                contentStream.showText("Nombre: " + lbNombre.getText() + " " + lbApelldio.getText());
+                contentStream.newLineAtOffset(100, 628);
+                contentStream.showText("                     " + lbNombre.getText() + " " + lbApelldio.getText());
                 contentStream.endText();
 
+                // Grado y Sección
                 contentStream.beginText();
-                contentStream.newLineAtOffset(100, 700);
-                contentStream.showText("Grado: " + lbGrado.getText() + "  Sección: " + lbSeccion.getText());
+                contentStream.newLineAtOffset(100, 595);
+                contentStream.showText("               " + lbGrado.getText() + "                                                    " + lbSeccion.getText());
                 contentStream.endText();
 
-                // Ajuste de posición y espaciado
                 float margin = 50;
-                float yStart = 650;
-                float tableWidth = page.getMediaBox().getWidth() - 2 * margin;
+                float yStart = 550;
                 float yPosition = yStart;
-                float rowHeight = 23f;  // Aumentar altura de las filas
+                float rowHeight = 23f;
                 float cellMargin = 5f;
 
-                // Crear tabla con bordes y estilo
                 String[] headers = {"Curso", "Unidad I", "Unidad II", "Unidad III", "Unidad IV", "Promedio", "A/No A"};
                 float[] columnWidths = {140, 52, 52, 52, 52, 52, 80};
 
@@ -235,38 +234,40 @@ public class MenuBoletinController implements Initializable {
                 }
 
                 contentStream.close();
-
-                // Guardar el documento en un archivo
                 document.save(file);
-                document.close();
-
-                System.out.println("El boletín ha sido guardado como PDF en: " + file.getAbsolutePath());
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        } else {
-            System.out.println("Guardado cancelado.");
         }
+    }
+
+    private byte[] toByteArray(InputStream input) throws IOException {
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        int nRead;
+        byte[] data = new byte[16384];
+
+        while ((nRead = input.read(data, 0, data.length)) != -1) {
+            buffer.write(data, 0, nRead);
+        }
+
+        buffer.flush();
+        return buffer.toByteArray();
     }
 
     private void drawRow(PDPageContentStream contentStream, String[] data, float[] columnWidths, float y, float margin, float rowHeight, float cellMargin, boolean isHeader) throws IOException {
         float x = margin;
 
         for (int i = 0; i < data.length; i++) {
-            // Dibujar bordes
             contentStream.addRect(x, y - rowHeight, columnWidths[i], rowHeight);
             contentStream.stroke();
 
             PDType1Font font = isHeader ? PDType1Font.HELVETICA_BOLD : PDType1Font.HELVETICA;
             contentStream.setFont(font, 10);
 
-            // Medir la longitud del texto para centrarlo
-            float textWidth = font.getStringWidth(data[i]) / 1000 * 10; // Tamaño de fuente 10
-            float textXOffset = (columnWidths[i] - textWidth) / 2; // Centrado horizontal
-            float textYOffset = (rowHeight / 2) - 3; // Centrado vertical ajustado
+            float textWidth = font.getStringWidth(data[i]) / 1000 * 10;
+            float textXOffset = (columnWidths[i] - textWidth) / 2;
+            float textYOffset = (rowHeight / 2) - 3;
 
-            // Escribir el texto con ajuste centrado
             contentStream.beginText();
             contentStream.newLineAtOffset(x + textXOffset, y - rowHeight + textYOffset + cellMargin);
             contentStream.showText(data[i]);
@@ -285,5 +286,4 @@ public class MenuBoletinController implements Initializable {
         Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         currentStage.close();
     }
-
 }
