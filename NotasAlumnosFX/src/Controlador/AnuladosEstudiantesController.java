@@ -32,7 +32,6 @@ import org.hibernate.criterion.Restrictions;
  *
  * @author Alonzo Morales
  */
-
 public class AnuladosEstudiantesController implements Initializable {
 
     @FXML
@@ -49,7 +48,10 @@ public class AnuladosEstudiantesController implements Initializable {
     private TableColumn<Estudiantes, String> grado;
     @FXML
     private TableColumn<Estudiantes, String> seccion;
-    private Stage menuDocenteStage;
+    private Integer gradoId;
+    private Integer seccionId;
+
+    private Stage menuEstudianteStage;
     private ObservableList<Estudiantes> listaEstudiantes;
 
     private MenuEstudianteController menuEstudianteController; // Referencia al controlador de MenuEstudiante
@@ -63,7 +65,18 @@ public class AnuladosEstudiantesController implements Initializable {
     public void setMenuEstudianteController(MenuEstudianteController controller) {
         this.menuEstudianteController = controller;
     }
-    
+
+    public void setMenuEstudianteStage(Stage stage) {
+        this.menuEstudianteStage = stage;  // Guardar la referencia de la ventana de MenuEstudiante
+    }
+    public void setDatosGradoSeccion(Integer gradoId, Integer seccionId) {
+    this.gradoId = gradoId;
+    this.seccionId = seccionId;
+
+    cargarEstudiantesAnulados();
+}
+
+
     public static List<Estudiantes> ListarEstudianteAnulados() {
         Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
         List<Estudiantes> lista = null;
@@ -96,18 +109,19 @@ public class AnuladosEstudiantesController implements Initializable {
         // Cargar los estudiantes anulados
         cargarEstudiantesAnulados();
     }
-
-    private void cargarEstudiantesAnulados() {
-        List<Estudiantes> estudiantes = ListarEstudianteAnulados();
-        // Filtrar estudiantes que están anulados
-        List<Estudiantes> estudiantesAnulados = estudiantes.stream()
-                .filter(est -> !est.isBorradoLogico()) // Filtra los estudiantes anulados
-                .collect(Collectors.toList());
-
-        listaEstudiantes = FXCollections.observableArrayList(estudiantesAnulados);
-        tblEstudiante.setItems(listaEstudiantes);
-    }
+private void cargarEstudiantesAnulados() {
+    List<Estudiantes> estudiantes = ListarEstudianteAnulados();
     
+    List<Estudiantes> estudiantesAnulados = estudiantes.stream()
+            .filter(est -> !est.isBorradoLogico())
+            .filter(est -> est.getGrados().getGradoId().equals(gradoId) && est.getSecciones().getSeccionId().equals(seccionId))
+            .collect(Collectors.toList());
+
+    listaEstudiantes = FXCollections.observableArrayList(estudiantesAnulados);
+    tblEstudiante.setItems(listaEstudiantes);
+}
+
+
     private void seleccionarEstudiante() {
         // Escuchar cambios de selección en la tabla
         tblEstudiante.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -120,9 +134,14 @@ public class AnuladosEstudiantesController implements Initializable {
 
     @FXML
     private void btnAtras(ActionEvent event) {
-        menuDocenteStage.show();
+        // Mostrar la ventana anterior (menuEstudianteStage)
+        if (menuEstudianteStage != null) {
+            menuEstudianteStage.show();
+        }
 
+        // Cerrar la ventana actual (AnuladosEstudiantes)
         Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         currentStage.close();
     }
+
 }

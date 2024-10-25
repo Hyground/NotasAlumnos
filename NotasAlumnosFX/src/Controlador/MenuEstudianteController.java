@@ -30,7 +30,6 @@ import javafx.stage.Stage;
  *
  * @author Alonzo Morales
  */
-
 public class MenuEstudianteController implements Initializable {
 
     @FXML
@@ -66,10 +65,10 @@ public class MenuEstudianteController implements Initializable {
     private Integer seccionId;  // Variable para almacenar el ID de la sección
     private Stage menuDocenteStage; // Referencia de la ventana del MenuDocente
 
+
     /**
      * Initializes the controller class.
      */
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //Configurar las columnas de la tabla
@@ -106,55 +105,53 @@ public class MenuEstudianteController implements Initializable {
 
     // Método para recibir los datos de Grado, Sección y la referencia de la ventana de MenuDocente
     public void setDatosGradoSeccion(String grado, String seccion, Integer gradoId, Integer seccionId, Stage docenteStage) {
-        this.gradoId = gradoId;       
+        this.gradoId = gradoId;
         this.seccionId = seccionId;
         this.menuDocenteStage = docenteStage; // Guardar la referencia del MenuDocente
-        txtGrado.setText(grado);      
-        txtSeccion.setText(seccion);  
-        
+        txtGrado.setText(grado);
+        txtSeccion.setText(seccion);
+
         // Cargar los estudiantes correspondientes
         cargarEstudiantes();
     }
 
-
     public void setEstudianteSeleccionado(Estudiantes estudiante) {
-    if (estudiante != null) {
-        System.out.println("Estudiante seleccionado: " + estudiante.getNombre()); // Depuración
-        txtCui.setText(estudiante.getCui());
-        txtCodigoPersonal.setText(estudiante.getCodigoPersonal());
-        txtNombre.setText(estudiante.getNombre());
-        txtApellido.setText(estudiante.getApellido());
-        txtGrado.setText(estudiante.getGrados().getNombreGrado());
-        txtSeccion.setText(estudiante.getSecciones().getNombreSeccion());
+        if (estudiante != null) {
+            System.out.println("Estudiante seleccionado: " + estudiante.getNombre()); // Depuración
+            txtCui.setText(estudiante.getCui());
+            txtCodigoPersonal.setText(estudiante.getCodigoPersonal());
+            txtNombre.setText(estudiante.getNombre());
+            txtApellido.setText(estudiante.getApellido());
+            txtGrado.setText(estudiante.getGrados().getNombreGrado());
+            txtSeccion.setText(estudiante.getSecciones().getNombreSeccion());
+        }
     }
-}
-    
+
     ////////////////////////////////////// Métodos importantes, no se tocan ///////////////////////////
-@FXML
-private void btnAgregar(ActionEvent event) {
-    String cui = txtCui.getText();
-    String codigoPersonal = txtCodigoPersonal.getText();
-    String nombre = txtNombre.getText();
-    String apellido = txtApellido.getText();
+    @FXML
+    private void btnAgregar(ActionEvent event) {
+        String cui = txtCui.getText();
+        String codigoPersonal = txtCodigoPersonal.getText();
+        String nombre = txtNombre.getText();
+        String apellido = txtApellido.getText();
 
-    // Validar que todos los campos estén llenos
-    if (cui.isEmpty() || codigoPersonal.isEmpty() || nombre.isEmpty() || apellido.isEmpty()) {
-        // Mostrar una alerta si hay campos vacíos
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Campos vacíos");
-        alert.setHeaderText(null);
-        alert.setContentText("Por favor, llene todos los campos antes de agregar el estudiante.");
-        alert.showAndWait();
-        return;  // Salir del método si hay campos vacíos
+        // Validar que todos los campos estén llenos
+        if (cui.isEmpty() || codigoPersonal.isEmpty() || nombre.isEmpty() || apellido.isEmpty()) {
+            // Mostrar una alerta si hay campos vacíos
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Campos vacíos");
+            alert.setHeaderText(null);
+            alert.setContentText("Por favor, llene todos los campos antes de agregar el estudiante.");
+            alert.showAndWait();
+            return;  // Salir del método si hay campos vacíos
+        }
+
+        // Utilizar el gradoId y seccionId almacenados
+        if (CEstudiantes.crearEstudiante(cui, codigoPersonal, nombre, apellido, gradoId, seccionId)) {
+            cargarEstudiantes();  // Recargar la tabla después de agregar un nuevo estudiante
+            limpiarCampos();  // Limpiar los campos después de agregar el estudiante
+        }
     }
-
-    // Utilizar el gradoId y seccionId almacenados
-    if (CEstudiantes.crearEstudiante(cui, codigoPersonal, nombre, apellido, gradoId, seccionId)) {
-        cargarEstudiantes();  // Recargar la tabla después de agregar un nuevo estudiante
-        limpiarCampos();  // Limpiar los campos después de agregar el estudiante
-    }
-}
-
 
     @FXML
     private void btnAnular(ActionEvent event) {
@@ -212,7 +209,8 @@ private void btnAgregar(ActionEvent event) {
         txtCui.clear();
         txtNombre.clear();
     }
-        @FXML
+
+    @FXML
     private void btnAtras(ActionEvent event) {
         menuDocenteStage.show();
 
@@ -220,46 +218,51 @@ private void btnAgregar(ActionEvent event) {
         currentStage.close();
     }
 
+    @FXML
+    private void btnPdf(ActionEvent event) {
+        try {
+            // Guardar la ventana actual
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            currentStage.hide();  // Ocultar la ventana actual
+
+            // Cargar el archivo FXML de la nueva ventana
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/CargarDatos.fxml"));
+            Parent root = loader.load();
+
+            // Obtener el controlador del nuevo FXML
+            CargarDatosController cargarDatosController = loader.getController();
+
+            // Pasar los valores de txtGrado y txtSeccion y la referencia de la ventana actual
+            cargarDatosController.setGradoSeccion(txtGrado.getText(), txtSeccion.getText(), currentStage);
+
+            // Crear una nueva ventana
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
 @FXML
-private void btnPdf(ActionEvent event) {
+private void btnMostrarAnulados(ActionEvent event) {
     try {
         // Guardar la ventana actual
         Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         currentStage.hide();  // Ocultar la ventana actual
 
-        // Cargar el archivo FXML de la nueva ventana
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/CargarDatos.fxml"));
-        Parent root = loader.load();
-        
-        // Obtener el controlador del nuevo FXML
-        CargarDatosController cargarDatosController = loader.getController();
-        
-        // Pasar los valores de txtGrado y txtSeccion y la referencia de la ventana actual
-        cargarDatosController.setGradoSeccion(txtGrado.getText(), txtSeccion.getText(), currentStage);
-        
-        // Crear una nueva ventana
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.show();
-        
-    } catch (IOException ex) {
-        ex.printStackTrace();
-    }
-}
-
-
-    @FXML
-    private void btnMostrarAnulados(ActionEvent event) {
-try {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/AnuladosEstudiantes.fxml"));
         Parent root = loader.load();
 
         // Obtener el controlador de AnuladosEstudiantes
         AnuladosEstudiantesController anuladosController = loader.getController();
-        
-        // Pasar el controlador del MenuEstudianteController a AnuladosEstudiantesController
-        anuladosController.setMenuEstudianteController(this);
 
+        anuladosController.setMenuEstudianteController(this);
+        anuladosController.setMenuEstudianteStage(currentStage);
+        anuladosController.setDatosGradoSeccion(gradoId, seccionId); 
+
+        // Crear y mostrar la nueva ventana
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
         stage.show();
@@ -267,4 +270,7 @@ try {
         e.printStackTrace();
     }
 }
+
+    
+
 }
