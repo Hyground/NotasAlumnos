@@ -23,8 +23,8 @@
       <Label layoutX="179.0" layoutY="283.0" text="Seccion" />
       <TableView fx:id="tablaView" layoutX="410.0" layoutY="32.0" onMouseClicked="#seleccionar" prefHeight="536.0" prefWidth="598.0">
         <columns>
-          <TableColumn fx:id="UsuarioID" prefWidth="51.0" text="ID" />
-            <TableColumn fx:id="CUI" prefWidth="129.0" text="CUI" />
+          <TableColumn fx:id="UsuarioID" minWidth="7.0" prefWidth="7.0" text="ID" />
+            <TableColumn fx:id="CUI" prefWidth="173.0" text="CUI" />
             <TableColumn fx:id="nombreUsuario" prefWidth="117.0" text="Nombre" />
             <TableColumn fx:id="Contrasenia" prefWidth="119.0" text="Contraseña" />
             <TableColumn fx:id="Rol" prefWidth="83.0" text="Rol" />
