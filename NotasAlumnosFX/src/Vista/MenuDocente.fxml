@@ -12,8 +12,8 @@
         <URL value="@menudocente.css" />
     </stylesheets>
    <children>
-      <Label layoutX="66.0" layoutY="64.0" text="Que gusto Verte: " />
-      <Label fx:id="labelNomDocente" layoutX="237.0" layoutY="64.0" text="Nombre Docente " />
+      <Label layoutX="151.0" layoutY="56.0" text="Que gusto verte " />
+      <Label fx:id="labelNomDocente" layoutX="100.0" layoutY="110.0" text="Nombre Docente " />
       <Label layoutX="157.0" layoutY="174.0" text="Grado:" />
       <Label fx:id="labelGrado" layoutX="238.0" layoutY="174.0" text="Primero" />
       <Label layoutX="140.0" layoutY="216.0" text="Sección:" />

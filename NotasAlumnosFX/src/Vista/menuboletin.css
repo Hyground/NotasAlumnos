@@ -1,5 +1,5 @@
 .mainFxmlClass {
-    -fx-background-image: url("../Imagenes/Fondoreal.png");
+    -fx-background-image: url("../Imagenes/ParaAnulados.png");
     -fx-background-repeat: no-repeat;
     -fx-background-size: cover; 
     -fx-background-position: center center;
@@ -10,9 +10,9 @@
     -fx-font-family: Arial;
     -fx-text-fill: black;
     -fx-background-color: rgba(265,256,256,1);
-    -fx-pref-width: 210px;
-    -fx-pref-height: 40px;
-    -fx-background-radius: 15px;
+    -fx-pref-width: 195px;
+    -fx-pref-height: 30px;
+    -fx-background-radius: 10px;
 }
 
 .button:hover{
@@ -62,8 +62,8 @@
     -fx-font-family: Arial;
     -fx-text-fill: black;
     -fx-background-color: rgba(265,256,256,1);
-    -fx-pref-width: 990px;
-    -fx-pref-height: 520px;
+    -fx-pref-width: 970px;
+    -fx-pref-height: 450px;
 }
 .table-column{
     -fx-background-color: rgba(265,256,256,1);
