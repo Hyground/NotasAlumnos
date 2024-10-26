@@ -33,9 +33,9 @@
       <TextField fx:id="txtNota" layoutX="82.0" layoutY="426.0" />
       <Label fx:id="rGrado" layoutX="110.0" layoutY="65.0" text="Primero" />
       <Label fx:id="rSeccion" layoutX="272.0" layoutY="66.0" prefHeight="7.0" prefWidth="44.0" text="A" />
-      <Label fx:id="txtNombre" layoutX="116.0" layoutY="146.0" text="Nombre" />
-      <Label fx:id="txtApelldio" layoutX="118.0" layoutY="182.0" text="Apellido" />
-      <Label fx:id="txtCui" layoutX="116.0" layoutY="115.0" text="cui" />
+      <Label fx:id="txtNombre" layoutX="116.0" layoutY="146.0" />
+      <Label fx:id="txtApelldio" layoutX="118.0" layoutY="182.0" />
+      <Label fx:id="txtCui" layoutX="116.0" layoutY="115.0" />
       <Label layoutX="70.0" layoutY="115.0" text="CUI:" />
       <Label layoutX="34.0" layoutY="269.0" text="Bimestre:" />
       <ChoiceBox fx:id="conBimestre" layoutX="129.0" layoutY="265.0" prefHeight="31.0" prefWidth="187.0" />

@@ -18,12 +18,12 @@
             <Font size="22.0" />
          </font></Label>
       <ChoiceBox fx:id="chAlumnos" layoutX="129.0" layoutY="264.0" prefHeight="30.0" prefWidth="195.0" />
-      <Label fx:id="lbGrado" layoutX="116.0" layoutY="155.0" text="Primero" />
-      <Label fx:id="lbSeccion" layoutX="116.0" layoutY="210.0" text="A" />
+      <Label fx:id="lbGrado" layoutX="116.0" layoutY="155.0" />
+      <Label fx:id="lbSeccion" layoutX="116.0" layoutY="210.0" />
       <Label fx:id="txt4" layoutX="20.0" layoutY="210.0" text="Seccion:" />
       <Label fx:id="txt3" layoutX="35.0" layoutY="155.0" text="Grado:" />
-      <Label fx:id="lbNombre" layoutX="115.0" layoutY="47.0" text="Nombre" />
-      <Label fx:id="lbApelldio" layoutX="115.0" layoutY="96.0" text="Apellido" />
+      <Label fx:id="lbNombre" layoutX="115.0" layoutY="47.0" />
+      <Label fx:id="lbApelldio" layoutX="115.0" layoutY="96.0" />
       <Label fx:id="txt2" layoutX="21.0" layoutY="96.0" text="Apellido:" />
       <Label fx:id="txt" layoutX="27.0" layoutY="47.0" text="Nombre:" />
       <Button fx:id="btnRegresar" layoutX="81.0" layoutY="512.0" mnemonicParsing="false" onAction="#btnRegresar" prefWidth="224.0" text="Regresar" />
