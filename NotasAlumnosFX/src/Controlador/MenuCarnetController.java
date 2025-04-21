@@ -94,12 +94,11 @@ public class MenuCarnetController implements Initializable {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Archivos de Imagen", "*.png", "*.jpg", "*.jpeg"));
         
-        // Mostrar el cuadro de diálogo para seleccionar una imagen
         Stage stage = (Stage) SelecImagen.getScene().getWindow();
         java.io.File selectedFile = fileChooser.showOpenDialog(stage);  
         
         if (selectedFile != null) {
-            // Cargar la imagen seleccionada en el ImageView
+            
             Image image = new Image(selectedFile.toURI().toString());
             SelecImagen.setImage(image);
         }
@@ -125,7 +124,7 @@ public class MenuCarnetController implements Initializable {
     public void setDatosGradoSeccion(String grado, String seccion, Integer gradoId, Integer seccionId, Stage menuDocenteStage) {
         this.gradoId = gradoId;
         this.seccionId = seccionId;
-        this.menuDocenteStage = menuDocenteStage; // Establecer la referencia de la ventana
+        this.menuDocenteStage = menuDocenteStage; 
         lbGrado.setText(grado);
         lbSeccion.setText(seccion);
         lbInstitucion.setText("Instituto Nacional de Educación Básica la estrella");
@@ -138,20 +137,19 @@ public class MenuCarnetController implements Initializable {
         // Obtener la fecha actual
         LocalDate fechaActual = LocalDate.now();
 
-        // Sumar un año a la fecha actual para calcular la fecha de vencimiento
+        // Sumar años a la fecha actual 
         LocalDate fechaVencimiento = fechaActual.plusYears(3);
-
+        
         // Formatear la fecha de vencimiento
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String fechaVencimientoStr = fechaVencimiento.format(formatter);
 
-        // Mostrar la fecha de vencimiento en el Label
         lbFechaVenci.setText(fechaVencimientoStr);
     }
       
     @FXML
     private void btnBuscarEstudiante(ActionEvent event) {
-        String cui = txtCui.getText().trim();  // Obtener el CUI escrito en el campo
+        String cui = txtCui.getText().trim();  // Obtener el CUI
         if (!cui.isEmpty()) {
             Estudiantes estudiante = CEstudiantes.obtenerEstudiantePorCui(cui);
             
@@ -173,7 +171,6 @@ public class MenuCarnetController implements Initializable {
         
     }
     
-
     @FXML
     private void btnRegresar(ActionEvent event) {
         menuDocenteStage.show(); 
