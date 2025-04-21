@@ -190,4 +190,28 @@ public void btnCambiarContrasenia(ActionEvent event) {
     }
 }
 
+    @FXML
+    private void btnCarnet(ActionEvent event) {
+        try {
+            Stage docenteStage = (Stage) labelGrado.getScene().getWindow();  // Guardar la ventana actual
+            docenteStage.hide();  // Ocultar la ventana actual
+            
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/MenuCarnet.fxml"));
+            Parent root = loader.load();
+               
+            // Obtener el controlador de la vista cargada
+            MenuCarnetController controller = loader.getController();
+    
+            // Pasar los datos de grado, sección, IDs y la referencia de la ventana al controlador de MenuCarnet
+            controller.setDatosGradoSeccion(labelGrado.getText(), labelSeccion.getText(), gradoId, seccionId, docenteStage);
+            
+            Stage stage = new Stage();
+            stage.setTitle("Carnet del Estudiante");
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            Logger.getLogger(MenuCarnetController.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
 }
