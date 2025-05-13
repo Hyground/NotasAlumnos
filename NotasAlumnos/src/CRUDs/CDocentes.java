@@ -9,12 +9,12 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  *
  * @author Carlos
  */
-
 public class CDocentes {
 
     // Método para listar todos los docentes activos 
@@ -77,20 +77,20 @@ public class CDocentes {
                 throw new RuntimeException("Ya existe un docente asignado al grado '" + grado.getNombreGrado() + "' y sección '" + seccion.getNombreSeccion() + "'.");
             }
 
-            // Crear el nuevo docente si pasa todas las validaciones
+            // Hashear la contraseña
+            String hash = BCrypt.hashpw(contrasenia, BCrypt.gensalt());
+
+            // Crear el nuevo docente
             Docentes docente = new Docentes();
             docente.setNombreCompleto(nombreCompleto);
             docente.setCui(cui);
             docente.setNombreUsuario(nombreUsuario);
-            docente.setContrasenia(contrasenia);
+            docente.setContrasenia(hash); // contraseña hasheada
             docente.setRol(rol);
             docente.setGrados(grado);
             docente.setSecciones(seccion);
-
-            // El docente está activo por defecto (borrado lógico = true)
             docente.setBorradoLogico(true);
 
-            // Guardar el nuevo docente
             session.save(docente);
             flag = true;
 
@@ -105,66 +105,69 @@ public class CDocentes {
         }
         return flag;
     }
+
     // metodo para actualizar docente, 
+    public static boolean actualizarDocente(int usuarioId, String cui, String nuevoNombreUsuario, String nuevaContrasenia, String nuevoRol, int nuevoGradoId, int nuevaSeccionId) {
+        boolean flag = false;
+        Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = null;
 
-public static boolean actualizarDocente(int usuarioId, String cui, String nuevoNombreUsuario, String nuevaContrasenia, String nuevoRol, int nuevoGradoId, int nuevaSeccionId) {
-    boolean flag = false;
-    Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
-    Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
 
-    try {
-        transaction = session.beginTransaction();
+            Docentes docente = (Docentes) session.get(Docentes.class, usuarioId);
+            if (docente != null) {
+                Grados nuevoGrado = (Grados) session.get(Grados.class, nuevoGradoId);
+                Secciones nuevaSeccion = (Secciones) session.get(Secciones.class, nuevaSeccionId);
 
-        // Obtener el docente existente
-        Docentes docente = (Docentes) session.get(Docentes.class, usuarioId);
-        if (docente != null) {
-            // Obtener el grado y la sección por sus IDs
-            Grados nuevoGrado = (Grados) session.get(Grados.class, nuevoGradoId);
-            Secciones nuevaSeccion = (Secciones) session.get(Secciones.class, nuevaSeccionId);
+                if (nuevoGrado == null) {
+                    throw new RuntimeException("El grado con ID " + nuevoGradoId + " no existe.");
+                }
+                if (nuevaSeccion == null) {
+                    throw new RuntimeException("La sección con ID " + nuevaSeccionId + " no existe.");
+                }
 
-            if (nuevoGrado == null) {
-                throw new RuntimeException("El grado con ID " + nuevoGradoId + " no existe.");
+                Criteria criteriaAsignacion = session.createCriteria(Docentes.class);
+                criteriaAsignacion.add(Restrictions.eq("grados", nuevoGrado));
+                criteriaAsignacion.add(Restrictions.eq("secciones", nuevaSeccion));
+                criteriaAsignacion.add(Restrictions.ne("usuarioId", usuarioId));
+                Docentes docenteAsignado = (Docentes) criteriaAsignacion.uniqueResult();
+
+                if (docenteAsignado != null) {
+                    throw new RuntimeException("Ya existe un docente asignado al grado '"
+                            + nuevoGrado.getNombreGrado() + "' y sección '" + nuevaSeccion.getNombreSeccion() + "'.");
+                }
+
+                docente.setCui(cui);
+                docente.setNombreUsuario(nuevoNombreUsuario);
+                docente.setRol(nuevoRol);
+                docente.setGrados(nuevoGrado);
+                docente.setSecciones(nuevaSeccion);
+
+                // 🔐 Hashear y actualizar si se ingresó una nueva contraseña distinta
+                if (nuevaContrasenia != null && !nuevaContrasenia.trim().isEmpty()) {
+                    if (!BCrypt.checkpw(nuevaContrasenia, docente.getContrasenia())) {
+                        String hashed = BCrypt.hashpw(nuevaContrasenia, BCrypt.gensalt());
+                        docente.setContrasenia(hashed);
+                    }
+                }
+
+                session.update(docente);
+                flag = true;
             }
-            if (nuevaSeccion == null) {
-                throw new RuntimeException("La sección con ID " + nuevaSeccionId + " no existe.");
+
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
             }
-
-            // Verificar si ya existe un docente asignado a la misma sección y grado, pero que no sea el mismo docente
-            Criteria criteriaAsignacion = session.createCriteria(Docentes.class);
-            criteriaAsignacion.add(Restrictions.eq("grados", nuevoGrado));
-            criteriaAsignacion.add(Restrictions.eq("secciones", nuevaSeccion));
-            criteriaAsignacion.add(Restrictions.ne("usuarioId", usuarioId)); // Asegurarse de que no sea el mismo docente
-            Docentes docenteAsignado = (Docentes) criteriaAsignacion.uniqueResult();
-
-            if (docenteAsignado != null) {
-                throw new RuntimeException("Ya existe un docente asignado al grado '" + nuevoGrado.getNombreGrado() + "' y sección '" + nuevaSeccion.getNombreSeccion() + "'.");
-            }
-
-            // Actualizar los datos del docente
-            docente.setCui(cui);  
-            docente.setNombreUsuario(nuevoNombreUsuario);
-            docente.setContrasenia(nuevaContrasenia);
-            docente.setRol(nuevoRol);
-            docente.setGrados(nuevoGrado);
-            docente.setSecciones(nuevaSeccion);
-
-            // Actualizar el docente
-            session.update(docente);
-            flag = true;
+            e.printStackTrace();
+        } finally {
+            session.close();
         }
 
-        transaction.commit();
-    } catch (Exception e) {
-        if (transaction != null) {
-            transaction.rollback();
-        }
-        e.printStackTrace();
-    } finally {
-        session.close();
+        return flag;
     }
-    return flag;
-}
-
 
     // Método para eliminar un docente
     public static boolean eliminarDocente(int usuarioId) {
@@ -178,7 +181,7 @@ public static boolean actualizarDocente(int usuarioId, String cui, String nuevoN
             // Obtener el docente existente
             Docentes docente = (Docentes) session.get(Docentes.class, usuarioId);
             if (docente != null) {
-                docente.setBorradoLogico(false); 
+                docente.setBorradoLogico(false);
                 session.update(docente);
                 flag = true;
             }
@@ -207,7 +210,7 @@ public static boolean actualizarDocente(int usuarioId, String cui, String nuevoN
             // Obtener el docente existente
             Docentes docente = (Docentes) session.get(Docentes.class, usuarioId);
             if (docente != null && !docente.isBorradoLogico()) {
-                docente.setBorradoLogico(true);  
+                docente.setBorradoLogico(true);
                 session.update(docente);
                 flag = true;
             }
@@ -240,49 +243,54 @@ public static boolean actualizarDocente(int usuarioId, String cui, String nuevoN
         return docente;
     }
     // Método para actualizar la contraseña mediante CUI y validando la contraseña antigua
-public static boolean actualizarContrasenia(String cui, String contraseniaAntigua, String nuevaContrasenia) {
-    boolean flag = false;
-    Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
-    Transaction transaction = null;
 
-    try {
-        transaction = session.beginTransaction();
+    public static boolean actualizarContrasenia(String cui, String contraseniaAntigua, String nuevaContrasenia) {
+        boolean flag = false;
+        Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = null;
 
-        Criteria criteria = session.createCriteria(Docentes.class);
-        criteria.add(Restrictions.eq("cui", cui));
-        List<Docentes> listaDocentes = criteria.list();
+        try {
+            transaction = session.beginTransaction();
 
-        if (listaDocentes.isEmpty()) {
-            throw new RuntimeException("No existe un docente con el CUI: " + cui);
-        }
+            Criteria criteria = session.createCriteria(Docentes.class);
+            criteria.add(Restrictions.eq("cui", cui));
+            List<Docentes> listaDocentes = criteria.list();
 
-        Docentes docenteCorrecto = null;
-        for (Docentes docente : listaDocentes) {
-            if (docente.getContrasenia().equals(contraseniaAntigua)) {
-                docenteCorrecto = docente;
-                break; 
+            if (listaDocentes.isEmpty()) {
+                throw new RuntimeException("No existe un docente con el CUI: " + cui);
             }
+
+            Docentes docenteCorrecto = null;
+            for (Docentes docente : listaDocentes) {
+                // 🔐 Comparar con BCrypt
+                if (BCrypt.checkpw(contraseniaAntigua, docente.getContrasenia())) {
+                    docenteCorrecto = docente;
+                    break;
+                }
+            }
+
+            if (docenteCorrecto == null) {
+                throw new RuntimeException("La contraseña antigua no coincide.");
+            }
+
+            // 🔐 Hashear la nueva contraseña
+            String hashNueva = BCrypt.hashpw(nuevaContrasenia, BCrypt.gensalt());
+            docenteCorrecto.setContrasenia(hashNueva);
+
+            session.update(docenteCorrecto);
+            flag = true;
+
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
         }
 
-        if (docenteCorrecto == null) {
-            throw new RuntimeException("La contraseña antigua no coincide.");
-        }
-
-        docenteCorrecto.setContrasenia(nuevaContrasenia);
-        session.update(docenteCorrecto);
-        flag = true;
-
-        transaction.commit();
-    } catch (Exception e) {
-        if (transaction != null) {
-            transaction.rollback();
-        }
-        e.printStackTrace();
-    } finally {
-        session.close();
+        return flag;
     }
-    return flag;
-}
-
 
 }

@@ -1,24 +1,21 @@
 package CRUDs;
 
-import POJOs.Docentes; 
+import POJOs.Docentes;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
+import org.mindrot.jbcrypt.BCrypt;
+
 import java.security.SecureRandom;
 import java.util.List;
-
-/**
- *
- * @author Carlos
- */
 
 public class RecupararContraPorCorreo {
 
     private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     private static final int PASSWORD_LENGTH = 8;
 
-    // Método para generar una nueva contraseña a nuestro ususaroios
+    // Genera una nueva contraseña temporal en texto plano
     public static String generatePassword() {
         SecureRandom random = new SecureRandom();
         StringBuilder password = new StringBuilder(PASSWORD_LENGTH);
@@ -28,7 +25,7 @@ public class RecupararContraPorCorreo {
         return password.toString();
     }
 
-    // Método para recuperar la contraseña y asignar una nueva
+    // Asigna una nueva contraseña hasheada al docente si coincide por cui, usuario y nombre completo
     public static String recuperarContrasenia(String cui, String nombreUsuario, String nombreCompleto) {
         Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = null;
@@ -37,7 +34,6 @@ public class RecupararContraPorCorreo {
         try {
             transaction = session.beginTransaction();
 
-            // Obtener el docente mediante CUI, nombre de usuario y nombre completo
             Criteria criteria = session.createCriteria(Docentes.class);
             criteria.add(Restrictions.eq("cui", cui));
             criteria.add(Restrictions.eq("nombreUsuario", nombreUsuario));
@@ -45,30 +41,29 @@ public class RecupararContraPorCorreo {
 
             List<Docentes> listaDocentes = criteria.list();
 
-            // Validamos de búsqueda de docentes
-            if (listaDocentes.isEmpty() || listaDocentes.size() > 1) {
-                return null; // Si no se encuentra o si hay más de un resultado, retornamos null
+            if (listaDocentes.size() != 1) {
+                return null;
             }
 
-            // Generar la nueva contraseña
             Docentes docente = listaDocentes.get(0);
             nuevaContrasenia = generatePassword();
-            docente.setContrasenia(nuevaContrasenia);
 
-            // Actualizar la nueva contraseña en la base de datos
+            // 🔐 Aplicar hash con BCrypt
+            String hash = BCrypt.hashpw(nuevaContrasenia, BCrypt.gensalt(10));
+            docente.setContrasenia(hash);
+
             session.update(docente);
             transaction.commit();
 
         } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
+            if (transaction != null) transaction.rollback();
             e.printStackTrace();
             return null;
         } finally {
             session.close();
         }
 
+        // Retornamos la contraseña en texto plano (para mostrarla temporalmente al usuario, si aplica)
         return nuevaContrasenia;
     }
 }

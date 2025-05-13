@@ -14,15 +14,15 @@ public class EmailService {
 
         // Configurar propiedades del servidor de correo (SMTP) de Hostinger
         Properties props = new Properties();
-        props.put("mail.smtp.host", "smtp.hostinger.com"); //  Hostinger
+        props.put("mail.smtp.host", "smtp.gmail.com"); //  Hostinger
         props.put("mail.smtp.socketFactory.port", "465"); // Puerto SMTP de Hostinger
         props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory"); // Encriptación SSL
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.port", "465");
 
         // Credenciales del correo principal (de Hostinger)
-        final String correoPrincipal = "edugt@wissegt.com";  // Correo de Hostinger
-        final String contraseniaPrincipal = "Edugt@12";  // Contraseña
+        final String correoPrincipal = "edugt.info@gmail.com";  // Correo de Hostinger
+        final String contraseniaPrincipal = "wknj hwas iwxa npit";  // Contraseña
 
         // Autenticación del correo desde el que se enviará
         Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
