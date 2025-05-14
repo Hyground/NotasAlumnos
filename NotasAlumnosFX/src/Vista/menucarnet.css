@@ -3,5 +3,108 @@
  */
 
 .mainFxmlClass {
+    -fx-background-image: url("../Imagenes/FondoBoletines.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover; 
+    -fx-background-position: center center;
+}
 
+.button{
+    -fx-font-size: 140%;
+    -fx-font-family: Arial;
+    -fx-text-fill: black;
+    -fx-background-color: rgba(265,256,256,1);
+    -fx-pref-width: 195px;
+    -fx-pref-height: 30px;
+    -fx-background-radius: 10px;
+}
+
+.button:hover{
+    -fx-background-color: rgba(1,1,1,0.7);
+    -fx-text-fill: white;
+    
+}
+
+.label{
+    -fx-text-fill: black;
+    -fx-font-family: Arial;
+    -fx-font-size: 120%;
+    -fx-display: flex; 
+    -fx-alignment: center;
+}
+
+#MENUADMIN{
+    -fx-font-size: 180%;
+}
+
+.text-field{
+    -fx-background-color: rgba(265,256,256,1);
+    -fx-text-fill: black;
+    -fx-font-family: Arial;
+    -fx-font-size: 14px;
+    -fx-display: flex; 
+    -fx-alignment: center;
+    -fx-pref-width: 210px;
+    -fx-pref-height: 30px;
+}
+
+
+.text-field:hover{
+    -fx-background-color: rgba(265,256,256, 0.8);
+}
+
+.check-box{
+    -fx-text-fill: black;
+    -fx-font-family: Arial;
+    -fx-font-size: 20px;
+    -fx-display: flex; 
+    -fx-alignment: center;
+}
+
+#txt{
+    -fx-font-size: 180%;
+}
+#txt2{
+    -fx-font-size: 180%;
+}
+#txt3{
+    -fx-font-size: 180%;
+}
+#txt4{
+    -fx-font-size: 180%;
+}
+#txt5{
+    -fx-font-size: 180%;
+}
+#txt6{
+    -fx-font-size: 180%;
+}
+#lbNombre{
+    -fx-font-size: 180%;
+}
+#lbApelldio{
+    -fx-font-size: 180%;
+}
+#lbGrado{
+    -fx-font-size: 180%;
+}
+#lbSeccion{
+    
+    -fx-font-size: 180%;
+}
+#lbCUI{
+    
+    -fx-font-size: 180%;
+}
+#lbFechaVenci{
+    
+    -fx-font-size: 180%;
+}
+#lbInstitucion{
+    
+    -fx-font-size: 180%;
+}
+#lbFechaMensaje{
+    
+    -fx-font-size: 180%;
 }

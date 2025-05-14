@@ -9,12 +9,12 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="Controlador.MenuCarnetController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.MenuCarnetController">
     <stylesheets>
         <URL value="@menucarnet.css" />
     </stylesheets>
    <children>
-      <AnchorPane id="AnchorPane" layoutY="-7.0" prefHeight="647.0" prefWidth="1060.0" styleClass="mainFxmlClass">
+      <AnchorPane id="AnchorPane" layoutY="-7.0" prefHeight="647.0" prefWidth="1060.0" styleClass="mainFxmlClass" stylesheets="@menucarnet.css">
          <children>
             <Label layoutX="31.0" layoutY="94.0" text="Seleccionar:">
                <font>
@@ -35,17 +35,14 @@
             <TextField fx:id="txtCui" layoutX="146.0" layoutY="172.0" prefHeight="31.0" prefWidth="159.0" />
             <Label layoutX="23.0" layoutY="177.0" text="BUSCAR CUI:" />
             <Button defaultButton="true" layoutX="81.0" layoutY="306.0" mnemonicParsing="false" onAction="#btnImprimirCarnet" text="Imprimir Carnet" />
-            <Label layoutX="608.0" layoutY="135.0" text="CUI:" />
+            <Label fx:id="txt6" layoutX="608.0" layoutY="135.0" text="CUI:" />
             <Label fx:id="lbCUI" layoutX="651.0" layoutY="135.0" />
-            <Label fx:id="lbInstitucion" layoutX="469.0" layoutY="32.0" prefHeight="62.0" prefWidth="510.0" />
+            <Label fx:id="lbInstitucion" layoutX="390.0" layoutY="31.0" prefHeight="74.0" prefWidth="645.0" />
             <ImageView fx:id="SelecImagen" fitHeight="193.0" fitWidth="210.0" layoutX="389.0" layoutY="130.0" pickOnBounds="true" preserveRatio="true" />
-            <Label fx:id="lbFechaMensaje" layoutX="451.0" layoutY="362.0" prefHeight="32.0" prefWidth="523.0" />
-            <Label layoutX="451.0" layoutY="418.0" text="Fecha de Vencimiento:" />
-            <Label fx:id="lbFechaVenci" layoutX="651.0" layoutY="418.0" prefHeight="21.0" prefWidth="195.0" />
+            <Label fx:id="lbFechaMensaje" layoutX="396.0" layoutY="346.0" prefHeight="45.0" prefWidth="645.0" />
+            <Label fx:id="txt5" layoutX="451.0" layoutY="418.0" text="Fecha de Vencimiento:" />
+            <Label fx:id="lbFechaVenci" layoutX="734.0" layoutY="418.0" prefHeight="21.0" prefWidth="195.0" />
          </children>
-         <stylesheets>
-            <URL value="@menuboletin.css" />
-         </stylesheets>
       </AnchorPane>
    </children>
 </AnchorPane>

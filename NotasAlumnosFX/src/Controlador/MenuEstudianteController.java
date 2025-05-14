@@ -175,7 +175,8 @@ public class MenuEstudianteController implements Initializable {
         }
     }
 
-    private void btnReactivar(ActionEvent event) {
+    @FXML
+    private void btnReactivar2ElRegreso(ActionEvent event) {
         String cui = txtCui.getText();
         if (CEstudiantes.reactivarEstudiante(cui)) {
             cargarEstudiantes();  // Recargar la tabla después de reactivar un estudiante
