@@ -205,7 +205,6 @@ public class MenuCarnetController implements Initializable {
         g.drawString("Sección: " + lbSeccion.getText(), 330, 180);
         g.drawString(lbFechaMensaje.getText(), 100, 230);
         g.drawString("Fecha de Vencimiento: " + lbFechaVenci.getText(), 120, 260);
-        g.setFont(new Font("Arial", Font.PLAIN, 14));
        
         Image imagenFX = SelecImagen.getImage();
         if (imagenFX != null) {
@@ -230,8 +229,6 @@ public class MenuCarnetController implements Initializable {
         // formato
         File output = new File(directorio, nombreArchivo);
         ImageIO.write(carnetFinal, "png", output);
-
-        System.out.println("Carnet generado exitosamente");
 
     } catch (IOException e) {
         e.printStackTrace();
@@ -274,7 +271,6 @@ public class MenuCarnetController implements Initializable {
         g.drawString("Sección: " + lbSeccion.getText(), 360, 610);
         g.drawString(lbFechaMensaje.getText(), 30, 670);
         g.drawString("Fecha de Vencimiento: " + lbFechaVenci.getText(), 80, 720);
-        g.setFont(new Font("Arial", Font.PLAIN, 26));
        
         Image imagenFX = SelecImagen.getImage();
         if (imagenFX != null) {
@@ -299,8 +295,6 @@ public class MenuCarnetController implements Initializable {
         // formato
         File output = new File(directorio, nombreArchivo);
         ImageIO.write(carnetFinal, "png", output);
-
-        System.out.println("Carnet generado exitosamente");
 
     } catch (IOException e) {
         e.printStackTrace();

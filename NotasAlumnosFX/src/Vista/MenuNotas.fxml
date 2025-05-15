@@ -20,25 +20,25 @@
          </columns>
       </TableView>
       <Button fx:id="btnModificar" layoutX="190.0" layoutY="505.0" mnemonicParsing="false" onAction="#modificar" text="Calificar" />
-      <Label layoutX="39.0" layoutY="184.0" text="Apellido:" />
-      <Label layoutX="37.0" layoutY="148.0" text="Nombre:" />
-      <Label layoutX="56.0" layoutY="307.0" text="Curso:" />
-      <Label layoutX="198.0" layoutY="64.0" text="Seccion:" />
-      <Label layoutX="39.0" layoutY="64.0" text="Grado: " />
-      <Label layoutX="172.0" layoutY="26.0" text="Notas" />
-      <ChoiceBox fx:id="chCurso" layoutX="129.0" layoutY="302.0" prefHeight="31.0" prefWidth="187.0" />
-      <ChoiceBox fx:id="chActividad" layoutX="131.0" layoutY="345.0" prefHeight="31.0" prefWidth="187.0" />
-      <Label layoutX="26.0" layoutY="350.0" text="Actividad:" />
+      <Label layoutX="32.0" layoutY="184.0" text="Apellido:" />
+      <Label layoutX="32.0" layoutY="148.0" text="Nombre:" />
+      <Label layoutX="59.0" layoutY="307.0" text="Curso:" />
+      <Label layoutX="208.0" layoutY="64.0" text="Seccion:" />
+      <Label layoutX="30.0" layoutY="64.0" text="Grado: " />
+      <Label layoutX="133.0" layoutY="26.0" text="Notas" />
+      <ChoiceBox fx:id="chCurso" layoutX="142.0" layoutY="302.0" prefHeight="31.0" prefWidth="187.0" />
+      <ChoiceBox fx:id="chActividad" layoutX="142.0" layoutY="359.0" prefHeight="31.0" prefWidth="187.0" />
+      <Label layoutX="26.0" layoutY="364.0" text="Actividad:" />
       <Label layoutX="22.0" layoutY="434.0" text="Nota:" />
       <TextField fx:id="txtNota" layoutX="82.0" layoutY="426.0" />
       <Label fx:id="rGrado" layoutX="110.0" layoutY="65.0" text="Primero" />
-      <Label fx:id="rSeccion" layoutX="272.0" layoutY="66.0" prefHeight="7.0" prefWidth="44.0" text="A" />
-      <Label fx:id="txtNombre" layoutX="116.0" layoutY="146.0" />
-      <Label fx:id="txtApelldio" layoutX="118.0" layoutY="182.0" />
-      <Label fx:id="txtCui" layoutX="116.0" layoutY="115.0" />
+      <Label fx:id="rSeccion" layoutX="302.0" layoutY="65.0" prefHeight="27.0" prefWidth="28.0" text="A" />
+      <Label fx:id="txtNombre" layoutX="131.0" layoutY="148.0" />
+      <Label fx:id="txtApelldio" layoutX="131.0" layoutY="184.0" />
+      <Label fx:id="txtCui" layoutX="124.0" layoutY="115.0" />
       <Label layoutX="70.0" layoutY="115.0" text="CUI:" />
-      <Label layoutX="34.0" layoutY="269.0" text="Bimestre:" />
-      <ChoiceBox fx:id="conBimestre" layoutX="129.0" layoutY="265.0" prefHeight="31.0" prefWidth="187.0" />
+      <Label layoutX="31.0" layoutY="251.0" text="Bimestre:" />
+      <ChoiceBox fx:id="conBimestre" layoutX="142.0" layoutY="246.0" prefHeight="31.0" prefWidth="187.0" />
       <Button fx:id="btnModificar1" layoutX="14.0" layoutY="505.0" mnemonicParsing="false" onAction="#btnAtras" text="Atras" />
    </children>
 </AnchorPane>

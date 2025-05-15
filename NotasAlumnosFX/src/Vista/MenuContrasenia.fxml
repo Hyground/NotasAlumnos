@@ -16,15 +16,15 @@
         <URL value="@menucontrasenia.css" />
     </stylesheets>
    <children>
-      <TextField fx:id="txtContr" layoutX="185.0" layoutY="199.0" prefHeight="28.0" prefWidth="225.0" />
-      <TextField fx:id="txtNuevaContra" layoutX="177.0" layoutY="315.0" prefHeight="28.0" prefWidth="225.0" />
+      <TextField fx:id="txtContr" layoutX="177.0" layoutY="198.0" prefHeight="28.0" prefWidth="225.0" />
+      <TextField fx:id="txtNuevaContra" layoutX="177.0" layoutY="313.0" prefHeight="28.0" prefWidth="225.0" />
       <Button layoutX="106.0" layoutY="504.0" mnemonicParsing="false" onAction="#actualizar" prefHeight="47.0" prefWidth="118.0" text="Actualizar" />
-      <Label layoutX="179.0" layoutY="162.0" text="CONTRASEÑA ANTERIOR" />
-      <Label layoutX="187.0" layoutY="275.0" text="NUEVA CONTRASEÑA" />
-      <Label layoutX="162.0" layoutY="382.0" text="CONFIRMAR CONTRASEÑA" />
-      <TextField fx:id="txtConfirmarContra" layoutX="177.0" layoutY="419.0" prefHeight="28.0" prefWidth="225.0" />
-      <Label layoutX="236.0" layoutY="70.0" text="Numero CUI" />
-      <TextField fx:id="txtCui" layoutX="185.0" layoutY="99.0" prefHeight="28.0" prefWidth="225.0" />
+      <Label layoutX="141.0" layoutY="161.0" text="CONTRASEÑA ANTERIOR" />
+      <Label layoutX="162.0" layoutY="274.0" text="NUEVA CONTRASEÑA" />
+      <Label layoutX="130.0" layoutY="381.0" text="CONFIRMAR CONTRASEÑA" />
+      <TextField fx:id="txtConfirmarContra" layoutX="177.0" layoutY="418.0" prefHeight="28.0" prefWidth="225.0" />
+      <Label layoutX="223.0" layoutY="64.0" text="Numero CUI" />
+      <TextField fx:id="txtCui" layoutX="177.0" layoutY="99.0" prefHeight="28.0" prefWidth="225.0" />
       <Button layoutX="320.0" layoutY="504.0" mnemonicParsing="false" onAction="#btnAtras" prefHeight="47.0" prefWidth="118.0" text="Cancelar" />
    </children>
 </AnchorPane>

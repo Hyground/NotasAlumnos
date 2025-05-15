@@ -13,15 +13,15 @@
     </stylesheets>
    <children>
       <Label layoutX="213.0" layoutY="83.0" text="Recuperar Contraseña" />
-      <Label layoutX="94.0" layoutY="180.0" text="Numero CUI:" />
-      <Label layoutX="51.0" layoutY="244.0" text="Nombre Completo:" />
-      <Label layoutX="71.0" layoutY="309.0" text="Nombre Usuario:" />
-      <Label layoutX="52.0" layoutY="372.0" text="Correo Electronico" />
+      <Label layoutX="106.0" layoutY="180.0" text="Numero CUI:" />
+      <Label layoutX="41.0" layoutY="244.0" text="Nombre Completo:" />
+      <Label layoutX="62.0" layoutY="305.0" text="Nombre Usuario:" />
+      <Label layoutX="39.0" layoutY="369.0" text="Correo Electronico:" />
       <Button layoutX="339.0" layoutY="476.0" mnemonicParsing="false" onAction="#btnRecuperar" text="Recuperar" />
-      <TextField fx:id="txtCui" layoutX="252.0" layoutY="174.0" />
-      <TextField fx:id="txtNombre" layoutX="252.0" layoutY="238.0" />
-      <TextField fx:id="txtUsuario" layoutX="252.0" layoutY="303.0" />
-      <TextField fx:id="txtCorreo" layoutX="252.0" layoutY="366.0" />
+      <TextField fx:id="txtCui" layoutX="272.0" layoutY="177.0" />
+      <TextField fx:id="txtNombre" layoutX="272.0" layoutY="241.0" />
+      <TextField fx:id="txtUsuario" layoutX="272.0" layoutY="302.0" />
+      <TextField fx:id="txtCorreo" layoutX="272.0" layoutY="366.0" />
       <Button layoutX="101.0" layoutY="482.0" mnemonicParsing="false" onAction="#btnAtras" text="Atras" />
    </children>
 </AnchorPane>

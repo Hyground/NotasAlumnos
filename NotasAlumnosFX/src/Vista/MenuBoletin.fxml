@@ -18,14 +18,14 @@
             <Font size="22.0" />
          </font></Label>
       <ChoiceBox fx:id="chAlumnos" layoutX="129.0" layoutY="264.0" prefHeight="30.0" prefWidth="195.0" />
-      <Label fx:id="lbGrado" layoutX="116.0" layoutY="155.0" />
-      <Label fx:id="lbSeccion" layoutX="116.0" layoutY="210.0" />
+      <Label fx:id="lbGrado" layoutX="121.0" layoutY="155.0" />
+      <Label fx:id="lbSeccion" layoutX="128.0" layoutY="210.0" />
       <Label fx:id="txt4" layoutX="20.0" layoutY="210.0" text="Seccion:" />
       <Label fx:id="txt3" layoutX="35.0" layoutY="155.0" text="Grado:" />
-      <Label fx:id="lbNombre" layoutX="115.0" layoutY="47.0" />
-      <Label fx:id="lbApelldio" layoutX="115.0" layoutY="96.0" />
+      <Label fx:id="lbNombre" layoutX="128.0" layoutY="47.0" />
+      <Label fx:id="lbApelldio" layoutX="128.0" layoutY="96.0" />
       <Label fx:id="txt2" layoutX="21.0" layoutY="96.0" text="Apellido:" />
-      <Label fx:id="txt" layoutX="27.0" layoutY="47.0" text="Nombre:" />
+      <Label fx:id="txt" layoutX="20.0" layoutY="47.0" text="Nombre:" />
       <Button fx:id="btnRegresar" layoutX="81.0" layoutY="512.0" mnemonicParsing="false" onAction="#btnRegresar" prefWidth="224.0" text="Regresar" />
       <Button layoutX="137.0" layoutY="383.0" mnemonicParsing="false" onAction="#btnBuscarBoletin" text="Buscar" />
       <TableView fx:id="tblBoletin" layoutX="376.0" layoutY="19.0" prefHeight="293.0" prefWidth="585.0">
@@ -39,8 +39,8 @@
             <TableColumn fx:id="tbAprob" prefWidth="91.0" text="A/NO A" />
          </columns>
       </TableView>
-      <TextField fx:id="txtCui" layoutX="129.0" layoutY="334.0" prefHeight="31.0" prefWidth="179.0" />
-      <Label layoutX="19.0" layoutY="341.0" text="BUSCAR CUI:" />
+      <TextField fx:id="txtCui" layoutX="145.0" layoutY="326.0" prefHeight="31.0" prefWidth="179.0" />
+      <Label layoutX="18.0" layoutY="331.0" text="BUSCAR CUI:" />
       <Button defaultButton="true" layoutX="81.0" layoutY="441.0" mnemonicParsing="false" onAction="#btnImprimir" text="Imprimir boletín en PDF" />
    </children>
 </AnchorPane>

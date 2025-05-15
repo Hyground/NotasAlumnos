@@ -12,7 +12,7 @@
         <URL value="@cargardatos.css" />
     </stylesheets>
    <children>
-      <Button fx:id="cCargar" layoutX="120.0" layoutY="221.0" mnemonicParsing="false" text="Cargar Datos" />
+      <Button fx:id="cCargar" layoutX="120.0" layoutY="221.0" mnemonicParsing="false" prefWidth="226.0" text="Cargar Datos" />
       <TableView fx:id="tablaAlumnos" layoutX="409.0" layoutY="35.0" prefHeight="201.0" prefWidth="529.0">
         <columns>
           <TableColumn fx:id="cCui" prefWidth="122.0" text="Cui" />
@@ -24,7 +24,7 @@
       <Label fx:id="txt" layoutX="89.0" layoutY="54.0" text="Grado" />
       <Label fx:id="txt2" layoutX="244.0" layoutY="54.0" text="Seccion" />
       <Label fx:id="labGrado" layoutX="82.0" layoutY="108.0" text="Primero" />
-      <Label fx:id="labSeccion" layoutX="272.0" layoutY="108.0" text="A" />
+      <Label fx:id="labSeccion" layoutX="283.0" layoutY="108.0" text="A" />
       <Button layoutX="31.0" layoutY="300.0" mnemonicParsing="false" onAction="#btnInscribir" text="Inscribir" />
       <Button layoutX="208.0" layoutY="300.0" mnemonicParsing="false" onAction="#btnAtras" text="Atras" />
    </children>
