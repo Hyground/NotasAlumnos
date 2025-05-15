@@ -249,7 +249,63 @@ public class MenuCarnetController implements Initializable {
 
     @FXML
     private void btnCarnetVertical(ActionEvent event) {
+    try {
+        BufferedImage fondoCarnet = ImageIO.read(new File("src/Imagenes/CarnetV.png"));
+
+        BufferedImage carnetFinal = new BufferedImage(
+            fondoCarnet.getWidth(),
+            fondoCarnet.getHeight(),
+            BufferedImage.TYPE_INT_ARGB
+        );
+
+        Graphics2D g = carnetFinal.createGraphics();
+        g.drawImage(fondoCarnet, 0, 0, null);
+
+        // la fuente y color
+        g.setFont(new Font("Arial", Font.BOLD, 28));
+        g.setColor(Color.BLACK);
+
+        // para ajustar el texto a la imagen
+        g.drawString(lbInstitucion.getText(), 40, 50);
+        g.drawString("CUI: " + lbCUI.getText(), 170, 460);
+        g.drawString("Nombre: " + lbNombre.getText(), 120, 510);
+        g.drawString("Apellido: " + lbApelldio.getText(), 120, 560);
+        g.drawString("Grado: " + lbGrado.getText(), 120, 610);
+        g.drawString("Sección: " + lbSeccion.getText(), 360, 610);
+        g.drawString(lbFechaMensaje.getText(), 30, 670);
+        g.drawString("Fecha de Vencimiento: " + lbFechaVenci.getText(), 80, 720);
+        g.setFont(new Font("Arial", Font.PLAIN, 26));
+       
+        Image imagenFX = SelecImagen.getImage();
+        if (imagenFX != null) {
+            BufferedImage imagenEstudiante = SwingFXUtils.fromFXImage(imagenFX, null);
+            BufferedImage redimensionada = resize(imagenEstudiante, 260, 260); //dimensiones
+            g.drawImage(redimensionada, 180, 140, null); //posicion en la imagen
+        }
+
+        g.dispose(); 
+
+        // crea carpeta 
+        File directorio = new File("C:\\Users\\USUARIO\\Pictures\\Carnet Vertical");
+        if (!directorio.exists()) {
+            directorio.mkdirs();
+        }
+
+        // guardar con nombre
+       String nombreEstudiante = lbNombre.getText().trim().replaceAll("\\s+", " ");
+       String apellidoEstudiante = lbApelldio.getText().trim().replaceAll("\\s+", " ");
+       String nombreArchivo = (nombreEstudiante + " " + apellidoEstudiante).replaceAll("\\s+", " ") + ".png";
+
+        // formato
+        File output = new File(directorio, nombreArchivo);
+        ImageIO.write(carnetFinal, "png", output);
+
+        System.out.println("Carnet generado exitosamente");
+
+    } catch (IOException e) {
+        e.printStackTrace();
     }
+}
 
     @FXML
     private void btnLimpiar(ActionEvent event) {
