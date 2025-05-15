@@ -7,6 +7,12 @@ package Controlador;
 
 import CRUDs.CEstudiantes;
 import POJOs.Estudiantes;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -15,6 +21,7 @@ import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -27,6 +34,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javax.imageio.ImageIO;
 
 /**
  * FXML Controller class
@@ -72,6 +80,10 @@ public class MenuCarnetController implements Initializable {
     private Stage menuDocenteStage; // Referencia de la ventana del MenuDocente
     private Integer gradoId;
     private Integer seccionId;
+    @FXML
+    private Label txt6;
+    @FXML
+    private Label txt5;
 
     /**
      * Initializes the controller class.
@@ -167,8 +179,80 @@ public class MenuCarnetController implements Initializable {
     }
 
     @FXML
-    private void btnImprimirCarnet(ActionEvent event) {
-        
+    private void btnCarnetHorizontal(ActionEvent event) {
+    try {
+        BufferedImage fondoCarnet = ImageIO.read(new File("src/Imagenes/CarnetH.png"));
+
+        BufferedImage carnetFinal = new BufferedImage(
+            fondoCarnet.getWidth(),
+            fondoCarnet.getHeight(),
+            BufferedImage.TYPE_INT_ARGB
+        );
+
+        Graphics2D g = carnetFinal.createGraphics();
+        g.drawImage(fondoCarnet, 0, 0, null);
+
+        // la fuente y color
+        g.setFont(new Font("Arial", Font.BOLD, 14));
+        g.setColor(Color.BLACK);
+
+        // para ajustar el texto a la imagen
+        g.drawString(lbInstitucion.getText(), 70, 40);
+        g.drawString("CUI: " + lbCUI.getText(), 190, 90);
+        g.drawString("Nombre: " + lbNombre.getText(), 190, 110);
+        g.drawString("Apellido: " + lbApelldio.getText(), 190, 135);
+        g.drawString("Grado: " + lbGrado.getText(), 190, 160);
+        g.drawString("Sección: " + lbSeccion.getText(), 330, 160);
+        g.drawString(lbFechaMensaje.getText(), 100, 225);
+        g.drawString("Fecha de Vencimiento: " + lbFechaVenci.getText(), 120, 255);
+        g.setFont(new Font("Arial", Font.PLAIN, 12));
+       
+        Image imagenFX = SelecImagen.getImage();
+        if (imagenFX != null) {
+            BufferedImage imagenEstudiante = SwingFXUtils.fromFXImage(imagenFX, null);
+            BufferedImage redimensionada = resize(imagenEstudiante, 120, 120); //dimensiones
+            g.drawImage(redimensionada, 35, 70, null); //posicion en la imagen
+        }
+
+        g.dispose(); 
+
+        // crea carpeta 
+        File directorio = new File("C:\\Users\\USUARIO\\Pictures\\Carnet Horizontal");
+        if (!directorio.exists()) {
+            directorio.mkdirs();
+        }
+
+        // guardar con nombre
+       String nombreEstudiante = lbNombre.getText().trim().replaceAll("\\s+", " ");
+       String apellidoEstudiante = lbApelldio.getText().trim().replaceAll("\\s+", " ");
+       String nombreArchivo = (nombreEstudiante + " " + apellidoEstudiante).replaceAll("\\s+", " ") + ".png";
+
+        // formato
+        File output = new File(directorio, nombreArchivo);
+        ImageIO.write(carnetFinal, "png", output);
+
+        System.out.println("Carnet generado exitosamente");
+
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+
+    private BufferedImage resize(BufferedImage img, int width, int height) {
+    java.awt.Image tmp = img.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
+    BufferedImage resized = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+    Graphics2D g2d = resized.createGraphics();
+    g2d.drawImage(tmp, 0, 0, null);
+    g2d.dispose();
+    return resized;
+}
+
+    @FXML
+    private void btnCarnetVertical(ActionEvent event) {
+    }
+
+    @FXML
+    private void btnLimpiar(ActionEvent event) {
     }
     
     @FXML
@@ -177,5 +261,5 @@ public class MenuCarnetController implements Initializable {
         
         Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         currentStage.close();
-    }  
+    }    
 }
