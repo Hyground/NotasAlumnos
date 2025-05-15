@@ -139,7 +139,7 @@ public class MenuCarnetController implements Initializable {
         this.menuDocenteStage = menuDocenteStage; 
         lbGrado.setText(grado);
         lbSeccion.setText(seccion);
-        lbInstitucion.setText("Instituto Nacional de Educación Básica la estrella");
+        lbInstitucion.setText("Instituto de Educación Básica la Estrella");
         lbFechaMensaje.setText("La vigencia de este carnet será de 3 años");
         calcularFechaVencimiento();
         cargarEstudiantes();
@@ -193,25 +193,25 @@ public class MenuCarnetController implements Initializable {
         g.drawImage(fondoCarnet, 0, 0, null);
 
         // la fuente y color
-        g.setFont(new Font("Arial", Font.BOLD, 14));
+        g.setFont(new Font("Arial", Font.BOLD, 16));
         g.setColor(Color.BLACK);
 
         // para ajustar el texto a la imagen
-        g.drawString(lbInstitucion.getText(), 70, 40);
+        g.drawString(lbInstitucion.getText(), 95, 40);
         g.drawString("CUI: " + lbCUI.getText(), 190, 90);
-        g.drawString("Nombre: " + lbNombre.getText(), 190, 110);
-        g.drawString("Apellido: " + lbApelldio.getText(), 190, 135);
-        g.drawString("Grado: " + lbGrado.getText(), 190, 160);
-        g.drawString("Sección: " + lbSeccion.getText(), 330, 160);
-        g.drawString(lbFechaMensaje.getText(), 100, 225);
-        g.drawString("Fecha de Vencimiento: " + lbFechaVenci.getText(), 120, 255);
-        g.setFont(new Font("Arial", Font.PLAIN, 12));
+        g.drawString("Nombre: " + lbNombre.getText(), 190, 120);
+        g.drawString("Apellido: " + lbApelldio.getText(), 190, 150);
+        g.drawString("Grado: " + lbGrado.getText(), 190, 180);
+        g.drawString("Sección: " + lbSeccion.getText(), 330, 180);
+        g.drawString(lbFechaMensaje.getText(), 100, 230);
+        g.drawString("Fecha de Vencimiento: " + lbFechaVenci.getText(), 120, 260);
+        g.setFont(new Font("Arial", Font.PLAIN, 14));
        
         Image imagenFX = SelecImagen.getImage();
         if (imagenFX != null) {
             BufferedImage imagenEstudiante = SwingFXUtils.fromFXImage(imagenFX, null);
-            BufferedImage redimensionada = resize(imagenEstudiante, 120, 120); //dimensiones
-            g.drawImage(redimensionada, 35, 70, null); //posicion en la imagen
+            BufferedImage redimensionada = resize(imagenEstudiante, 125, 125); //dimensiones
+            g.drawImage(redimensionada, 32, 70, null); //posicion en la imagen
         }
 
         g.dispose(); 
