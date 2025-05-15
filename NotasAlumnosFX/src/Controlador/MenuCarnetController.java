@@ -172,8 +172,8 @@ public class MenuCarnetController implements Initializable {
             
             } else {
                 lbNombre.setText("No encontrado");
-                lbApelldio.setText("");
-                lbCUI.setText("");
+                lbApelldio.setText("No encontrado");
+                lbCUI.setText("No encontrado");
             }
         }  
     }
@@ -253,6 +253,12 @@ public class MenuCarnetController implements Initializable {
 
     @FXML
     private void btnLimpiar(ActionEvent event) {
+        txtCui.clear();
+        lbCUI.setText("");
+        lbNombre.setText("");
+        lbApelldio.setText("");
+        chAlumnos.setValue("");
+        SelecImagen.setImage(null);
     }
     
     @FXML
