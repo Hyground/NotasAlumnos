@@ -13,25 +13,25 @@
         <URL value="@login.css" />
     </stylesheets>
    <children>
-      <Button fx:id="btnIngreso" layoutX="160.0" layoutY="469.0" mnemonicParsing="false" onAction="#iniciar" prefHeight="37.0" prefWidth="96.0" text="Ingresar" />
+      <Button fx:id="btnIngreso" layoutX="127.0" layoutY="469.0" mnemonicParsing="false" onAction="#iniciar" prefHeight="37.0" prefWidth="96.0" text="Ingresar" />
       <CheckBox fx:id="docenteOn" layoutX="229.0" layoutY="169.0" mnemonicParsing="false" onAction="#cambio" text="Docente" />
-      <Label fx:id="label1" layoutX="160.0" layoutY="37.0" prefHeight="25.0" prefWidth="251.0" text="¡Bienvenido!" />
-      <Button fx:id="btnLimpiar" layoutX="323.0" layoutY="469.0" mnemonicParsing="false" onAction="#limpiar" text="Limpiar" />
-      <Label fx:id="label2" layoutX="101.0" layoutY="75.0" prefHeight="25.0" prefWidth="378.0" text="Para continuar, por favor indica si eres">
+      <Label fx:id="label1" layoutX="24.0" layoutY="37.0" prefHeight="31.0" prefWidth="541.0" text="¡Bienvenido!" />
+      <Button fx:id="btnLimpiar" layoutX="310.0" layoutY="469.0" mnemonicParsing="false" onAction="#limpiar" text="Limpiar" />
+      <Label fx:id="label2" layoutX="23.0" layoutY="75.0" prefHeight="31.0" prefWidth="541.0" text="Para continuar, por favor indica si eres">
          <font>
             <Font name="Bell MT" size="12.0" />
          </font></Label>
       <CheckBox fx:id="adminOn" layoutX="229.0" layoutY="214.0" mnemonicParsing="false" onAction="#cambio" text="Administrador" />
-      <TextField fx:id="txtUser" layoutX="160.0" layoutY="282.0" onMouseClicked="#mover" />
-      <Label fx:id="lblUser" layoutX="246.0" layoutY="282.0" text="Usuario" />
-      <Label fx:id="label21" layoutX="115.0" layoutY="100.0" prefHeight="17.0" prefWidth="370.0" text="parte de los administradores o docente">
+      <TextField fx:id="txtUser" layoutX="171.0" layoutY="282.0" onMouseClicked="#mover" />
+      <Label fx:id="lblUser" layoutX="252.0" layoutY="282.0" text="Usuario" />
+      <Label fx:id="label21" layoutX="24.0" layoutY="106.0" prefHeight="31.0" prefWidth="541.0" text="parte de los administradores o docente">
          <font>
             <Font name="Bell MT" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="errorUsPas" layoutX="97.0" layoutY="413.0" text="Usuario o Contraseña Incorrecta " textAlignment="CENTER" textFill="#ff0101" />
-      <PasswordField fx:id="txtContra" layoutX="160.0" layoutY="359.0" onMouseClicked="#mover2" />
-      <Label fx:id="lblContra" layoutX="228.0" layoutY="359.0" text="Contraseña" />
-      <Button fx:id="recucontra" layoutX="115.0" layoutY="550.0" mnemonicParsing="false" onAction="#recuperar" prefWidth="287.0" text="Recuperar contraseña por Correo" />
+      <Label fx:id="errorUsPas" layoutX="25.0" layoutY="413.0" prefHeight="31.0" prefWidth="541.0" text="Usuario o Contraseña Incorrecta " textAlignment="CENTER" textFill="#ff0101" />
+      <PasswordField fx:id="txtContra" layoutX="171.0" layoutY="356.0" onMouseClicked="#mover2" />
+      <Label fx:id="lblContra" layoutX="229.0" layoutY="356.0" text="Contraseña" />
+      <Button fx:id="recucontra" layoutX="71.0" layoutY="550.0" mnemonicParsing="false" onAction="#recuperar" prefWidth="287.0" text="Recuperar contraseña por Correo" />
    </children>
 </AnchorPane>

@@ -10,13 +10,13 @@
     -fx-font-family: Arial;
     -fx-text-fill: black;
     -fx-background-color: rgba(265,256,256,1);
-    -fx-pref-width: 110px;
+    -fx-pref-width: 140px;
     -fx-pref-height: 45px;
     -fx-background-radius: 25px;
 }
 
 #recucontra{
-    -fx-pref-width: 350px;
+    -fx-pref-width: 450px;
     -fx-pref-height: 40px;
 }
 
