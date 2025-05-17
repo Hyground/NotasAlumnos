@@ -197,14 +197,14 @@ public class MenuCarnetController implements Initializable {
         g.setColor(Color.BLACK);
 
         // para ajustar el texto a la imagen
-        g.drawString(lbInstitucion.getText(), 95, 40);
+        g.drawString(lbInstitucion.getText(), 75, 30);
         g.drawString("CUI: " + lbCUI.getText(), 190, 90);
         g.drawString("Nombre: " + lbNombre.getText(), 190, 120);
         g.drawString("Apellido: " + lbApelldio.getText(), 190, 150);
         g.drawString("Grado: " + lbGrado.getText(), 190, 180);
         g.drawString("Sección: " + lbSeccion.getText(), 330, 180);
-        g.drawString(lbFechaMensaje.getText(), 100, 230);
-        g.drawString("Fecha de Vencimiento: " + lbFechaVenci.getText(), 120, 260);
+        g.drawString(lbFechaMensaje.getText(), 100, 260);
+        g.drawString("Fecha de Vencimiento: " + lbFechaVenci.getText(), 220, 300);
        
         Image imagenFX = SelecImagen.getImage();
         if (imagenFX != null) {
@@ -259,18 +259,20 @@ public class MenuCarnetController implements Initializable {
         g.drawImage(fondoCarnet, 0, 0, null);
 
         // la fuente y color
-        g.setFont(new Font("Arial", Font.BOLD, 28));
+        g.setFont(new Font("Arial", Font.BOLD, 26));
         g.setColor(Color.BLACK);
 
         // para ajustar el texto a la imagen
-        g.drawString(lbInstitucion.getText(), 40, 50);
-        g.drawString("CUI: " + lbCUI.getText(), 170, 460);
+        g.drawString(lbInstitucion.getText(), 58, 55);
+        g.drawString("CUI: " + lbCUI.getText(), 190, 460);
         g.drawString("Nombre: " + lbNombre.getText(), 120, 510);
         g.drawString("Apellido: " + lbApelldio.getText(), 120, 560);
         g.drawString("Grado: " + lbGrado.getText(), 120, 610);
         g.drawString("Sección: " + lbSeccion.getText(), 360, 610);
-        g.drawString(lbFechaMensaje.getText(), 30, 670);
-        g.drawString("Fecha de Vencimiento: " + lbFechaVenci.getText(), 80, 720);
+        g.setFont(new Font("Arial", Font.BOLD, 24));
+        g.drawString(lbFechaMensaje.getText(), 70, 690);
+        g.setFont(new Font("Arial", Font.BOLD, 20));
+        g.drawString("Fecha de Vencimiento: " + lbFechaVenci.getText(), 290, 850);
        
         Image imagenFX = SelecImagen.getImage();
         if (imagenFX != null) {
