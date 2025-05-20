@@ -214,4 +214,16 @@ public void btnCambiarContrasenia(ActionEvent event) {
             Logger.getLogger(MenuCarnetController.class.getName()).log(Level.SEVERE, null, e);
         }
     }
+    @FXML
+private void btnAsistencia(ActionEvent event) {
+    try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vista/MenuAsistencia.fxml"));
+        Parent root = loader.load();
+        Stage stage = new Stage();
+        stage.setTitle("Asistencia");
+        stage.setScene(new Scene(root));
+        stage.show();
+    } catch (IOException e) {
+    }
+}
 }

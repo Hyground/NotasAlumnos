@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="600" prefWidth="800" style="-fx-background-color: #f9f9f9;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.MenuAsistenciaController">
+
+    <children>
+      <ImageView fitHeight="600.0" fitWidth="862.0">
+         <image>
+            <Image url="@../Imagenes/FondoBoletines.png" />
+         </image>
+      </ImageView>
+        <Label layoutX="30" layoutY="20" style="-fx-font-size: 22px; -fx-font-weight: bold;" text="Registro de Asistencia" />
+
+        <TableView fx:id="tablaAsistencia" layoutX="73.0" layoutY="63.0" prefHeight="400" prefWidth="740">
+            <columns>
+                <TableColumn fx:id="colNombre" prefWidth="400" text="Nombre" />
+                <TableColumn fx:id="colPresente" prefWidth="150" text="¿Presente?" />
+            </columns>
+        </TableView>
+
+        <Button layoutX="96.0" layoutY="480.0" onAction="#guardarAsistencia" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Guardar Asistencia" />
+
+        <Button layoutX="541.0" layoutY="493.0" onAction="#cerrarVentana" style="-fx-background-color: #e53935; -fx-text-fill: white;" text="Cerrar" />
+    </children>
+</AnchorPane>

@@ -24,6 +24,7 @@
       <Button layoutX="308.0" layoutY="426.0" mnemonicParsing="false" onAction="#btnImprimirBoletines" text="Imprimir Boletínes" />
       <Button layoutX="308.0" layoutY="516.0" mnemonicParsing="false" onAction="#btnCerrarSesion" text="Cerrar sesión" />
       <Button fx:id="btnCambiarContrasenia" layoutX="42.0" layoutY="516.0" mnemonicParsing="false" onAction="#btnCambiarContrasenia" prefWidth="247.0" text="Cambiar Contraseña" />
-      <Button layoutX="178.0" layoutY="245.0" mnemonicParsing="false" onAction="#btnCarnet" text="Crear Carnet" />
+      <Button layoutX="42.0" layoutY="245.0" mnemonicParsing="false" onAction="#btnCarnet" text="Crear Carnet" />
+      <Button fx:id="btnAsistencia" layoutX="315.0" layoutY="245.0" mnemonicParsing="false" onAction="#btnAsistencia" text="Registrar Asistencia" />
    </children>
 </AnchorPane>
